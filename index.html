@@ -5,40 +5,143 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LAST CALL</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-logo">LAST CALL</div>
+      <nav class="header-nav">
+        <a href="#story">STORY</a>
+        <a href="#gallery">GALLERY</a>
+        <a href="#lineup">LINEUP</a>
+        <a href="#info">INFO</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-inner">
-      <h1>LAST CALL</h1>
-      <p class="tagline">The night is just beginning.</p>
-      <a href="#info" class="btn">詳しく見る</a>
+    <div class="hero-img-wrap">
+      <img src="photos/A7S01173.jpg" alt="LAST CALL" class="hero-img" />
+      <div class="hero-overlay">
+        <div class="hero-text">
+          <p class="hero-sub">music × art × culture</p>
+          <h1 class="hero-title">LAST CALL</h1>
+          <p class="hero-date">2026.05.xx</p>
+        </div>
+      </div>
+    </div>
+    <!-- ticker -->
+    <div class="ticker-bar">
+      <div class="ticker-inner">
+        <span class="ticker-label">NEWS</span>
+        <div class="ticker-text">
+          <span>チケット発売中&nbsp;&nbsp;&nbsp;｜&nbsp;&nbsp;&nbsp;次回イベント詳細近日公開&nbsp;&nbsp;&nbsp;｜&nbsp;&nbsp;&nbsp;LAST CALL official site OPEN</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="about" id="about">
+  <!-- SNS BUTTONS -->
+  <div class="sns-bar">
+    <a href="#" class="sns-btn x-btn">𝕏</a>
+    <a href="#" class="sns-btn ig-btn">Instagram</a>
+  </div>
+
+  <!-- STORY -->
+  <section class="story" id="story">
     <div class="container">
-      <h2>ABOUT</h2>
-      <p>
-        LAST CALL は、音楽・アート・カルチャーが交差する夜のイベントです。<br>
-        最高の夜を、あなたと。
-      </p>
+      <div class="section-head">
+        <span class="section-en">STORY</span>
+        <h2 class="section-ja">ストーリー</h2>
+      </div>
+      <div class="story-inner">
+        <div class="story-img">
+          <img src="photos/A7S01319.jpg" alt="story" />
+        </div>
+        <div class="story-text">
+          <p>
+            音楽・アート・カルチャーが交差する、特別な一夜。<br><br>
+            LAST CALL は、東京を拠点に活動するオルタナティブイベント。
+            DJとライブが融合し、アートインスタレーションが空間を彩る。<br><br>
+            夜が深まるほど、熱量は増していく。<br>
+            あなたの「最後の一杯」を、ここで。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- GALLERY -->
   <section class="gallery" id="gallery">
     <div class="container">
-      <h2>GALLERY</h2>
-      <div class="grid">
-        <div class="grid-item"><img src="photos/1.jpg" alt="event photo" /></div>
-        <div class="grid-item"><img src="photos/2.jpg" alt="event photo" /></div>
-        <div class="grid-item"><img src="photos/3.jpg" alt="event photo" /></div>
-        <div class="grid-item"><img src="photos/4.jpg" alt="event photo" /></div>
-        <div class="grid-item"><img src="photos/5.jpg" alt="event photo" /></div>
-        <div class="grid-item"><img src="photos/6.jpg" alt="event photo" /></div>
+      <div class="section-head">
+        <span class="section-en">GALLERY</span>
+        <h2 class="section-ja">ギャラリー</h2>
+      </div>
+    </div>
+    <div class="gallery-scroll">
+      <div class="gallery-track">
+        <img src="photos/A7S00035.jpg" alt="" />
+        <img src="photos/A7S01400.jpg" alt="" />
+        <img src="photos/A7S01445.jpg" alt="" />
+        <img src="photos/A7S01483.jpg" alt="" />
+        <img src="photos/A7S01657.jpg" alt="" />
+        <img src="photos/A7S01728.jpg" alt="" />
+        <img src="photos/A7S01739.jpg" alt="" />
+        <img src="photos/A7S02073.jpg" alt="" />
+      </div>
+    </div>
+    <div class="gallery-grid container">
+      <img src="photos/A7S02180.jpg" alt="" />
+      <img src="photos/A7S02188.jpg" alt="" />
+      <img src="photos/A7S02267.jpg" alt="" />
+      <img src="photos/A7S03549.jpg" alt="" />
+      <img src="photos/A7S04016.jpg" alt="" />
+      <img src="photos/A7S04373.jpg" alt="" />
+    </div>
+  </section>
+
+  <!-- LINEUP -->
+  <section class="lineup" id="lineup">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-en">LINEUP</span>
+        <h2 class="section-ja">ラインナップ</h2>
+      </div>
+      <div class="lineup-grid">
+        <div class="lineup-card">
+          <div class="lineup-img-wrap">
+            <img src="photos/A7S04427.jpg" alt="" />
+          </div>
+          <p class="lineup-role">DJ</p>
+          <p class="lineup-name">ARTIST NAME</p>
+        </div>
+        <div class="lineup-card">
+          <div class="lineup-img-wrap">
+            <img src="photos/A7S04761.jpg" alt="" />
+          </div>
+          <p class="lineup-role">LIVE</p>
+          <p class="lineup-name">ARTIST NAME</p>
+        </div>
+        <div class="lineup-card">
+          <div class="lineup-img-wrap">
+            <img src="photos/A7S04831.jpg" alt="" />
+          </div>
+          <p class="lineup-role">VJ</p>
+          <p class="lineup-name">ARTIST NAME</p>
+        </div>
+        <div class="lineup-card">
+          <div class="lineup-img-wrap">
+            <img src="photos/A7S05094.jpg" alt="" />
+          </div>
+          <p class="lineup-role">DJ</p>
+          <p class="lineup-name">ARTIST NAME</p>
+        </div>
       </div>
     </div>
   </section>
@@ -46,20 +149,29 @@
   <!-- INFO -->
   <section class="info" id="info">
     <div class="container">
-      <h2>INFO</h2>
-      <table>
-        <tr><th>NEXT EVENT</th><td>TBA</td></tr>
-        <tr><th>VENUE</th><td>TBA</td></tr>
-        <tr><th>OPEN</th><td>22:00</td></tr>
-        <tr><th>ADV</th><td>¥2,000</td></tr>
-        <tr><th>DOOR</th><td>¥2,500</td></tr>
-      </table>
+      <div class="section-head">
+        <span class="section-en">INFO</span>
+        <h2 class="section-ja">イベント情報</h2>
+      </div>
+      <div class="info-box">
+        <table class="info-table">
+          <tr><th>DATE</th><td>2026.05.xx (土)</td></tr>
+          <tr><th>VENUE</th><td>TBA</td></tr>
+          <tr><th>OPEN / START</th><td>22:00 / 22:30</td></tr>
+          <tr><th>ADV</th><td>¥2,000</td></tr>
+          <tr><th>DOOR</th><td>¥2,500</td></tr>
+        </table>
+        <div class="ticket-btn-wrap">
+          <a href="#" class="ticket-btn">チケット購入</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2026 LAST CALL. All rights reserved.</p>
+  <footer class="site-footer">
+    <div class="footer-logo">LAST CALL</div>
+    <p class="footer-copy">&copy; 2026 LAST CALL. All rights reserved.</p>
   </footer>
 
 </body>
