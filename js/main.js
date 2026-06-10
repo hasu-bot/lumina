@@ -1,11 +1,16 @@
 /**
  * Last Call 公式サイト — main.js
- * ・スクロールでナビ背景を変化
- * ・Intersection Observer によるフェードインアニメーション
- * ・キャストカードのモーダル表示
- * ・ギャラリーのライトボックス
- * ・ハンバーガーメニュー（SP）
- * 依存ライブラリ：なし（vanilla JS）
+ * 設計書: DESIGN.md 参照
+ *
+ * モジュール一覧:
+ *  1. NAV：スクロール背景変化 + ハンバーガー
+ *  2. HERO：パラックス + タイトル stagger + フェードイン
+ *  3. FADE IN：Intersection Observer
+ *  4. TRAILER：COMING SOON ↔ 再生ボタン切替 + YouTube モーダル
+ *  5. CAST MODAL：キャストカードのモーダル表示
+ *  6. LIGHTBOX：ギャラリーライトボックス
+ *
+ * 依存ライブラリ：なし（vanilla JS / ES2020）
  */
 
 'use strict';
@@ -14,208 +19,282 @@
    ユーティリティ
 ============================================================ */
 
-/** 要素が画像を読み込めているか判定し、失敗時にプレースホルダーを表示 */
-function hidePlaceholderIfImgLoaded(imgEl, placeholderEl) {
-  const showOrHide = () => {
-    if (imgEl.naturalWidth > 0) {
-      placeholderEl.style.display = 'none';
-    } else {
-      imgEl.style.display = 'none';
-    }
+/** 要素が取れなければ何もしない安全な querySelector */
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+/** 画像の読み込み成否でプレースホルダーを切り替える */
+function handleImgPlaceholder(imgEl, placeholderEl) {
+  if (!imgEl || !placeholderEl) return;
+  const toggle = () => {
+    const loaded = imgEl.naturalWidth > 0;
+    imgEl.style.display          = loaded ? '' : 'none';
+    placeholderEl.style.display  = loaded ? 'none' : '';
   };
-  if (imgEl.complete) {
-    showOrHide();
-  } else {
-    imgEl.addEventListener('load',  () => { placeholderEl.style.display = 'none'; });
-    imgEl.addEventListener('error', () => { imgEl.style.display = 'none'; });
+  if (imgEl.complete) { toggle(); }
+  else {
+    imgEl.addEventListener('load',  toggle);
+    imgEl.addEventListener('error', toggle);
   }
 }
 
 /* ============================================================
-   1. ナビゲーション：スクロールで背景変化 & ハンバーガー
+   1. NAV：スクロール背景変化 & ハンバーガー
 ============================================================ */
 (function initNav() {
-  const nav = document.getElementById('nav');
-  const hamburger = document.getElementById('navHamburger');
-  const menu = document.getElementById('navMenu');
+  const nav       = $('#nav');
+  const hamburger = $('#navHamburger');
+  const menu      = $('#navMenu');
   if (!nav) return;
 
-  // スクロール時に .scrolled クラスをトグル
-  const onScroll = () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  };
+  // スクロールで .scrolled を付与
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // 初期状態
+  onScroll();
 
-  // ハンバーガーメニュー開閉
-  if (hamburger && menu) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = hamburger.classList.toggle('open');
-      menu.classList.toggle('open', isOpen);
-      hamburger.setAttribute('aria-expanded', isOpen);
-      // スクロール抑止
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+  // ハンバーガー
+  if (!hamburger || !menu) return;
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    menu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
 
-    // メニューリンクをクリックしたら閉じる
-    menu.querySelectorAll('.nav__link').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        menu.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
+  // メニューリンク押下で閉じる
+  $$('.nav__link', menu).forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      menu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     });
-  }
+  });
 })();
 
 /* ============================================================
-   2. Intersection Observer：フェードインアニメーション
+   2. HERO：パラックス + タイトル stagger + 各要素フェード
+============================================================ */
+(function initHero() {
+  /* ─ パラックス背景 ─ */
+  const parallax = $('#heroParallax');
+  if (parallax) {
+    const hero = parallax.closest('.hero');
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight) return; // ヒーロー範囲外はスキップ
+      parallax.style.transform = `translateY(${window.scrollY * 0.38}px)`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ─ キャッチコピー フェードイン ─ */
+  const catchEl = $('#heroCatch');
+  if (catchEl) {
+    requestAnimationFrame(() =>
+      setTimeout(() => catchEl.classList.add('appear'), 300)
+    );
+  }
+
+  /* ─ タイトル stagger（文字ごと） ─ */
+  const titleEl = $('#heroTitle');
+  if (titleEl) {
+    const text = titleEl.textContent.trim();
+    // 半角スペースは &nbsp; として保持
+    titleEl.innerHTML = text
+      .split('')
+      .map((ch, i) =>
+        `<span class="char" style="transition-delay:${0.5 + i * 0.08}s">${
+          ch === ' ' ? '&nbsp;' : ch
+        }</span>`
+      )
+      .join('');
+
+    // 次フレームで appear クラス付与
+    requestAnimationFrame(() =>
+      setTimeout(() => {
+        $$('.char', titleEl).forEach(el => el.classList.add('appear'));
+      }, 100)
+    );
+  }
+
+  /* ─ meta・actions フェードイン ─ */
+  const metaEl    = $('.hero__meta');
+  const actionsEl = $('.hero__actions');
+  [metaEl, actionsEl].forEach(el => {
+    if (el) setTimeout(() => el.classList.add('appear'), 800);
+  });
+})();
+
+/* ============================================================
+   3. FADE IN：Intersection Observer
 ============================================================ */
 (function initFadeIn() {
-  const targets = document.querySelectorAll('.fade-in');
+  const targets = $$('.fade-in');
   if (!targets.length) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // 一度だけ発火
-      }
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     });
-  }, {
-    rootMargin: '0px 0px -60px 0px', // 少し手前でトリガー
-    threshold: 0.1
-  });
+  }, { rootMargin: '0px 0px -80px 0px', threshold: 0.08 });
 
   targets.forEach(el => observer.observe(el));
 })();
 
 /* ============================================================
-   3. キャストモーダル
+   4. TRAILER：COMING SOON ↔ 再生ボタン切替 + YouTube モーダル
+   HTML 側の data-trailer-id="" を動画 ID に書き換えるだけで切替
 ============================================================ */
-(function initCastModal() {
-  const cards   = document.querySelectorAll('.cast__card');
-  const modal   = document.getElementById('castModal');
-  const backdrop= document.getElementById('modalBackdrop');
-  const closeBtn= document.getElementById('modalClose');
-  const imgEl   = document.getElementById('modalImg');
-  const placeholderEl = document.getElementById('modalPlaceholder');
-  const roleEl  = document.getElementById('modalRole');
-  const nameEl  = document.getElementById('modalName');
-  const commentEl = document.getElementById('modalComment');
-  if (!modal || !cards.length) return;
+(function initTrailer() {
+  const section     = $('.trailer');
+  if (!section) return;
+  const trailerId   = section.dataset.trailerId || '';
+  const comingEl    = $('#trailerComing');
+  const playBtn     = $('#trailerPlay');
+  const ytModal     = $('#ytModal');
+  const ytBackdrop  = $('#ytBackdrop');
+  const ytClose     = $('#ytClose');
+  const ytIframe    = $('#ytIframe');
 
-  let lastFocused = null;
+  // 動画 ID がある → 再生ボタン表示 / COMING SOON 非表示
+  if (trailerId) {
+    if (comingEl) comingEl.hidden = true;
+    if (playBtn)  playBtn.hidden  = false;
+  }
 
-  /** モーダルを開く */
-  function openModal(card) {
-    lastFocused = card;
-
-    // data属性から値を取得
-    const name    = card.dataset.name    || '';
-    const role    = card.dataset.role    || '';
-    const imgSrc  = card.dataset.img     || '';
-    const comment = card.dataset.comment || '';
-
-    // モーダルに値をセット
-    roleEl.textContent    = role;
-    nameEl.textContent    = name;
-    commentEl.textContent = comment;
-    placeholderEl.textContent = name.charAt(0) || '？';
-
-    if (imgSrc) {
-      imgEl.src = imgSrc;
-      imgEl.alt = name;
-      imgEl.style.display = '';
-      placeholderEl.style.display = '';
-      hidePlaceholderIfImgLoaded(imgEl, placeholderEl);
-    } else {
-      imgEl.style.display = 'none';
-      placeholderEl.style.display = '';
-    }
-
-    modal.removeAttribute('hidden');
+  // モーダルを開く
+  function openYT() {
+    if (!ytModal || !ytIframe) return;
+    ytIframe.src = `https://www.youtube.com/embed/${trailerId}?autoplay=1&rel=0`;
+    ytModal.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-
-    // フォーカスをモーダルへ
-    setTimeout(() => closeBtn.focus(), 50);
+    if (ytClose) ytClose.focus();
   }
 
-  /** モーダルを閉じる */
-  function closeModal() {
-    modal.setAttribute('hidden', '');
+  // モーダルを閉じる
+  function closeYT() {
+    if (!ytModal || !ytIframe) return;
+    ytIframe.src = '';
+    ytModal.setAttribute('hidden', '');
     document.body.style.overflow = '';
-    // フォーカスを元の位置へ
-    if (lastFocused) lastFocused.focus();
   }
 
-  // カードクリック & キーボード
-  cards.forEach(card => {
-    card.addEventListener('click', () => openModal(card));
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal(card);
-      }
-    });
-  });
-
-  // 閉じるボタン
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
-  // Escape で閉じる
+  if (playBtn)     playBtn.addEventListener('click',   openYT);
+  if (ytClose)     ytClose.addEventListener('click',   closeYT);
+  if (ytBackdrop)  ytBackdrop.addEventListener('click', closeYT);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) {
-      closeModal();
-    }
+    if (e.key === 'Escape' && ytModal && !ytModal.hasAttribute('hidden')) closeYT();
   });
 })();
 
 /* ============================================================
-   4. ギャラリーライトボックス
+   5. CAST MODAL
+============================================================ */
+(function initCastModal() {
+  const cards       = $$('.cast__card');
+  const modal       = $('#castModal');
+  const backdrop    = $('#modalBackdrop');
+  const closeBtn    = $('#modalClose');
+  const imgEl       = $('#modalImg');
+  const placeholder = $('#modalPlaceholder');
+  const roleEl      = $('#modalRole');
+  const nameEl      = $('#modalName');
+  const commentEl   = $('#modalComment');
+  if (!modal || !cards.length) return;
+
+  let lastFocused = null;
+
+  function openModal(card) {
+    lastFocused = card;
+    const { name = '', role = '', img = '', comment = '' } = card.dataset;
+
+    roleEl.textContent    = role;
+    nameEl.textContent    = name;
+    commentEl.textContent = comment;
+
+    // 1文字目をプレースホルダーに
+    if (placeholder) placeholder.textContent = name.charAt(0) || '？';
+
+    if (img) {
+      imgEl.src = img;
+      imgEl.alt = name;
+      imgEl.style.display      = '';
+      placeholder.style.display = '';
+      handleImgPlaceholder(imgEl, placeholder);
+    } else {
+      imgEl.style.display       = 'none';
+      placeholder.style.display = '';
+    }
+
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeModal() {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+    lastFocused?.focus();
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click',   () => openModal(card));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+    });
+  });
+
+  closeBtn?.addEventListener('click',  closeModal);
+  backdrop?.addEventListener('click',  closeModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+  });
+
+  // キャストカードの初期プレースホルダー処理
+  cards.forEach(card => {
+    handleImgPlaceholder(
+      card.querySelector('.cast__img'),
+      card.querySelector('.cast__placeholder')
+    );
+  });
+})();
+
+/* ============================================================
+   6. LIGHTBOX
 ============================================================ */
 (function initLightbox() {
-  const items     = document.querySelectorAll('.gallery__item');
-  const lightbox  = document.getElementById('lightbox');
-  const backdrop  = document.getElementById('lbBackdrop');
-  const imgEl     = document.getElementById('lbImg');
-  const prevBtn   = document.getElementById('lbPrev');
-  const nextBtn   = document.getElementById('lbNext');
-  const closeBtn  = document.getElementById('lbClose');
-  const counterEl = document.getElementById('lbCounter');
+  const items     = $$('.gallery__item');
+  const lightbox  = $('#lightbox');
+  const backdrop  = $('#lbBackdrop');
+  const imgEl     = $('#lbImg');
+  const prevBtn   = $('#lbPrev');
+  const nextBtn   = $('#lbNext');
+  const closeBtn  = $('#lbClose');
+  const counterEl = $('#lbCounter');
   if (!lightbox || !items.length) return;
 
-  // ギャラリーの全画像srcを配列で管理
-  const srcs = Array.from(items).map(item => item.dataset.src || item.querySelector('img')?.src || '');
+  // 全画像の src を配列で管理
+  const srcs = items.map(item =>
+    item.dataset.src || item.querySelector('img')?.src || ''
+  );
   let current = 0;
 
-  /** ライトボックスを開く */
+  function show(index) {
+    current = Math.max(0, Math.min(srcs.length - 1, index));
+    imgEl.src = srcs[current];
+    imgEl.alt = `スチール写真 ${current + 1}`;
+    if (counterEl) counterEl.textContent = `${current + 1} / ${srcs.length}`;
+    if (prevBtn) prevBtn.style.opacity = current === 0 ? '0.3' : '1';
+    if (nextBtn) nextBtn.style.opacity = current === srcs.length - 1 ? '0.3' : '1';
+  }
+
   function open(index) {
-    current = index;
-    showImage();
+    show(index);
     lightbox.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-    closeBtn.focus();
-  }
-
-  /** 画像を表示 */
-  function showImage() {
-    imgEl.src = srcs[current];
-    imgEl.alt = `ギャラリー ${current + 1} / ${srcs.length}`;
-    counterEl.textContent = `${current + 1} / ${srcs.length}`;
-    // ボタンの活性状態
-    prevBtn.style.opacity = current === 0 ? '0.3' : '1';
-    nextBtn.style.opacity = current === srcs.length - 1 ? '0.3' : '1';
-  }
-
-  function prev() {
-    if (current > 0) { current--; showImage(); }
-  }
-
-  function next() {
-    if (current < srcs.length - 1) { current++; showImage(); }
+    closeBtn?.focus();
   }
 
   function close() {
@@ -223,53 +302,30 @@ function hidePlaceholderIfImgLoaded(imgEl, placeholderEl) {
     document.body.style.overflow = '';
   }
 
-  // アイテムクリック & キーボード
   items.forEach((item, i) => {
-    item.addEventListener('click', () => open(i));
+    item.addEventListener('click',   () => open(i));
     item.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        open(i);
-      }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
     });
   });
 
-  prevBtn.addEventListener('click',  prev);
-  nextBtn.addEventListener('click',  next);
-  closeBtn.addEventListener('click', close);
-  backdrop.addEventListener('click', close);
+  prevBtn?.addEventListener('click',  () => show(current - 1));
+  nextBtn?.addEventListener('click',  () => show(current + 1));
+  closeBtn?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
 
-  // キーボード操作
   document.addEventListener('keydown', e => {
     if (lightbox.hasAttribute('hidden')) return;
-    if (e.key === 'ArrowLeft')  prev();
-    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
     if (e.key === 'Escape')     close();
   });
 
-  // スワイプ対応（タッチ）
-  let touchStartX = 0;
-  lightbox.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].clientX;
+  // タッチスワイプ
+  let tx = 0;
+  lightbox.addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) dx < 0 ? show(current + 1) : show(current - 1);
   }, { passive: true });
-
-  lightbox.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) {
-      dx < 0 ? next() : prev();
-    }
-  }, { passive: true });
-})();
-
-/* ============================================================
-   5. キャスト画像プレースホルダー制御（初期ロード時）
-============================================================ */
-(function initCastPlaceholders() {
-  document.querySelectorAll('.cast__card').forEach(card => {
-    const img = card.querySelector('.cast__img');
-    const placeholder = card.querySelector('.cast__img-placeholder');
-    if (img && placeholder) {
-      hidePlaceholderIfImgLoaded(img, placeholder);
-    }
-  });
 })();

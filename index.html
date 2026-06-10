@@ -5,27 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="自主制作短編映画「Last Call」公式サイト。2026年夏公開。熊本・天草の離島を舞台にした青春ストーリー。" />
   <title>Last Call｜自主制作短編映画 公式サイト</title>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;600;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <!-- ========================================
-       NAVIGATION（固定ヘッダー）
-       スクロールでbackdropが半透明になる
+       NAV（固定ヘッダー）
+       .scrolled クラスで白背景化（JS制御）
   ======================================== -->
   <header class="nav" id="nav">
     <div class="nav__inner">
-      <a href="#hero" class="nav__logo">Last Call</a>
-      <button class="nav__hamburger" id="navHamburger" aria-label="メニュー">
+      <a href="#hero" class="nav__logo klee">Last Call</a>
+      <button class="nav__hamburger" id="navHamburger" aria-label="メニューを開く" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
-      <nav class="nav__menu" id="navMenu">
+      <nav class="nav__menu" id="navMenu" aria-label="メインナビゲーション">
         <a href="#story"   class="nav__link">STORY</a>
         <a href="#cast"    class="nav__link">CAST</a>
         <a href="#staff"   class="nav__link">STAFF</a>
@@ -37,52 +34,108 @@
 
   <!-- ========================================
        HERO（全画面）
-       背景画像は assets/img/hero.jpg に差し替え
+       - パラックス背景（JS: scrollY * 0.4）
+       - タイトル文字 stagger アニメ（JS制御）
+       - 背景差し替え: src="photos/..." を変更
   ======================================== -->
   <section class="hero" id="hero">
-    <!-- 背景画像。差し替え時は src を変更 -->
-    <img
-      src="photos/A7S07404.jpg"
-      alt="Last Call メインビジュアル"
-      class="hero__bg"
-    />
-    <div class="hero__overlay"></div>
-    <div class="hero__content fade-in">
-      <!-- キャッチコピー -->
-      <p class="hero__catch klee">あの夏、最後の声を聴いた。</p>
-      <!-- 映画タイトル -->
-      <h1 class="hero__title serif">Last Call</h1>
-      <!-- 公開情報 -->
-      <p class="hero__release">2026年 夏 公開予定</p>
-      <!-- 舞台 -->
-      <p class="hero__location">熊本県天草市・御所浦</p>
-      <!-- 予告編ボタン（video/trailer.mp4 を置いたら href="#trailer" を変更） -->
-      <a href="#story" class="hero__btn">作品について</a>
+    <div class="hero__parallax" id="heroParallax">
+      <img
+        src="photos/A7S07404.jpg"
+        alt="Last Call メインビジュアル"
+        class="hero__bg"
+        fetchpriority="high"
+      />
     </div>
-    <!-- スクロール促進矢印 -->
-    <div class="hero__scroll">
+    <!-- グラデーションオーバーレイ -->
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <!-- テキストコンテンツ -->
+    <div class="hero__content">
+      <p class="hero__catch klee" id="heroCatch">あの夏、最後の声を聴いた。</p>
+      <!-- タイトルは JS で文字ごとに <span> 分解してアニメ -->
+      <h1 class="hero__title klee" id="heroTitle" aria-label="Last Call">Last Call</h1>
+      <div class="hero__meta">
+        <p class="hero__release">2026年 夏 公開予定</p>
+        <p class="hero__location">熊本県天草市・御所浦</p>
+      </div>
+      <div class="hero__actions">
+        <a href="#trailer" class="hero__btn hero__btn--primary">予告編を見る</a>
+        <a href="#story"   class="hero__btn hero__btn--outline">作品について</a>
+      </div>
+    </div>
+
+    <!-- スクロール促進 -->
+    <div class="hero__scroll" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
       <span class="hero__scroll-text">SCROLL</span>
-      <div class="hero__scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       TRAILER（予告編）
+       data-trailer-id="" のままなら「COMING SOON」表示
+       data-trailer-id="YouTubeのID" にすると再生ボタン表示
+  ======================================== -->
+  <section class="trailer" id="trailer" data-trailer-id="">
+    <div class="trailer__bg-wrap" aria-hidden="true">
+      <img src="photos/A7S07533.jpg" alt="" class="trailer__bg" />
+      <div class="trailer__blur"></div>
+    </div>
+    <div class="trailer__content fade-in">
+      <!-- 予告編なし時 -->
+      <div class="trailer__coming" id="trailerComing">
+        <span class="trailer__en">TRAILER</span>
+        <p class="trailer__soon serif">予告編 近日公開</p>
+        <p class="trailer__note">公開情報はSNSでお知らせします</p>
+      </div>
+      <!-- 予告編あり時（JS で表示切替） -->
+      <button class="trailer__play" id="trailerPlay" hidden aria-label="予告編を再生">
+        <span class="trailer__play-icon" aria-hidden="true">&#9654;</span>
+        <span class="trailer__play-text serif">TRAILER</span>
+      </button>
+    </div>
+    <!-- YouTube モーダル（JS制御） -->
+    <div class="yt-modal" id="ytModal" hidden role="dialog" aria-modal="true" aria-label="予告編">
+      <div class="yt-modal__backdrop" id="ytBackdrop"></div>
+      <div class="yt-modal__box">
+        <button class="yt-modal__close" id="ytClose" aria-label="閉じる">&times;</button>
+        <div class="yt-modal__frame">
+          <iframe id="ytIframe" src="" allow="autoplay; encrypted-media" allowfullscreen title="Last Call 予告編"></iframe>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ========================================
        STORY（あらすじ）
+       写真左 / テキスト右（PC）
+       差し替え: src="photos/..." を変更
   ======================================== -->
   <section class="section story" id="story">
+
+    <!-- ウェーブ区切り（上） -->
+    <div class="wave wave--top" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,0 L0,0 Z" fill="#1a2a4a"/>
+      </svg>
+    </div>
+
     <div class="container">
       <div class="section__head fade-in">
         <span class="section__en">STORY</span>
         <h2 class="section__ja serif">あらすじ</h2>
       </div>
-      <div class="story__body fade-in">
-        <!-- ダミー画像（差し替え：assets/img/story.jpg） -->
-        <div class="story__img-wrap">
-          <img src="photos/A7S07525.jpg" alt="Story" class="story__img" />
+      <div class="story__body">
+        <div class="story__img-wrap fade-in">
+          <!-- 差し替え: assets/img/story.jpg -->
+          <img src="photos/A7S07525.jpg" alt="あらすじ写真" class="story__img" loading="lazy" />
+          <!-- 装飾ボーダー -->
+          <div class="story__img-deco" aria-hidden="true"></div>
         </div>
-        <div class="story__text">
+        <div class="story__text fade-in" style="--delay:0.15s">
           <p class="story__lead serif">
-            熊本・天草の離島を舞台に、<br class="pc-only">
+            熊本・天草の離島を舞台に、<br>
             6人の若者が迎えるひと夏の物語。
           </p>
           <p>
@@ -93,9 +146,9 @@
             夏の終わりに届く一本の電話——<br>
             その声を聞いたとき、すべてが変わった。
           </p>
-          <!-- ダミーテキスト。実際のあらすじに差し替えてください -->
+          <!-- ダミー。実際のあらすじに差し替えてください -->
           <p class="story__note klee">
-            ※本作はフィクションです。熊本県天草市の協力を得て撮影されました。
+            ※ 実際のあらすじに差し替えてください。
           </p>
         </div>
       </div>
@@ -105,7 +158,7 @@
   <!-- ========================================
        CAST（キャスト紹介）
        カードクリックでモーダル表示
-       data-* 属性でモーダルに渡す情報を管理
+       data-* 属性で情報管理
   ======================================== -->
   <section class="section cast" id="cast">
     <div class="container">
@@ -113,100 +166,109 @@
         <span class="section__en">CAST</span>
         <h2 class="section__ja serif">キャスト</h2>
       </div>
-      <div class="cast__grid fade-in">
+      <div class="cast__grid">
 
-        <!-- キャスト①〜⑥ ─ 画像は assets/img/cast01.jpg 等に差し替え -->
-        <!-- ダミー画像は css で背景色のグラデーションを使用 -->
-
-        <article class="cast__card"
-          data-name="キャスト①"
-          data-role="役名①"
+        <!-- ─ キャスト① ─ 画像: assets/img/cast01.jpg に差し替え -->
+        <article class="cast__card fade-in"
+          data-name="キャスト①" data-role="役名①"
           data-img="assets/img/cast01.jpg"
           data-comment="「この作品に参加できて、本当に光栄です。天草の自然と共に、精一杯演じました。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast01.jpg" alt="キャスト①" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">①</div>
+            <img src="assets/img/cast01.jpg" alt="キャスト①" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>①</span></div>
           </div>
-          <p class="cast__role">役名①</p>
-          <p class="cast__name serif">キャスト①</p>
+          <div class="cast__info">
+            <p class="cast__role">役名①</p>
+            <p class="cast__name serif">キャスト①</p>
+          </div>
         </article>
 
-        <article class="cast__card"
-          data-name="キャスト②"
-          data-role="役名②"
+        <!-- ─ キャスト② ─ -->
+        <article class="cast__card fade-in" style="--delay:0.1s"
+          data-name="キャスト②" data-role="役名②"
           data-img="assets/img/cast02.jpg"
           data-comment="「天草の美しい景色の中で撮影でき、忘れられない経験になりました。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast02.jpg" alt="キャスト②" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">②</div>
+            <img src="assets/img/cast02.jpg" alt="キャスト②" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>②</span></div>
           </div>
-          <p class="cast__role">役名②</p>
-          <p class="cast__name serif">キャスト②</p>
+          <div class="cast__info">
+            <p class="cast__role">役名②</p>
+            <p class="cast__name serif">キャスト②</p>
+          </div>
         </article>
 
-        <article class="cast__card"
-          data-name="キャスト③"
-          data-role="役名③"
+        <!-- ─ キャスト③ ─ -->
+        <article class="cast__card fade-in" style="--delay:0.2s"
+          data-name="キャスト③" data-role="役名③"
           data-img="assets/img/cast03.jpg"
           data-comment="「6人それぞれのキャラクターが絡み合う物語は、何度観ても新しい発見があります。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast03.jpg" alt="キャスト③" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">③</div>
+            <img src="assets/img/cast03.jpg" alt="キャスト③" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>③</span></div>
           </div>
-          <p class="cast__role">役名③</p>
-          <p class="cast__name serif">キャスト③</p>
+          <div class="cast__info">
+            <p class="cast__role">役名③</p>
+            <p class="cast__name serif">キャスト③</p>
+          </div>
         </article>
 
-        <article class="cast__card"
-          data-name="キャスト④"
-          data-role="役名④"
+        <!-- ─ キャスト④ ─ -->
+        <article class="cast__card fade-in" style="--delay:0.05s"
+          data-name="キャスト④" data-role="役名④"
           data-img="assets/img/cast04.jpg"
           data-comment="「監督の坂本さんの世界観が大好きで、参加を決めました。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast04.jpg" alt="キャスト④" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">④</div>
+            <img src="assets/img/cast04.jpg" alt="キャスト④" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>④</span></div>
           </div>
-          <p class="cast__role">役名④</p>
-          <p class="cast__name serif">キャスト④</p>
+          <div class="cast__info">
+            <p class="cast__role">役名④</p>
+            <p class="cast__name serif">キャスト④</p>
+          </div>
         </article>
 
-        <article class="cast__card"
-          data-name="キャスト⑤"
-          data-role="役名⑤"
+        <!-- ─ キャスト⑤ ─ -->
+        <article class="cast__card fade-in" style="--delay:0.15s"
+          data-name="キャスト⑤" data-role="役名⑤"
           data-img="assets/img/cast05.jpg"
           data-comment="「海と島の空気が演技にリアリティを与えてくれました。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast05.jpg" alt="キャスト⑤" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">⑤</div>
+            <img src="assets/img/cast05.jpg" alt="キャスト⑤" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>⑤</span></div>
           </div>
-          <p class="cast__role">役名⑤</p>
-          <p class="cast__name serif">キャスト⑤</p>
+          <div class="cast__info">
+            <p class="cast__role">役名⑤</p>
+            <p class="cast__name serif">キャスト⑤</p>
+          </div>
         </article>
 
-        <article class="cast__card"
-          data-name="キャスト⑥"
-          data-role="役名⑥"
+        <!-- ─ キャスト⑥ ─ -->
+        <article class="cast__card fade-in" style="--delay:0.25s"
+          data-name="キャスト⑥" data-role="役名⑥"
           data-img="assets/img/cast06.jpg"
           data-comment="「『Last Call』は私にとっても青春そのものです。」（ダミーコメント）"
           tabindex="0" role="button" aria-haspopup="dialog">
           <div class="cast__img-wrap">
-            <img src="assets/img/cast06.jpg" alt="キャスト⑥" class="cast__img" onerror="this.style.display='none'" />
-            <div class="cast__img-placeholder" aria-hidden="true">⑥</div>
+            <img src="assets/img/cast06.jpg" alt="キャスト⑥" class="cast__img" onerror="this.style.display='none'" loading="lazy"/>
+            <div class="cast__placeholder" aria-hidden="true"><span>⑥</span></div>
           </div>
-          <p class="cast__role">役名⑥</p>
-          <p class="cast__name serif">キャスト⑥</p>
+          <div class="cast__info">
+            <p class="cast__role">役名⑥</p>
+            <p class="cast__name serif">キャスト⑥</p>
+          </div>
         </article>
 
-      </div>
-    </div>
+      </div><!-- /.cast__grid -->
+    </div><!-- /.container -->
   </section>
 
-  <!-- キャストモーダル（JS で動的に内容を書き換え） -->
+  <!-- キャストモーダル -->
   <div class="modal" id="castModal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
     <div class="modal__backdrop" id="modalBackdrop"></div>
     <div class="modal__box">
@@ -214,9 +276,9 @@
       <div class="modal__inner">
         <div class="modal__img-wrap">
           <img src="" alt="" id="modalImg" class="modal__img" />
-          <div class="modal__img-placeholder" id="modalPlaceholder" aria-hidden="true"></div>
+          <div class="modal__placeholder" id="modalPlaceholder" aria-hidden="true"></div>
         </div>
-        <div class="modal__info">
+        <div class="modal__body">
           <p class="modal__role" id="modalRole"></p>
           <h3 class="modal__name serif" id="modalName"></h3>
           <p class="modal__comment" id="modalComment"></p>
@@ -235,7 +297,6 @@
         <h2 class="section__ja serif">スタッフ</h2>
       </div>
       <dl class="staff__list fade-in">
-        <!-- 総合監督 -->
         <div class="staff__item">
           <dt class="staff__role">総合監督</dt>
           <dd class="staff__name serif">Sa（坂本蓮）</dd>
@@ -268,58 +329,53 @@
   <!-- ========================================
        GALLERY（スチール写真）
        ライトボックス付き
-       ダミー画像は既存の撮影写真を使用
   ======================================== -->
-  <section class="section gallery" id="gallery">
+  <section class="gallery" id="gallery">
+    <div class="wave wave--gallery-top" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,0 C360,80 1080,0 1440,60 L1440,80 L0,80 Z" fill="#FAFAF7"/>
+      </svg>
+    </div>
     <div class="container">
-      <div class="section__head fade-in">
-        <span class="section__en">GALLERY</span>
-        <h2 class="section__ja serif">ギャラリー</h2>
+      <div class="section__head section__head--light fade-in">
+        <span class="section__en section__en--light">GALLERY</span>
+        <h2 class="section__ja section__ja--light serif">ギャラリー</h2>
       </div>
     </div>
-    <!-- グリッドレイアウト（Masonry風） -->
     <div class="gallery__grid container fade-in">
-      <!-- 画像は photos/ フォルダのものを使用。差し替え時は src を変更 -->
-      <figure class="gallery__item" data-src="photos/A7S01173.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S01173.jpg" alt="スチール写真 01" loading="lazy" />
-      </figure>
+      <figure class="gallery__item"                data-src="photos/A7S01173.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S01173.jpg" alt="スチール01" loading="lazy" /></figure>
       <figure class="gallery__item gallery__item--tall" data-src="photos/A7S01319.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S01319.jpg" alt="スチール写真 02" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/A7S01400.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S01400.jpg" alt="スチール写真 03" loading="lazy" />
-      </figure>
+        <img src="photos/A7S01319.jpg" alt="スチール02" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/A7S01400.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S01400.jpg" alt="スチール03" loading="lazy" /></figure>
       <figure class="gallery__item gallery__item--wide" data-src="photos/A7S01657.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S01657.jpg" alt="スチール写真 04" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/A7S02073.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S02073.jpg" alt="スチール写真 05" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/A7S02180.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S02180.jpg" alt="スチール写真 06" loading="lazy" />
-      </figure>
+        <img src="photos/A7S01657.jpg" alt="スチール04" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/A7S02073.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S02073.jpg" alt="スチール05" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/A7S02180.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S02180.jpg" alt="スチール06" loading="lazy" /></figure>
       <figure class="gallery__item gallery__item--tall" data-src="photos/A7S04016.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S04016.jpg" alt="スチール写真 07" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/A7S05877.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S05877.jpg" alt="スチール写真 08" loading="lazy" />
-      </figure>
+        <img src="photos/A7S04016.jpg" alt="スチール07" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/A7S05877.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S05877.jpg" alt="スチール08" loading="lazy" /></figure>
       <figure class="gallery__item gallery__item--wide" data-src="photos/A7S07059.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S07059.jpg" alt="スチール写真 09" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/A7S07371.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/A7S07371.jpg" alt="スチール写真 10" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/DSC00100.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/DSC00100.jpg" alt="スチール写真 11" loading="lazy" />
-      </figure>
-      <figure class="gallery__item" data-src="photos/DSC05492.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
-        <img src="photos/DSC05492.jpg" alt="スチール写真 12" loading="lazy" />
-      </figure>
+        <img src="photos/A7S07059.jpg" alt="スチール09" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/A7S07371.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/A7S07371.jpg" alt="スチール10" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/DSC00100.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/DSC00100.jpg" alt="スチール11" loading="lazy" /></figure>
+      <figure class="gallery__item"                data-src="photos/DSC05492.jpg" tabindex="0" role="button" aria-label="ギャラリー画像を拡大">
+        <img src="photos/DSC05492.jpg" alt="スチール12" loading="lazy" /></figure>
+    </div>
+    <div class="wave wave--gallery-bottom" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,60 C360,0 1080,80 1440,20 L1440,80 L0,80 Z" fill="#FAFAF7"/>
+      </svg>
     </div>
   </section>
 
-  <!-- ライトボックス（JS で制御） -->
+  <!-- ライトボックス -->
   <div class="lightbox" id="lightbox" hidden>
     <div class="lightbox__backdrop" id="lbBackdrop"></div>
     <button class="lightbox__prev" id="lbPrev" aria-label="前の画像">&#8249;</button>
@@ -333,7 +389,6 @@
 
   <!-- ========================================
        NEWS（お知らせ）
-       最新3件のみ表示。news/index.html に全件あり
   ======================================== -->
   <section class="section news" id="news">
     <div class="container">
@@ -342,7 +397,6 @@
         <h2 class="section__ja serif">お知らせ</h2>
       </div>
       <ul class="news__list fade-in">
-        <!-- ダミー記事 3件。実際の情報に差し替えてください -->
         <li class="news__item">
           <a href="news/template.html" class="news__link">
             <time class="news__date" datetime="2026-04-26">2026.04.26</time>
@@ -373,22 +427,23 @@
 
   <!-- ========================================
        FOOTER
+       上部ウェーブ区切り
   ======================================== -->
   <footer class="footer">
+    <div class="footer__wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,50 C480,100 960,0 1440,50 L1440,0 L0,0 Z" fill="#FAFAF7"/>
+      </svg>
+    </div>
     <div class="footer__inner">
-      <p class="footer__logo serif">Last Call</p>
-      <p class="footer__tagline klee">あの夏、最後の声を聴いた。</p>
+      <p class="footer__logo klee">Last Call</p>
+      <p class="footer__catch klee">あの夏、最後の声を聴いた。</p>
       <div class="footer__sns">
-        <!-- href は実際のURLに差し替えてください -->
         <a href="https://instagram.com/" class="footer__sns-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         </a>
         <a href="https://youtube.com/" class="footer__sns-link" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </a>
       </div>
       <p class="footer__copy">&copy;2026 YOLO / Last Call 製作委員会</p>
