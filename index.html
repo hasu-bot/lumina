@@ -13,6 +13,22 @@
 <body>
 
   <!-- ========================================
+       LOADER（ローディング画面）
+       JS で .done クラスを付与してスライドアウト
+  ======================================== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <h1 class="loader__title klee">Last Call</h1>
+      <p class="loader__sub klee">あの夏、最後の声を聴いた。</p>
+      <div class="loader__bar"><span class="loader__fill" id="loaderFill"></span></div>
+    </div>
+  </div>
+
+  <!-- カスタムカーソル（PCのみ表示） -->
+  <div class="cursor"      id="cursor"      aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing"  aria-hidden="true"></div>
+
+  <!-- ========================================
        NAV（固定ヘッダー）
        .scrolled クラスで白背景化（JS制御）
   ======================================== -->
@@ -55,6 +71,8 @@
       <p class="hero__catch klee" id="heroCatch">あの夏、最後の声を聴いた。</p>
       <!-- タイトルは JS で文字ごとに <span> 分解してアニメ -->
       <h1 class="hero__title klee" id="heroTitle" aria-label="Last Call">Last Call</h1>
+      <!-- 区切り線（JS で .appear を付与） -->
+      <div class="hero__rule" aria-hidden="true"></div>
       <div class="hero__meta">
         <p class="hero__release">2026年 夏 公開予定</p>
         <p class="hero__location">熊本県天草市・御所浦</p>
@@ -122,12 +140,12 @@
     </div>
 
     <div class="container">
-      <div class="section__head fade-in">
+      <div class="section__head reveal">
         <span class="section__en">STORY</span>
         <h2 class="section__ja serif">あらすじ</h2>
       </div>
       <div class="story__body">
-        <div class="story__img-wrap fade-in">
+        <div class="story__img-wrap reveal">
           <!-- 差し替え: assets/img/story.jpg -->
           <img src="photos/A7S07525.jpg" alt="あらすじ写真" class="story__img" loading="lazy" />
           <!-- 装飾ボーダー -->
@@ -162,7 +180,7 @@
   ======================================== -->
   <section class="section cast" id="cast">
     <div class="container">
-      <div class="section__head fade-in">
+      <div class="section__head reveal">
         <span class="section__en">CAST</span>
         <h2 class="section__ja serif">キャスト</h2>
       </div>
@@ -292,7 +310,7 @@
   ======================================== -->
   <section class="section staff" id="staff">
     <div class="container">
-      <div class="section__head fade-in">
+      <div class="section__head reveal">
         <span class="section__en">STAFF</span>
         <h2 class="section__ja serif">スタッフ</h2>
       </div>
