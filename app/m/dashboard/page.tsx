@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { AutoRefresh } from "@/components/AutoRefresh";
 import { StatusBadge } from "@/components/StatusBadge";
+import { PhotoUploadForm } from "@/components/PhotoUploadForm";
 import { getServiceClient } from "@/lib/supabase";
 import { getReservations } from "@/lib/data";
 import { getModelSession } from "@/lib/session";
@@ -45,6 +46,9 @@ export default async function ModelDashboardPage() {
             </button>
           </form>
         </div>
+
+        {/* 写真アップロード */}
+        <PhotoUploadForm currentPhotoUrl={model.photo_url} />
 
         {/* ステータス切替 */}
         <div className="panel">
