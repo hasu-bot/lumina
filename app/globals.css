@@ -704,3 +704,46 @@ hr {
   border: none;
   border-top: 1px solid var(--line);
 }
+
+/* ---- スマホ余白の最適化 ----
+   デスクトップ前提の左右・上下余白がスマホでは大きすぎたため、
+   画面幅を有効に使えるよう各所の余白を詰める。 */
+@media (max-width: 560px) {
+  .container {
+    padding: 0 16px;
+  }
+  .hero {
+    padding: 52px 0 40px;
+  }
+  .hero__tag {
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    line-height: 1.35;
+    margin: 0 0 14px;
+  }
+  .section {
+    padding: 44px 0;
+  }
+  .section__sub {
+    margin: 0 0 22px;
+  }
+  .panel {
+    padding: 18px 16px;
+    margin-bottom: 16px;
+  }
+  .profile-text {
+    margin-top: 18px;
+    padding: 14px 15px;
+  }
+  .steps {
+    gap: 12px;
+  }
+  .step {
+    padding: 18px 16px;
+  }
+  .site-footer {
+    margin-top: 32px;
+    padding: 36px 0;
+  }
+}
