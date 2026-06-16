@@ -301,13 +301,13 @@ a:hover {
 /* ---- 詳細 ---- */
 .detail {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: var(--detail-cols, 360px 1fr);
   gap: 44px;
   align-items: start;
 }
 @media (max-width: 800px) {
   .detail {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 28px;
   }
 }
@@ -553,6 +553,21 @@ select {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+/* スマホでは横並びフォームを縦積みにして、項目が潰れて操作できなくなるのを防ぐ */
+@media (max-width: 700px) {
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-row > .field {
+    flex: 1 1 auto !important;
+    width: 100%;
+  }
+  .btn-row > button,
+  .btn-row > .btn {
+    width: 100%;
+  }
 }
 
 /* ---- アラート ---- */

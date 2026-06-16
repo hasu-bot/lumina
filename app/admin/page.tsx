@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import type { CSSProperties } from "react";
 import { ModelRegisterForm } from "@/components/ModelRegisterForm";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AdminPhotoUploadForm } from "@/components/AdminPhotoUploadForm";
@@ -40,7 +41,7 @@ export default async function AdminPage() {
 
         {loadError ? <div className="alert alert--err">{loadError}</div> : null}
 
-        <div className="detail" style={{ gridTemplateColumns: "380px 1fr" }}>
+        <div className="detail" style={{ "--detail-cols": "380px 1fr" } as CSSProperties}>
           {/* モデル登録 */}
           <div className="panel">
             <h2 className="panel__title">モデル登録</h2>
