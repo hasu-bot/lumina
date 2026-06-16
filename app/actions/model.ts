@@ -4,7 +4,74 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServiceClient } from "@/lib/supabase";
 import { getModelSession, loginModelByPasscode, logoutModel } from "@/lib/session";
+import { normalizeTime } from "@/lib/slots";
 import type { ModelStatus } from "@/lib/types";
+
+/** ランダム6文字パスコード生成 */
+function generatePasscode(): string {
+  return Math.random().toString(36).slice(2, 8).toUpperCase();
+}
+
+/** モデル自己登録申請。承認待ち状態で登録され、運営承認後に公開される。 */
+export async function submitModelRegistration(
+  formData: FormData
+): Promise<{ ok: boolean; message: string; passcode?: string }> {
+  const name = String(formData.get("name") ?? "").trim();
+  const agency = String(formData.get("agency") ?? "").trim();
+  if (!name) return { ok: false, message: "名前は必須です。" };
+  if (!agency) return { ok: false, message: "所属事務所は必須です。" };
+
+  const start = normalizeTime(String(formData.get("available_start") ?? "")) || null;
+  const end = normalizeTime(String(formData.get("available_end") ?? "")) || null;
+
+  const passcode = generatePasscode();
+  const supabase = getServiceClient();
+  const { error } = await supabase.from("models").insert({
+    name,
+    agency,
+    instagram: String(formData.get("instagram") ?? "").trim() || null,
+    genre: String(formData.get("genre") ?? "").trim() || null,
+    profile: String(formData.get("profile") ?? "").trim() || null,
+    fee: String(formData.get("fee") ?? "").trim() || null,
+    available_start: start,
+    available_end: end,
+    passcode,
+    status: "closed",
+    is_active: false,
+    registration_status: "pending",
+  });
+
+  if (error) return { ok: false, message: `申請に失敗しました: ${error.message}` };
+
+  revalidatePath("/admin");
+  return { ok: true, message: "申請を受け付けました。運営の承認をお待ちください。", passcode };
+}
+
+/** ログイン中モデルが自分の在廊時間を変更 */
+export async function updateModelAvailability(
+  formData: FormData
+): Promise<{ ok: boolean; message: string }> {
+  const sessionId = await getModelSession();
+  if (!sessionId) redirect("/m/login");
+
+  const start = normalizeTime(String(formData.get("available_start") ?? "")) || null;
+  const end = normalizeTime(String(formData.get("available_end") ?? "")) || null;
+
+  if (!start || !end) return { ok: false, message: "開始・終了時間を両方入力してください。" };
+  if (start >= end) return { ok: false, message: "終了時間は開始時間より後にしてください。" };
+
+  const supabase = getServiceClient();
+  const { error } = await supabase
+    .from("models")
+    .update({ available_start: start, available_end: end })
+    .eq("id", sessionId);
+  if (error) return { ok: false, message: `更新に失敗しました: ${error.message}` };
+
+  revalidatePath("/m/dashboard");
+  revalidatePath("/");
+  revalidatePath(`/models/${sessionId}`);
+  return { ok: true, message: "在廊時間を更新しました。" };
+}
 
 const VALID_STATUS: ModelStatus[] = ["active", "break", "closed"];
 

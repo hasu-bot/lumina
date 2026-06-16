@@ -20,6 +20,7 @@ export interface Model {
   status: ModelStatus;
   is_active: boolean;
   passcode: string; // モデル管理画面ログイン用（運営のみ取得）
+  registration_status: "pending" | "approved"; // pending=申請中 / approved=承認済み
   creator_type: string; // 将来拡張用。MVPは "model"
   created_at: string;
 }

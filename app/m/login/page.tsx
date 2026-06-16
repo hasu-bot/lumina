@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PasscodeForm } from "@/components/PasscodeForm";
 import { modelLogin } from "@/app/actions/model";
@@ -15,6 +16,12 @@ export default async function ModelLoginPage() {
         <div className="panel">
           <PasscodeForm action={modelLogin} label="パスコード" buttonText="ログイン" />
         </div>
+        <p style={{ textAlign: "center", marginTop: 16, fontSize: "0.9rem" }}>
+          初めての方は{" "}
+          <Link href="/m/register" style={{ fontWeight: 600 }}>
+            新規登録はこちら
+          </Link>
+        </p>
       </div>
     </section>
   );

@@ -3,9 +3,9 @@ import type { CSSProperties } from "react";
 import { ModelRegisterForm } from "@/components/ModelRegisterForm";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AdminPhotoUploadForm } from "@/components/AdminPhotoUploadForm";
-import { getAllModelsAdmin } from "@/lib/data";
+import { getAllModelsAdmin, getPendingModelsAdmin } from "@/lib/data";
 import { isAdmin } from "@/lib/session";
-import { adminLogout, setModelActive, updateModelSettings } from "@/app/actions/admin";
+import { adminLogout, setModelActive, updateModelSettings, approveModel, rejectModel } from "@/app/actions/admin";
 import { normalizeTime } from "@/lib/slots";
 import { STATUS_LABEL, type Model, type ModelStatus } from "@/lib/types";
 
@@ -17,9 +17,10 @@ export default async function AdminPage() {
   if (!(await isAdmin())) redirect("/admin/login");
 
   let models: Model[] = [];
+  let pendingModels: Model[] = [];
   let loadError: string | null = null;
   try {
-    models = await getAllModelsAdmin();
+    [models, pendingModels] = await Promise.all([getAllModelsAdmin(), getPendingModelsAdmin()]);
   } catch (e) {
     loadError = e instanceof Error ? e.message : "取得に失敗しました。";
   }
@@ -40,6 +41,18 @@ export default async function AdminPage() {
         </div>
 
         {loadError ? <div className="alert alert--err">{loadError}</div> : null}
+
+        {/* 承認待ちモデル */}
+        {pendingModels.length > 0 ? (
+          <div className="panel" style={{ borderLeft: "4px solid #f59e0b", marginBottom: 24 }}>
+            <h2 className="panel__title">承認待ちの参加申請（{pendingModels.length}件）</h2>
+            <div className="stack-sm">
+              {pendingModels.map((m) => (
+                <PendingModelRow key={m.id} model={m} />
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         <div className="detail" style={{ "--detail-cols": "380px 1fr" } as CSSProperties}>
           {/* モデル登録 */}
@@ -66,6 +79,33 @@ export default async function AdminPage() {
         </div>
       </div>
     </section>
+  );
+}
+
+function PendingModelRow({ model }: { model: Model }) {
+  return (
+    <div style={{ border: "1px solid #fbbf24", borderRadius: 10, padding: 14, background: "#fffbeb" }}>
+      <div className="meta-row" style={{ justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <strong>{model.name}</strong>
+          <div className="card__agency">所属：{model.agency}</div>
+          {model.genre ? <div className="muted" style={{ fontSize: "0.82rem" }}>{model.genre}</div> : null}
+          {model.fee ? <div className="muted" style={{ fontSize: "0.82rem" }}>撮影条件：{model.fee}</div> : null}
+          {model.profile ? <div className="muted" style={{ fontSize: "0.82rem", marginTop: 4 }}>{model.profile}</div> : null}
+          <div className="muted" style={{ fontSize: "0.76rem", marginTop: 4 }}>パスコード：<code>{model.passcode}</code>（本人に伝えてください）</div>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <form action={approveModel}>
+            <input type="hidden" name="id" value={model.id} />
+            <button className="btn btn--sm" type="submit">承認して公開</button>
+          </form>
+          <form action={rejectModel}>
+            <input type="hidden" name="id" value={model.id} />
+            <button className="btn btn--ghost btn--sm" type="submit" style={{ color: "#ef4444" }}>却下</button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 

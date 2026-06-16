@@ -18,6 +18,36 @@ export async function adminLogout(): Promise<void> {
   redirect("/admin/login");
 }
 
+/** 申請中モデルを承認して公開状態にする */
+export async function approveModel(formData: FormData): Promise<void> {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
+  const supabase = getServiceClient();
+  const { error } = await supabase
+    .from("models")
+    .update({ registration_status: "approved", is_active: true, status: "active" })
+    .eq("id", id);
+  if (error) throw new Error(`承認に失敗しました: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
+
+/** 申請中モデルを却下して削除する */
+export async function rejectModel(formData: FormData): Promise<void> {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
+  const supabase = getServiceClient();
+  const { error } = await supabase.from("models").delete().eq("id", id);
+  if (error) throw new Error(`却下に失敗しました: ${error.message}`);
+
+  revalidatePath("/admin");
+}
+
 /** モデル新規登録（運営）。所属事務所は必須。 */
 export async function createModel(formData: FormData): Promise<{ ok: false; message: string } | void> {
   if (!(await isAdmin())) redirect("/admin/login");

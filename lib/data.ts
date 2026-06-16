@@ -25,11 +25,27 @@ export async function getModelById(id: string): Promise<PublicModel | null> {
   return (data as PublicModel) ?? null;
 }
 
-/** 運営管理用: 全モデル（パスコード含む特権取得） */
+/** 運営管理用: 承認済みモデル一覧（パスコード含む特権取得） */
 export async function getAllModelsAdmin(): Promise<Model[]> {
   const supabase = getServiceClient();
-  const { data, error } = await supabase.from("models").select("*").order("created_at", { ascending: true });
+  const { data, error } = await supabase
+    .from("models")
+    .select("*")
+    .eq("registration_status", "approved")
+    .order("created_at", { ascending: true });
   if (error) throw new Error(`モデル一覧（運営）の取得に失敗: ${error.message}`);
+  return (data ?? []) as Model[];
+}
+
+/** 運営管理用: 承認待ちモデル一覧 */
+export async function getPendingModelsAdmin(): Promise<Model[]> {
+  const supabase = getServiceClient();
+  const { data, error } = await supabase
+    .from("models")
+    .select("*")
+    .eq("registration_status", "pending")
+    .order("created_at", { ascending: true });
+  if (error) throw new Error(`申請中モデル一覧の取得に失敗: ${error.message}`);
   return (data ?? []) as Model[];
 }
 

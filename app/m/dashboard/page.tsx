@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { AutoRefresh } from "@/components/AutoRefresh";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PhotoUploadForm } from "@/components/PhotoUploadForm";
+import { AvailabilityForm } from "@/components/AvailabilityForm";
 import { getServiceClient } from "@/lib/supabase";
 import { getReservations } from "@/lib/data";
 import { getModelSession } from "@/lib/session";
@@ -49,6 +50,9 @@ export default async function ModelDashboardPage() {
 
         {/* 写真アップロード */}
         <PhotoUploadForm currentPhotoUrl={model.photo_url} />
+
+        {/* 在廊時間の変更 */}
+        <AvailabilityForm currentStart={normalizeTime(model.available_start)} currentEnd={normalizeTime(model.available_end)} />
 
         {/* ステータス切替 */}
         <div className="panel">
