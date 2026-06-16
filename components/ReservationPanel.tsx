@@ -13,9 +13,9 @@ function slotClass(slot: Slot, selected: boolean): string {
 }
 
 function slotState(slot: Slot): string {
-  if (slot.booked) return "× 予約済";
+  if (slot.booked) return "× リクエスト済";
   if (slot.type === "walkin") return "当日枠";
-  return "○ 予約可";
+  return "○ リクエスト可";
 }
 
 export function ReservationPanel({ modelId, slots, acceptingReservations }: { modelId: string; slots: Slot[]; acceptingReservations: boolean }) {
@@ -46,7 +46,7 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
 
   return (
     <div className="panel">
-      <h2 className="panel__title">空き時間・予約（1枠30分）</h2>
+      <h2 className="panel__title">空き時間・撮影リクエスト（1枠30分）</h2>
 
       {slots.length === 0 ? (
         <p className="muted">対応時間が未設定です。</p>
@@ -72,7 +72,7 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
             })}
           </div>
           <p className="muted" style={{ fontSize: "0.76rem", marginTop: 10 }}>
-            ○ 予約可 / × 予約済 / 当日枠 は会場受付で対応（オンライン予約不可）
+            ○ リクエスト可 / × リクエスト済 / 当日枠 は会場受付で対応（オンラインリクエスト不可）
           </p>
         </>
       )}
@@ -80,13 +80,13 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
       <hr style={{ border: "none", borderTop: "1px solid var(--line)", margin: "18px 0" }} />
 
       {!acceptingReservations ? (
-        <div className="alert alert--info">現在このモデルは予約を受け付けていません（休憩中／受付終了）。</div>
+        <div className="alert alert--info">現在このモデルは撮影リクエストを受け付けていません（休憩中／受付終了）。</div>
       ) : !hasOpenSlots ? (
-        <div className="alert alert--info">現在予約可能な枠はありません。当日枠は会場受付でお問い合わせください。</div>
+        <div className="alert alert--info">現在リクエスト可能な枠はありません。当日枠は会場受付でお問い合わせください。</div>
       ) : (
         <div>
           <div className="field">
-            <label>予約する枠</label>
+            <label>リクエストする枠</label>
             <div>{selected ? <strong>{selected} の枠</strong> : <span className="muted">上の○の枠を選択してください</span>}</div>
           </div>
           <div className="field">
@@ -103,7 +103,7 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
             />
           </div>
           <button className="btn" disabled={!selected || !name.trim() || pending} onClick={submit}>
-            {pending ? "送信中…" : "この枠で予約する"}
+            {pending ? "送信中…" : "この枠で撮影リクエストを送る"}
           </button>
         </div>
       )}

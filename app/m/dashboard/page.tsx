@@ -66,21 +66,21 @@ export default async function ModelDashboardPage() {
             ))}
           </div>
           <p className="muted" style={{ fontSize: "0.78rem", marginTop: 10 }}>
-            「参加中」のときのみ、一覧表示・オンライン予約が有効になります。
+            「参加中」のときのみ、一覧表示・オンラインでの撮影リクエストが有効になります。
           </p>
         </div>
 
-        {/* 本日の予約一覧 */}
+        {/* 本日の撮影リクエスト一覧 */}
         <div className="panel">
-          <h2 className="panel__title">本日の予約一覧（{reservations.length}件）</h2>
+          <h2 className="panel__title">本日の撮影リクエスト一覧（{reservations.length}件）</h2>
           {reservations.length === 0 ? (
-            <p className="muted">まだ予約はありません。</p>
+            <p className="muted">まだリクエストはありません。</p>
           ) : (
             <table className="table">
               <thead>
                 <tr>
                   <th style={{ width: 130 }}>時間</th>
-                  <th>予約者名</th>
+                  <th>リクエスト者名</th>
                   <th style={{ width: 90 }} />
                 </tr>
               </thead>
@@ -99,7 +99,7 @@ export default async function ModelDashboardPage() {
             </table>
           )}
           <p className="muted" style={{ fontSize: "0.76rem", marginTop: 10 }}>
-            この画面は15秒ごとに自動更新され、新しい予約は「NEW」で表示されます。
+            この画面は15秒ごとに自動更新され、新しいリクエストは「NEW」で表示されます。
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default async function ModelDashboardPage() {
                     {slot.start}–{slot.end}
                   </div>
                   <div className="slot__state">
-                    {slot.booked ? `× ${slot.visitorName ?? "予約済"}` : slot.type === "walkin" ? "当日枠" : "○ 空き"}
+                    {slot.booked ? `× ${slot.visitorName ?? "リクエスト済"}` : slot.type === "walkin" ? "当日枠" : "○ 空き"}
                   </div>
                 </div>
               ))}

@@ -69,8 +69,8 @@ export function ModelRegisterForm() {
         </div>
       </div>
       <div className="field">
-        <label>料金</label>
-        <input name="fee" type="text" placeholder="例）30分 ¥3,000" />
+        <label>撮影条件</label>
+        <input name="fee" type="text" placeholder="例）30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" />
       </div>
       <button className="btn" type="submit" disabled={pending}>
         {pending ? "登録中…" : "モデルを登録する"}

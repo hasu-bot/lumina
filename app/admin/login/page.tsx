@@ -11,7 +11,7 @@ export default async function AdminLoginPage() {
     <section className="section">
       <div className="container" style={{ maxWidth: 420 }}>
         <h1 className="section__title">運営ログイン</h1>
-        <p className="section__sub">運営パスコード（環境変数 ADMIN_PASSCODE）を入力してください</p>
+        <p className="section__sub">運営パスコードを入力してください</p>
         <div className="panel">
           <PasscodeForm action={adminLogin} label="運営パスコード" buttonText="ログイン" />
         </div>

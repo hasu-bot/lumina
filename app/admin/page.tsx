@@ -30,7 +30,7 @@ export default async function AdminPage() {
         <div className="meta-row" style={{ justifyContent: "space-between" }}>
           <div>
             <h1 className="section__title">運営管理</h1>
-            <p className="section__sub">モデル登録・参加管理・対応時間/料金設定</p>
+            <p className="section__sub">モデル登録・参加管理・対応時間/撮影条件設定</p>
           </div>
           <form action={adminLogout}>
             <button className="btn btn--ghost btn--sm" type="submit">
@@ -87,7 +87,7 @@ function ModelAdminRow({ model }: { model: Model }) {
         </form>
       </div>
 
-      {/* 対応時間・料金・ステータス設定 */}
+      {/* 対応時間・撮影条件・ステータス設定 */}
       <form action={updateModelSettings} className="btn-row" style={{ alignItems: "flex-end", marginTop: 10 }}>
         <input type="hidden" name="id" value={model.id} />
         <div className="field" style={{ flex: 1, marginBottom: 0 }}>
@@ -109,8 +109,8 @@ function ModelAdminRow({ model }: { model: Model }) {
           </select>
         </div>
         <div className="field" style={{ flex: 1.4, marginBottom: 0 }}>
-          <label>料金</label>
-          <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000" />
+          <label>撮影条件</label>
+          <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" />
         </div>
         <button className="btn btn--sm" type="submit">
           保存

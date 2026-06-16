@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "写真展参加者一覧 | YOLO写真映像展「lumina」",
   description:
-    "YOLO写真映像展「lumina」公式。会場で出展モデルのプロフィールを見て、その場で撮影・対話の予約ができるマッチングシステム。",
+    "YOLO写真映像展「lumina」公式。会場で会場参加モデルのプロフィールを見て、その場で撮影リクエストができるマッチングシステム。",
 };
 
 // スマホブラウザがデスクトップ幅(980px相当)で描画してしまい、
@@ -48,6 +48,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="footer__mark">lumina</span>
             <span>YOLO写真映像展 ／ PHOTO EXHIBITION GUESTS</span>
             <span className="muted">※ 掲載モデルの所属事務所は各プロフィールに明記しています。</span>
+            <span className="muted">
+              ※ 掲載モデルへの撮影依頼は、各所属事務所および本人の許可範囲内で実施されます。本サイトは「YOLO写真映像展
+              lumina」会場内での交流および撮影マッチングを目的としたサービスです。
+            </span>
           </div>
         </footer>
       </body>

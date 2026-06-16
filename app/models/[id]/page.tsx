@@ -61,7 +61,7 @@ export default async function ModelDetailPage({ params }: { params: Promise<{ id
               ) : null}
               {model.fee ? (
                 <>
-                  <dt>料金</dt>
+                  <dt>撮影条件</dt>
                   <dd>{model.fee}</dd>
                 </>
               ) : null}

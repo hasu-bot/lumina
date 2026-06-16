@@ -22,7 +22,7 @@ export async function createReservation(formData: FormData): Promise<ActionResul
   const startTime = normalizeTime(String(formData.get("startTime") ?? ""));
   const visitorName = String(formData.get("visitorName") ?? "").trim();
 
-  if (!modelId || !startTime) return { ok: false, message: "予約情報が不正です。" };
+  if (!modelId || !startTime) return { ok: false, message: "リクエスト情報が不正です。" };
   if (!visitorName) return { ok: false, message: "お名前を入力してください。" };
   if (visitorName.length > 40) return { ok: false, message: "お名前が長すぎます。" };
 
@@ -38,12 +38,12 @@ export async function createReservation(formData: FormData): Promise<ActionResul
 
   const m = model as Pick<Model, "id" | "available_start" | "available_end" | "status" | "is_active">;
   if (!m.is_active || m.status !== "active") {
-    return { ok: false, message: "現在このモデルは予約を受け付けていません。" };
+    return { ok: false, message: "現在このモデルは撮影リクエストを受け付けていません。" };
   }
 
   const existing = await getReservations(modelId, date);
   if (!isBookable(m.available_start, m.available_end, startTime, existing)) {
-    return { ok: false, message: "その枠は予約できません（当日枠または予約済みです）。" };
+    return { ok: false, message: "その枠はリクエストできません（当日枠またはリクエスト済みです）。" };
   }
 
   const { error: insertErr } = await supabase.from("reservations").insert({
@@ -54,14 +54,14 @@ export async function createReservation(formData: FormData): Promise<ActionResul
   });
 
   if (insertErr) {
-    // 23505 = unique_violation（同時予約の競合）
+    // 23505 = unique_violation（同時リクエストの競合）
     if ((insertErr as { code?: string }).code === "23505") {
-      return { ok: false, message: "申し訳ありません。今その枠は予約されました。" };
+      return { ok: false, message: "申し訳ありません。今その枠はリクエストされました。" };
     }
-    return { ok: false, message: `予約に失敗しました: ${insertErr.message}` };
+    return { ok: false, message: `リクエストに失敗しました: ${insertErr.message}` };
   }
 
   revalidatePath(`/models/${modelId}`);
   revalidatePath("/m/dashboard");
-  return { ok: true, message: `${startTime} の枠を予約しました。` };
+  return { ok: true, message: `${startTime} の枠に撮影リクエストを送りました。` };
 }
