@@ -712,15 +712,26 @@ hr {
   .container {
     padding: 0 16px;
   }
+  /* ヘッダーを低くして、開いてすぐ上部に出る空白帯を減らす */
+  .site-header__inner {
+    height: 54px;
+  }
+  .brand__event {
+    font-size: 1.35rem;
+  }
+  /* ヒーローの上余白を大きく削る（ヘッダー54px + ここ で上部の空きが決まる） */
   .hero {
-    padding: 52px 0 40px;
+    padding: 26px 0 34px;
   }
   .hero__tag {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .hero h1 {
-    line-height: 1.35;
-    margin: 0 0 14px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+  }
+  .hero p {
+    font-size: 0.92rem;
   }
   .section {
     padding: 44px 0;
