@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { ModelRegisterForm } from "@/components/ModelRegisterForm";
 import { StatusBadge } from "@/components/StatusBadge";
+import { AdminPhotoUploadForm } from "@/components/AdminPhotoUploadForm";
 import { getAllModelsAdmin } from "@/lib/data";
 import { isAdmin } from "@/lib/session";
 import { adminLogout, setModelActive, updateModelSettings } from "@/app/actions/admin";
@@ -110,14 +111,15 @@ function ModelAdminRow({ model }: { model: Model }) {
           <label>料金</label>
           <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000" />
         </div>
-        <div className="field" style={{ flex: 2, marginBottom: 0 }}>
-          <label>写真URL</label>
-          <input name="photo_url" type="url" defaultValue={model.photo_url ?? ""} placeholder="https://…" />
-        </div>
         <button className="btn btn--sm" type="submit">
           保存
         </button>
       </form>
+
+      {/* 写真の代理アップロード（モデルがログインできない等のトラブル時用） */}
+      <div style={{ marginTop: 10 }}>
+        <AdminPhotoUploadForm modelId={model.id} />
+      </div>
       <p className="muted" style={{ fontSize: "0.74rem", marginTop: 6 }}>
         パスコード：<code>{model.passcode}</code>（モデルに伝えてください）
       </p>

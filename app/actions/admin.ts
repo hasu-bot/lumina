@@ -86,13 +86,52 @@ export async function updateModelSettings(formData: FormData): Promise<void> {
     available_start: normalizeTime(String(formData.get("available_start") ?? "")) || null,
     available_end: normalizeTime(String(formData.get("available_end") ?? "")) || null,
     fee: String(formData.get("fee") ?? "").trim() || null,
-    photo_url: String(formData.get("photo_url") ?? "").trim() || null,
   };
   if (["active", "break", "closed"].includes(status)) patch.status = status;
 
   const supabase = getServiceClient();
   const { error } = await supabase.from("models").update(patch).eq("id", id);
   if (error) throw new Error(`設定の更新に失敗: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath(`/models/${id}`);
+}
+
+const PHOTOS_BUCKET = "photos";
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024; // 5MB（ブラウザ側で圧縮済みのものを想定した安全弁）
+
+/** モデルがログインできない等のトラブル時、運営が代理で写真をアップロード */
+export async function adminUploadModelPhoto(formData: FormData): Promise<{ ok: false; message: string } | void> {
+  if (!(await isAdmin())) redirect("/admin/login");
+
+  const id = String(formData.get("id") ?? "");
+  if (!id) return { ok: false, message: "モデルIDが不正です。" };
+
+  const file = formData.get("photo");
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: "画像ファイルを選択してください。" };
+  }
+  if (file.size > MAX_PHOTO_BYTES) {
+    return { ok: false, message: "画像サイズが大きすぎます（5MB以下にしてください）。" };
+  }
+  if (!file.type.startsWith("image/")) {
+    return { ok: false, message: "画像ファイルを選択してください。" };
+  }
+
+  const ext = file.type === "image/png" ? "png" : "jpg";
+  const path = `${id}-${Date.now()}.${ext}`;
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  const supabase = getServiceClient();
+  const { error: uploadError } = await supabase.storage
+    .from(PHOTOS_BUCKET)
+    .upload(path, buffer, { contentType: file.type, upsert: true });
+  if (uploadError) return { ok: false, message: `アップロードに失敗しました: ${uploadError.message}` };
+
+  const { data: urlData } = supabase.storage.from(PHOTOS_BUCKET).getPublicUrl(path);
+  const { error: updateError } = await supabase.from("models").update({ photo_url: urlData.publicUrl }).eq("id", id);
+  if (updateError) return { ok: false, message: `写真の登録に失敗しました: ${updateError.message}` };
 
   revalidatePath("/admin");
   revalidatePath("/");
