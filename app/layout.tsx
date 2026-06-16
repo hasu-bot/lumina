@@ -11,16 +11,26 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
+        <div className="grain" aria-hidden />
+
         <header className="site-header">
           <div className="container site-header__inner">
             <Link href="/" className="brand">
-              <span className="brand__mark">YOLO写真映像展</span>
               <span className="brand__event">lumina</span>
+              <span className="brand__mark">YOLO 写真映像展</span>
             </Link>
             <nav className="header-nav">
               <Link href="/">参加者一覧</Link>
-              <Link href="/m/login">モデルログイン</Link>
+              <Link href="/m/login">モデル</Link>
               <Link href="/admin/login">運営</Link>
             </nav>
           </div>
@@ -30,9 +40,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <footer className="site-footer">
           <div className="container">
-            YOLO写真映像展「lumina」 / PHOTO EXHIBITION GUESTS
-            <br />
-            ※ 掲載モデルの所属事務所は各プロフィールに明記しています。
+            <span className="footer__mark">lumina</span>
+            <span>YOLO写真映像展 ／ PHOTO EXHIBITION GUESTS</span>
+            <span className="muted">※ 掲載モデルの所属事務所は各プロフィールに明記しています。</span>
           </div>
         </footer>
       </body>
