@@ -15,13 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Noto+Serif+JP:wght@500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap"
           rel="stylesheet"
         />
       </head>
       <body>
-        <div className="grain" aria-hidden />
-
         <header className="site-header">
           <div className="container site-header__inner">
             <Link href="/" className="brand">

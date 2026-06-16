@@ -5,11 +5,11 @@ import type { PublicModel } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 const STEPS = [
-  { no: "STEP 1", title: "気になるモデルを探す", desc: "本日参加中のモデル一覧から、プロフィールを見て気になる人を選びます。" },
-  { no: "STEP 2", title: "プロフィールを見る", desc: "写真・所属事務所・ジャンル・在廊時間を確認できます。" },
-  { no: "STEP 3", title: "空き枠を選ぶ", desc: "○印の予約枠（30分）から希望の時間を選択します。" },
-  { no: "STEP 4", title: "名前を入れて予約", desc: "お名前を入力するだけで予約完了。枠はすぐに×に変わります。" },
-  { no: "STEP 5", title: "会場で合流", desc: "予約時間に会場でモデルと合流。当日枠は受付でも対応します。" },
+  { no: "01", title: "気になるモデルを探す", desc: "本日参加中のモデル一覧から、プロフィールを見て気になる人を選びます。" },
+  { no: "02", title: "プロフィールを見る", desc: "写真・所属事務所・ジャンル・在廊時間を確認できます。" },
+  { no: "03", title: "空き枠を選ぶ", desc: "○印の予約枠（30分）から希望の時間を選択します。" },
+  { no: "04", title: "名前を入れて予約", desc: "お名前を入力するだけで予約完了。枠はすぐに×に変わります。" },
+  { no: "05", title: "会場で合流", desc: "予約時間に会場でモデルと合流。当日枠は受付でも対応します。" },
 ];
 
 export default async function HomePage() {
@@ -54,7 +54,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: "#fff", borderTop: "1px solid var(--line)" }}>
+      <section className="section section--cream" style={{ borderTop: "1px solid var(--line)" }}>
         <div className="container">
           <h2 className="section__title">ご利用の流れ</h2>
           <p className="section__sub">HOW TO BOOK</p>
