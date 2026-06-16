@@ -53,15 +53,24 @@ export async function loginModelByPasscode(passcode: string): Promise<string | n
   const code = passcode.trim();
   if (!code) return null;
   const supabase = getServiceClient();
+
+  // パスコードでモデルを特定
   const { data, error } = await supabase
     .from("models")
-    .select("id, registration_status")
+    .select("id")
     .eq("passcode", code)
     .limit(1)
     .maybeSingle();
   if (error || !data) return null;
-  // 承認待ちのモデルはログイン不可
-  if ((data as { registration_status: string }).registration_status === "pending") return null;
+
+  // 承認待ちはログイン不可。migration未適用でカラムが無い場合はチェックをスキップ
+  const { data: regData } = await supabase
+    .from("models")
+    .select("registration_status")
+    .eq("id", data.id)
+    .maybeSingle();
+  if (regData?.registration_status === "pending") return null;
+
   (await cookies()).set(MODEL_COOKIE, sign(data.id), cookieOptions);
   return data.id as string;
 }
