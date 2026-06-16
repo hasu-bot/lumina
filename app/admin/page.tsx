@@ -110,6 +110,10 @@ function ModelAdminRow({ model }: { model: Model }) {
           <label>料金</label>
           <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000" />
         </div>
+        <div className="field" style={{ flex: 2, marginBottom: 0 }}>
+          <label>写真URL</label>
+          <input name="photo_url" type="url" defaultValue={model.photo_url ?? ""} placeholder="https://…" />
+        </div>
         <button className="btn btn--sm" type="submit">
           保存
         </button>

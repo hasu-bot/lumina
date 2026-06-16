@@ -86,6 +86,7 @@ export async function updateModelSettings(formData: FormData): Promise<void> {
     available_start: normalizeTime(String(formData.get("available_start") ?? "")) || null,
     available_end: normalizeTime(String(formData.get("available_end") ?? "")) || null,
     fee: String(formData.get("fee") ?? "").trim() || null,
+    photo_url: String(formData.get("photo_url") ?? "").trim() || null,
   };
   if (["active", "break", "closed"].includes(status)) patch.status = status;
 
