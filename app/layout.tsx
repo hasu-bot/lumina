@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
 
@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: "写真展参加者一覧 | YOLO写真映像展「lumina」",
   description:
     "YOLO写真映像展「lumina」公式。会場で出展モデルのプロフィールを見て、その場で撮影・対話の予約ができるマッチングシステム。",
+};
+
+// スマホブラウザがデスクトップ幅(980px相当)で描画してしまい、
+// モバイル用CSS(@media)が発動しなくなる問題を防ぐための必須設定。
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
