@@ -27,7 +27,7 @@ export async function submitModelRegistration(
   const email = String(formData.get("email") ?? "").trim() || null;
 
   const passcode = generatePasscode();
-  const row = {
+  const baseRow = {
     name,
     agency,
     instagram: String(formData.get("instagram") ?? "").trim() || null,
@@ -39,14 +39,18 @@ export async function submitModelRegistration(
     passcode,
     status: "closed",
     is_active: false,
-    registration_status: "pending",
   };
 
   const supabase = getServiceClient();
-  let { error } = await supabase.from("models").insert({ ...row, email });
-  // email 列が未追加（migration 002 未適用）ならメール無しで申請
-  if (error && isMissingColumnError(error, "email")) {
-    ({ error } = await supabase.from("models").insert(row));
+  let { error } = await supabase
+    .from("models")
+    .insert({ ...baseRow, registration_status: "pending", email });
+  // registration_status(001) / email(002) 列が未追加の環境では、存在する列だけで申請
+  if (
+    error &&
+    (isMissingColumnError(error, "registration_status") || isMissingColumnError(error, "email"))
+  ) {
+    ({ error } = await supabase.from("models").insert(baseRow));
   }
 
   if (error) return { ok: false, message: `申請に失敗しました: ${error.message}` };

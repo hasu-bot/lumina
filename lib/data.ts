@@ -47,7 +47,18 @@ export async function getAllModelsAdmin(): Promise<Model[]> {
     .select("*")
     .eq("registration_status", "approved")
     .order("created_at", { ascending: true });
-  if (error) throw new Error(`モデル一覧（運営）の取得に失敗: ${error.message}`);
+  if (error) {
+    // registration_status 列が未追加(migration 001 未適用)なら全件返す
+    if (isMissingColumnError(error, "registration_status")) {
+      const { data: all, error: e2 } = await supabase
+        .from("models")
+        .select("*")
+        .order("created_at", { ascending: true });
+      if (e2) throw new Error(`モデル一覧（運営）の取得に失敗: ${e2.message}`);
+      return (all ?? []) as Model[];
+    }
+    throw new Error(`モデル一覧（運営）の取得に失敗: ${error.message}`);
+  }
   return (data ?? []) as Model[];
 }
 
@@ -59,7 +70,11 @@ export async function getPendingModelsAdmin(): Promise<Model[]> {
     .select("*")
     .eq("registration_status", "pending")
     .order("created_at", { ascending: true });
-  if (error) throw new Error(`申請中モデル一覧の取得に失敗: ${error.message}`);
+  if (error) {
+    // 列が未追加なら「承認待ち」概念が無いので空配列を返す
+    if (isMissingColumnError(error, "registration_status")) return [];
+    throw new Error(`申請中モデル一覧の取得に失敗: ${error.message}`);
+  }
   return (data ?? []) as Model[];
 }
 
