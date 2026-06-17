@@ -243,11 +243,11 @@ a:hover {
 .card__agency {
   display: inline-block;
   font-size: 0.7rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   color: var(--accent-deep);
   background: var(--accent-soft);
-  padding: 3px 11px;
-  border-radius: 999px;
+  padding: 2px 9px;
+  border-radius: 6px;
   margin: 0 0 11px;
 }
 .card__genre {
@@ -297,6 +297,7 @@ a:hover {
 .badge--agency {
   color: var(--accent-deep);
   background: var(--accent-soft);
+  border-radius: 6px;
 }
 .badge--agency::before {
   display: none;
