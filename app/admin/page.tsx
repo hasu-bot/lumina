@@ -128,37 +128,43 @@ function ModelAdminRow({ model }: { model: Model }) {
       </div>
 
       {/* 対応時間・撮影条件・ステータス設定 */}
-      <form action={updateModelSettings} className="btn-row" style={{ alignItems: "flex-end", marginTop: 10 }}>
+      <form action={updateModelSettings} style={{ marginTop: 10 }}>
         <input type="hidden" name="id" value={model.id} />
-        <div className="field" style={{ flex: 1, marginBottom: 0 }}>
-          <label>開始</label>
-          <input name="available_start" type="time" defaultValue={normalizeTime(model.available_start)} />
+        {/* 1行目: 時間 + ステータス */}
+        <div className="btn-row" style={{ marginBottom: 8 }}>
+          <div className="field" style={{ flex: 1, marginBottom: 0 }}>
+            <label>開始</label>
+            <input name="available_start" type="time" defaultValue={normalizeTime(model.available_start)} />
+          </div>
+          <div className="field" style={{ flex: 1, marginBottom: 0 }}>
+            <label>終了</label>
+            <input name="available_end" type="time" defaultValue={normalizeTime(model.available_end)} />
+          </div>
+          <div className="field" style={{ flex: 1.2, marginBottom: 0 }}>
+            <label>ステータス</label>
+            <select name="status" defaultValue={model.status}>
+              {STATUS_OPTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {STATUS_LABEL[s]}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="field" style={{ flex: 1, marginBottom: 0 }}>
-          <label>終了</label>
-          <input name="available_end" type="time" defaultValue={normalizeTime(model.available_end)} />
+        {/* 2行目: 撮影条件 + メール + 保存 */}
+        <div className="btn-row" style={{ alignItems: "flex-end" }}>
+          <div className="field" style={{ flex: 1, marginBottom: 0 }}>
+            <label>撮影条件</label>
+            <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" />
+          </div>
+          <div className="field" style={{ flex: 1, marginBottom: 0 }}>
+            <label>通知用メール</label>
+            <input name="email" type="email" defaultValue={model.email ?? ""} placeholder="撮影リクエスト時に通知" />
+          </div>
+          <button className="btn btn--sm" type="submit">
+            保存
+          </button>
         </div>
-        <div className="field" style={{ flex: 1, marginBottom: 0 }}>
-          <label>ステータス</label>
-          <select name="status" defaultValue={model.status}>
-            {STATUS_OPTIONS.map((s) => (
-              <option key={s} value={s}>
-                {STATUS_LABEL[s]}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="field" style={{ flex: 1.4, marginBottom: 0 }}>
-          <label>撮影条件</label>
-          <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" />
-        </div>
-        <div className="field" style={{ flex: 1.4, marginBottom: 0 }}>
-          <label>通知用メール</label>
-          <input name="email" type="email" defaultValue={model.email ?? ""} placeholder="撮影リクエスト時に通知" />
-        </div>
-        <button className="btn btn--sm" type="submit">
-          保存
-        </button>
       </form>
 
       {/* 写真の代理アップロード（モデルがログインできない等のトラブル時用） */}
