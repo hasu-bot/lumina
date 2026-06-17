@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>映画『ラストコール』公式サイト</title>
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html.js .reveal { opacity: 0; transform: translateY(26px); }
+  body {
+    background: var(--paper);
+    color: var(--fg);
+    font-family: var(--serif);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+  .wrap-text { max-width: var(--maxw-text); }
+
+  /* ---------- section eyebrow ---------- */
+  .eyebrow {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    color: var(--sea-600);
+    letter-spacing: 0.18em;
+    line-height: 1.1;
+    font-size: clamp(26px, 3.6vw, 46px);
+  }
+  .eyebrow-jp {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: var(--t-small);
+    letter-spacing: 0.34em;
+    color: var(--fg-faint);
+    margin-top: 14px;
+  }
+  .center { text-align: center; }
+  .center .eyebrow-jp { letter-spacing: 0.4em; }
+  .deco-line { display: block; height: 16px; margin: 20px auto 0; }
+  .deco-line.center { margin-inline: auto; }
+
+  section { position: relative; }
+  .pad { padding-block: clamp(72px, 11vw, 150px); }
+
+  /* reveal */
+  html.js .reveal { transition: opacity 1100ms var(--ease-out), transform 1100ms var(--ease-out); }
+  html.js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-5);
+    padding: 18px clamp(20px, 5vw, 56px);
+    transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), padding var(--dur) var(--ease);
+  }
+  .site-header.scrolled {
+    background: rgba(247,243,236,0.82);
+    backdrop-filter: blur(14px) saturate(1.1);
+    box-shadow: 0 1px 0 var(--line);
+    padding-block: 12px;
+  }
+  .brand-mark {
+    font-family: var(--serif-display);
+    font-weight: 600; font-size: 22px; letter-spacing: 0.16em;
+    color: #fff; text-shadow: 0 1px 12px rgba(6,33,47,0.4);
+    transition: color var(--dur) var(--ease), text-shadow var(--dur) var(--ease);
+  }
+  .scrolled .brand-mark { color: var(--ink); text-shadow: none; }
+  .nav { display: flex; align-items: center; gap: clamp(14px, 1.8vw, 30px); }
+  .nav a {
+    font-family: var(--sans); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.18em; color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 8px rgba(6,33,47,0.35);
+    position: relative; padding-bottom: 4px;
+    transition: color var(--dur) var(--ease), text-shadow var(--dur) var(--ease);
+  }
+  .nav a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0;
+    background: currentColor; transition: width var(--dur) var(--ease);
+  }
+  .nav a:hover::after { width: 100%; }
+  .scrolled .nav a { color: var(--ink-2); text-shadow: none; }
+  .scrolled .nav a:hover { color: var(--sea-600); }
+  .header-social { height: 26px; opacity: 0.95; }
+  .scrolled .header-social { filter: none; }
+  @media (max-width: 900px) { .nav { display: none; } }
+
+  /* ============ HERO ============ */
+  .hero { height: 100svh; min-height: 620px; position: relative; overflow: hidden; background: var(--sea-100); }
+  .hero-photo {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    object-position: center 62%;
+    animation: kenburns 26s var(--ease) infinite alternate;
+  }
+  @keyframes kenburns { from { transform: scale(1.04); } to { transform: scale(1.13); } }
+  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(to bottom, rgba(225,240,248,0.30) 0%, rgba(225,240,248,0) 26%),
+      linear-gradient(to bottom, rgba(6,33,47,0) 55%, rgba(6,33,47,0.34) 100%);
+  }
+  .hero-cloud {
+    position: absolute; z-index: 2; pointer-events: none;
+    opacity: 0.85; mix-blend-mode: screen;
+  }
+  .hero-cloud.c1 { top: 9%; left: 4%; width: 240px; animation: drift 30s ease-in-out infinite alternate; }
+  .hero-cloud.c2 { top: 16%; right: 6%; width: 300px; animation: drift 38s ease-in-out infinite alternate-reverse; }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(28px); } }
+  .hero-inner {
+    position: absolute; inset: 0; z-index: 3;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+    padding: 90px var(--gutter) 0;
+  }
+  .hero-logo {
+    font-family: var(--serif-display); font-weight: 600;
+    font-size: clamp(54px, 11vw, 132px); letter-spacing: 0.14em;
+    color: #fff; line-height: 1; text-indent: 0.14em;
+    text-shadow: 0 3px 30px rgba(6,33,47,0.45), 0 1px 4px rgba(6,33,47,0.3);
+  }
+  .hero-sparkle { width: 150px; margin: 18px auto -6px; opacity: 0.9; }
+  .hero-tagline {
+    margin-top: 30px; color: #fff;
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(17px, 2.4vw, 27px); line-height: 2.1; letter-spacing: 0.14em;
+    text-shadow: 0 2px 18px rgba(6,33,47,0.5);
+  }
+  .hero-meta {
+    position: absolute; bottom: clamp(36px, 7vh, 76px); left: 0; right: 0; z-index: 3;
+    text-align: center; color: #fff;
+  }
+  .hero-date {
+    font-family: var(--latin); font-weight: 500; font-size: clamp(28px, 4.2vw, 46px);
+    letter-spacing: 0.1em; text-shadow: 0 2px 16px rgba(6,33,47,0.55);
+  }
+  .hero-date .sat { font-size: 0.6em; letter-spacing: 0.22em; margin-left: 0.3em; }
+  .hero-venue {
+    font-family: var(--sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.34em; margin-top: 10px; color: rgba(255,255,255,0.94);
+    text-shadow: 0 1px 12px rgba(6,33,47,0.5);
+  }
+  .scroll-cue {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 3;
+    width: 1px; height: 46px; background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0));
+    overflow: hidden;
+  }
+  .scroll-cue::after {
+    content: ""; position: absolute; inset: 0; background: #fff;
+    animation: cue 2.4s var(--ease) infinite;
+  }
+  @keyframes cue { 0%{transform:translateY(-100%);} 60%,100%{transform:translateY(100%);} }
+
+  /* ============ CONCEPT ============ */
+  .concept { background: var(--paper); overflow: hidden; }
+  .concept-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 84px);
+    align-items: center;
+  }
+  .concept-copy .eyebrow { text-align: left; }
+  .concept-headline {
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(30px, 4.6vw, 56px); line-height: 1.55; letter-spacing: 0.06em;
+    color: var(--ink); margin: 30px 0 28px;
+  }
+  .concept-body { color: var(--ink-2); font-size: var(--t-body-l); line-height: 2.25; letter-spacing: 0.04em; }
+  .photo-frame {
+    position: relative; border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-img);
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .concept-photo { aspect-ratio: 4/3.1; }
+  .concept-photo img { object-position: center 55%; transition: transform 1.6s var(--ease-out); }
+  .photo-frame:hover img { transform: scale(1.05); }
+  .splash {
+    position: absolute; pointer-events: none; z-index: 0; opacity: 0.62;
+    mix-blend-mode: multiply;
+  }
+
+  /* ============ ABOUT ============ */
+  .about { background: linear-gradient(to bottom, var(--paper), var(--sea-50)); }
+  .about-grid {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(36px, 6vw, 84px);
+    align-items: center;
+  }
+  .about-photo { aspect-ratio: 4/3.2; }
+  .about-photo img { object-position: 40% 30%; }
+  .about-copy .eyebrow { text-align: left; }
+  .about-title {
+    font-family: var(--serif-display); font-weight: 600; font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: 0.05em; color: var(--ink); margin: 26px 0 24px;
+  }
+  .about-body { color: var(--ink-2); font-size: var(--t-body-l); line-height: 2.3; }
+  .about-body + .about-body { margin-top: 1.6em; }
+
+  /* ============ STORY ============ */
+  .story { background: var(--sea-50); overflow: hidden; }
+  .story-lead {
+    max-width: 640px; margin: clamp(40px, 6vw, 64px) auto 0; text-align: center;
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(20px, 2.8vw, 30px); line-height: 2.3; letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  /* ============ TRAILER ============ */
+  .trailer { background: linear-gradient(to bottom, var(--sea-50), var(--paper)); }
+  .trailer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(34px, 5vw, 70px); align-items: center; margin-top: clamp(40px,5vw,64px); }
+  .trailer-thumb {
+    position: relative; aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden;
+    box-shadow: var(--sh-img); cursor: pointer;
+  }
+  .trailer-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 32%; transition: transform 1.6s var(--ease-out); }
+  .trailer-thumb::after { content:""; position:absolute; inset:0; background: linear-gradient(120deg, rgba(6,33,47,0.34), rgba(6,33,47,0.06) 55%, rgba(6,33,47,0.28)); }
+  .trailer-thumb:hover img { transform: scale(1.05); }
+  .play-btn { position: absolute; inset: 0; margin: auto; width: 92px; height: 92px; z-index: 2; transition: transform var(--dur) var(--ease); filter: drop-shadow(0 8px 22px rgba(6,33,47,0.4)); }
+  .trailer-thumb:hover .play-btn { transform: scale(1.08); }
+  .trailer-copy .eyebrow { text-align: left; }
+  .trailer-jp { font-family: var(--serif-display); font-weight: 600; font-size: 24px; color: var(--ink); margin: 22px 0 18px; letter-spacing: 0.06em; }
+  .trailer-copy p { color: var(--ink-2); font-size: var(--t-body); line-height: 2.1; margin-bottom: 30px; }
+  @media (max-width: 820px){ .trailer-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- buttons (CSS pills styled after deco refs 09/10) ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 16px;
+    font-family: var(--sans); font-weight: 500; font-size: 13px; letter-spacing: 0.2em;
+    padding: 16px 30px; border-radius: var(--r-pill); cursor: pointer;
+    transition: background var(--dur) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  .btn .arw { font-family: var(--sans); font-size: 14px; transition: transform var(--dur) var(--ease); }
+  .btn:hover .arw { transform: translateX(5px); }
+  .btn:active { transform: scale(0.985); }
+  .btn-primary { background: var(--sea-600); color: #fff; box-shadow: 0 8px 22px rgba(27,92,138,0.28); }
+  .btn-primary:hover { background: var(--sea-800); }
+  .btn-ghost { background: transparent; color: var(--sea-700); border: 1.5px solid var(--sea-300); }
+  .btn-ghost:hover { background: var(--sea-600); border-color: var(--sea-600); color: #fff; }
+
+  /* ============ CAST ============ */
+  .cast { background: var(--paper); overflow: hidden; }
+  .cast-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(14px, 1.6vw, 24px);
+    margin-top: clamp(44px, 6vw, 74px);
+  }
+  .cast-card { text-align: center; }
+  .cast-photo { aspect-ratio: 3/4; border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-2); margin-bottom: 18px; }
+  .cast-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease-out); }
+  .cast-card:hover .cast-photo img { transform: scale(1.06); }
+  .cast-role { font-family: var(--sans); font-weight: 700; font-size: 10px; letter-spacing: 0.2em; color: var(--sea-600); }
+  .cast-name { font-family: var(--serif-display); font-weight: 600; font-size: 21px; color: var(--ink); margin: 8px 0 10px; letter-spacing: 0.08em; }
+  .cast-desc { font-family: var(--serif); font-size: 12.5px; line-height: 1.95; color: var(--ink-3); }
+  @media (max-width: 920px){ .cast-grid { grid-template-columns: repeat(3, 1fr); row-gap: 36px; } }
+  @media (max-width: 560px){ .cast-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ============ GALLERY ============ */
+  .gallery { background: linear-gradient(to bottom, var(--paper), var(--sea-50)); }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 1.2vw, 18px);
+    margin-top: clamp(44px, 6vw, 70px);
+  }
+  .g-item { overflow: hidden; border-radius: var(--r-sm); aspect-ratio: 4/3; box-shadow: var(--sh-1); }
+  .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--ease-out); }
+  .g-item:hover img { transform: scale(1.07); }
+  .g-wide { grid-column: span 2; aspect-ratio: 8/3; }
+  .gallery-more { text-align: center; margin-top: clamp(38px, 5vw, 56px); }
+  @media (max-width: 760px){ .gallery-grid { grid-template-columns: repeat(2, 1fr); } .g-wide { grid-column: span 2; aspect-ratio: 16/7; } }
+
+  /* ============ SCREENING ============ */
+  .screening { background: linear-gradient(160deg, var(--sea-50), var(--sea-100) 70%, var(--sea-200)); overflow: hidden; }
+  .screening-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 80px); align-items: center; }
+  .scr-left { text-align: center; }
+  .scr-left .eyebrow { color: var(--sea-700); }
+  .scr-date {
+    font-family: var(--serif-display); font-weight: 500; letter-spacing: 0.06em;
+    color: var(--ink); line-height: 1.5; margin-top: 30px;
+  }
+  .scr-date .y { font-size: clamp(34px, 5.4vw, 64px); }
+  .scr-venue { font-family: var(--serif-display); font-weight: 600; font-size: clamp(30px, 4.6vw, 52px); color: var(--sea-700); letter-spacing: 0.14em; margin-top: 10px; }
+  .scr-city { font-family: var(--sans); font-weight: 500; font-size: 13px; letter-spacing: 0.3em; color: var(--ink-3); margin-top: 14px; }
+  .scr-card {
+    position: relative; background: rgba(255,255,255,0.78); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.9); border-radius: var(--r-lg);
+    padding: clamp(28px, 3.6vw, 46px); box-shadow: var(--sh-3);
+  }
+  .scr-corner { position: absolute; width: 96px; opacity: 0.7; pointer-events: none; }
+  .scr-corner.tl { top: 14px; left: 14px; }
+  .scr-corner.br { bottom: 14px; right: 14px; transform: rotate(180deg); }
+  .scr-row { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 18px 6px; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .scr-row:last-of-type { border-bottom: none; }
+  .scr-key { font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing: 0.2em; color: var(--sea-600); }
+  .scr-val { font-family: var(--serif); font-size: 15px; line-height: 1.8; color: var(--ink); }
+  .scr-card .btn { margin-top: 22px; width: 100%; justify-content: center; }
+  @media (max-width: 820px){ .screening-grid { grid-template-columns: 1fr; } }
+
+  /* ============ FOOTER ============ */
+  .footer { position: relative; background: var(--paper-2); padding: clamp(70px,8vw,110px) 0 48px; text-align: center; }
+  .footer-strip { position: absolute; top: -1px; left: 0; width: 100%; height: 70px; object-fit: cover; object-position: center top; opacity: 0.8; transform: scaleY(-1); pointer-events: none; }
+  .footer-logo { font-family: var(--serif-display); font-weight: 600; font-size: 30px; letter-spacing: 0.16em; color: var(--ink); }
+  .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin: 30px 0 32px; }
+  .footer-nav a { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.2em; color: var(--ink-3); transition: color var(--dur) var(--ease); }
+  .footer-nav a:hover { color: var(--sea-600); }
+  .footer-social { height: 30px; margin: 0 auto 30px; opacity: 0.92; }
+  .footer-copy { font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-4); }
+
+  /* responsive split-to-stack */
+  @media (max-width: 820px){
+    .concept-grid, .about-grid { grid-template-columns: 1fr; }
+    .concept-copy, .about-copy { order: -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <a href="#hero" class="brand-mark">ラストコール</a>
+  <nav class="nav">
+    <a href="#concept">CONCEPT</a>
+    <a href="#about">ABOUT</a>
+    <a href="#story">STORY</a>
+    <a href="#trailer">TRAILER</a>
+    <a href="#cast">CAST</a>
+    <a href="#gallery">GALLERY</a>
+    <a href="#screening">SCREENING</a>
+  </nav>
+  <img class="header-social" src="assets/deco/social-icons.png" alt="SNS">
+</header>
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" id="hero" data-screen-label="HERO">
+  <img class="hero-photo" src="assets/photos/hero-wide.jpg" alt="天草の海辺に立つ高校生バンド">
+  <div class="hero-inner">
+    <h1 class="hero-logo">ラストコール</h1>
+    <img class="hero-sparkle" src="assets/deco/divider-sparkle.png" alt="">
+    <p class="hero-tagline">天草の海辺で、<br>高校最後の夏が鳴り出す。</p>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-date">2026.8.29<span class="sat">SAT</span></div>
+    <div class="hero-venue">熊本 ・ 電気館</div>
+  </div>
+  <div class="scroll-cue"></div>
+</section>
+
+<!-- ============ 02 CONCEPT ============ -->
+<section class="concept pad" id="concept" data-screen-label="CONCEPT">
+  <img class="splash" src="assets/deco/splash-cloud.png" alt="" style="top:-30px; left:-40px; width:300px;">
+  <div class="wrap concept-grid">
+    <div class="concept-copy reveal">
+      <div class="eyebrow">CONCEPT<span class="eyebrow-jp">コンセプト</span></div>
+      <h2 class="concept-headline">天草の海辺で、<br>高校最後の夏が<br>鳴り出す。</h2>
+      <p class="concept-body">眩しいほどの青、きらめく海、鳴り響く音楽。<br>かけがえのない仲間と、はじめての恋、<br>そして、まだ見えない未来への不安。<br><br>すべてを抱えた、<br>あの夏の記憶が、いまよみがえる——。</p>
+    </div>
+    <div class="photo-frame concept-photo reveal">
+      <img src="assets/photos/still-06.jpg" alt="天草の海">
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 ABOUT THE MOVIE ============ -->
+<section class="about pad" id="about" data-screen-label="ABOUT">
+  <div class="wrap about-grid">
+    <div class="photo-frame about-photo reveal">
+      <img src="assets/photos/still-05.jpg" alt="バンドのメンバー">
+    </div>
+    <div class="about-copy reveal">
+      <div class="eyebrow">ABOUT THE MOVIE<span class="eyebrow-jp">作品について</span></div>
+      <h3 class="about-title">青春音楽映画『ラストコール』</h3>
+      <p class="about-body">熊本・天草の海辺を舞台に、バンドに青春を懸ける高校生たちの姿を瑞々しく描くオリジナルストーリー。</p>
+      <p class="about-body">音楽、恋、友情、そして進路。それぞれの想いがぶつかり合いながら、「自分たちの音」を探していく、ひと夏の物語。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 STORY ============ -->
+<section class="story pad" id="story" data-screen-label="STORY">
+  <img class="splash" src="assets/deco/splash-wide.png" alt="" style="top:30px; right:-30px; width:300px; opacity:.5;">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">STORY<span class="eyebrow-jp">ストーリー</span></div>
+      <img class="deco-line" src="assets/deco/divider-dots.png" alt="">
+    </div>
+    <p class="story-lead reveal">バラバラだった僕らが、ひと夏だけ、同じ音を鳴らした。<br>下手でも、すれ違っても、もう一回。<br>届かない言葉も、音にすれば——。</p>
+  </div>
+</section>
+
+<!-- ============ 05 TRAILER ============ -->
+<section class="trailer pad" id="trailer" data-screen-label="TRAILER">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">TRAILER<span class="eyebrow-jp">予告編</span></div>
+      <img class="deco-line" src="assets/deco/divider-sparkle.png" alt="">
+    </div>
+    <div class="trailer-grid">
+      <div class="trailer-thumb reveal" role="button" tabindex="0" aria-label="予告編を再生">
+        <img src="assets/photos/cast-c.jpg" alt="予告編サムネイル">
+        <img class="play-btn" src="assets/deco/play-button.png" alt="">
+      </div>
+      <div class="trailer-copy reveal">
+        <div class="trailer-jp">予告編</div>
+        <p>風の匂い、海の音、<br>あの夏のきらめきが、ここに。</p>
+        <a href="#trailer" class="btn btn-ghost">予告編を見る<span class="arw">▶</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 CAST / CHARACTER ============ -->
+<section class="cast pad" id="cast" data-screen-label="CAST">
+  <img class="splash" src="assets/deco/cloud-blob.png" alt="" style="top:40px; left:-50px; width:260px; opacity:.45;">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">CAST / CHARACTER<span class="eyebrow-jp">登場人物</span></div>
+      <img class="deco-line" src="assets/deco/divider-dots.png" alt="">
+    </div>
+    <div class="cast-grid">
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/still-02.jpg" alt="晴人" style="object-position: 28% 26%;"></div>
+        <div class="cast-role">VOCAL / GUITAR</div>
+        <div class="cast-name">晴人</div>
+        <p class="cast-desc">バンドの中心。<br>まっすぐで不器用な主人公。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-b.jpg" alt="陽平" style="object-position: 22% 38%;"></div>
+        <div class="cast-role">DRUMS</div>
+        <div class="cast-name">陽平</div>
+        <p class="cast-desc">ムードメーカー。<br>誰よりも音楽を楽しんでいる。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-d.jpg" alt="陸" style="object-position: 50% 28%;"></div>
+        <div class="cast-role">BASS</div>
+        <div class="cast-name">陸</div>
+        <p class="cast-desc">冷静でクール。<br>仲間を支える存在。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-c.jpg" alt="葵" style="object-position: 86% 24%;"></div>
+        <div class="cast-role">CHILDHOOD FRIEND</div>
+        <div class="cast-name">葵</div>
+        <p class="cast-desc">幼なじみ。不器用な想いを抱え、彼らを見守る。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/still-05.jpg" alt="茜" style="object-position: 90% 22%;"></div>
+        <div class="cast-role">TEACHER</div>
+        <div class="cast-name">茜</div>
+        <p class="cast-desc">東京から来た音楽教師。晴人たちの夏を動かす存在。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 GALLERY ============ -->
+<section class="gallery pad" id="gallery" data-screen-label="GALLERY">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">GALLERY<span class="eyebrow-jp">ギャラリー</span></div>
+      <img class="deco-line" src="assets/deco/divider-sparkle.png" alt="">
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item"><img src="assets/photos/still-01.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-03.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-c.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-06.jpg" alt=""></div>
+      <div class="g-item g-wide"><img src="assets/photos/still-04.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-d.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-a.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-02.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-b.jpg" alt=""></div>
+      <div class="g-item g-wide"><img src="assets/photos/key-visual.jpg" alt=""></div>
+    </div>
+    <div class="gallery-more reveal">
+      <a href="#gallery" class="btn btn-ghost">ギャラリーをもっと見る<span class="arw">＋</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 SCREENING ============ -->
+<section class="screening pad" id="screening" data-screen-label="SCREENING">
+  <div class="wrap screening-grid">
+    <div class="scr-left reveal">
+      <div class="eyebrow">SCREENING<span class="eyebrow-jp">上映情報</span></div>
+      <div class="scr-date"><span class="y">2026</span>年8月29日（土）</div>
+      <div class="scr-venue">電気館</div>
+      <div class="scr-city">熊本市</div>
+    </div>
+    <div class="scr-card reveal">
+      <div class="scr-row"><div class="scr-key">劇場</div><div class="scr-val">電気館</div></div>
+      <div class="scr-row"><div class="scr-key">住所</div><div class="scr-val">熊本県熊本市中央区新市街8-2</div></div>
+      <div class="scr-row"><div class="scr-key">上映日</div><div class="scr-val">2026年8月29日（土）より公開</div></div>
+      <div class="scr-row"><div class="scr-key">チケット</div><div class="scr-val">近日発売予定</div></div>
+      <a href="#screening" class="btn btn-primary">劇場サイトはこちら<span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 FOOTER ============ -->
+<footer class="footer" data-screen-label="FOOTER">
+  <img class="footer-strip" src="assets/deco/footer-strip.png" alt="">
+  <div class="wrap">
+    <div class="footer-logo">ラストコール</div>
+    <nav class="footer-nav">
+      <a href="#concept">CONCEPT</a>
+      <a href="#about">ABOUT</a>
+      <a href="#story">STORY</a>
+      <a href="#trailer">TRAILER</a>
+      <a href="#cast">CAST</a>
+      <a href="#gallery">GALLERY</a>
+      <a href="#screening">SCREENING</a>
+    </nav>
+    <img class="footer-social" src="assets/deco/social-icons.png" alt="SNS">
+    <div class="footer-copy">© 2026 映画『ラストコール』製作委員会</div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.remove('no-js');
+  document.documentElement.classList.add('js');
+
+  // header scroll state
+  const header = document.getElementById('header');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 60);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    // light stagger for sibling groups
+    const sibs = el.parentElement ? [...el.parentElement.children].filter(c => c.classList.contains('reveal')) : [];
+    const idx = sibs.indexOf(el);
+    if (idx > 0) el.style.transitionDelay = (idx * 110) + 'ms';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+/* ============================================================
+   映画「ラストコール」 — Colors & Type Foundations
+   天草を舞台にした青春・恋愛映画 / 青と白・海と暖かい光・明朝
+   ------------------------------------------------------------
+   Fonts are loaded from Google Fonts CDN (Japanese full TTFs are
+   multi‑MB; see README "FONTS" note). Self‑host the .woff2 in
+   /fonts for production if offline use is required.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+:root {
+  /* ---------- BLUE: 天草の海 (primary brand scale, anchored on 海の青 #1B5C8A) ---------- */
+  --sea-950: #06212F;  /* ink navy — deepest, near-black backgrounds */
+  --sea-900: #0A2F45;
+  --sea-800: #103F5C;
+  --sea-700: #154E72;  /* brand-strong — links, primary buttons */
+  --sea-600: #1B5C8A;  /* PRIMARY — 海の青 (official) */
+  --sea-500: #2570A3;
+  --sea-400: #4A8FBE;
+  --sea-300: #84B5D4;
+  --sea-200: #B7D5E6;
+  --sea-100: #DBEAF2;
+  --sea-50:  #EEF5F9;
+
+  /* ---------- WARM: 夕焼けオレンジ (accent — use sparingly) ---------- */
+  --sun-600: #C2632C;
+  --sun-500: #D97840;  /* sunset orange (official) */
+  --sun-400: #E59866;
+  --sun-300: #EFBB95;
+  --sun-100: #F8E4D3;
+
+  /* ---------- PAPER & INK (warm-white neutrals) ---------- */
+  --paper:    #F7F3EC;  /* off-white (official) — default page bg */
+  --paper-2:  #FFFFFF;  /* card / pure white */
+  --paper-3:  #EFEAE0;  /* sunk panel */
+  --ink:      #15252F;  /* primary text — blue-black */
+  --ink-2:    #3C515D;  /* secondary text */
+  --ink-3:    #6F8088;  /* muted / meta */
+  --ink-4:    #A6B2B8;  /* disabled / faint */
+  --line:     #DED7CB;  /* hairline borders (warm) */
+  --line-2:   #EAE4D9;  /* faintest divider */
+
+  /* ---------- SEMANTIC ROLES ---------- */
+  --bg:           var(--paper);
+  --bg-deep:      var(--sea-950);     /* footer / cinematic sections */
+  --surface:      var(--paper-2);
+  --fg:           var(--ink);
+  --fg-muted:     var(--ink-2);
+  --fg-faint:     var(--ink-3);
+  --brand:        var(--sea-600);
+  --brand-strong: var(--sea-700);
+  --accent:       var(--sun-500);
+  --on-dark:      #EAF3F7;            /* text on deep navy */
+  --on-dark-mute: #8FB0C0;
+  --focus:        var(--sea-400);
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --serif-display: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+  --serif:         'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --sans:          'Noto Sans JP', 'Hiragino Sans', system-ui, sans-serif;
+  --latin:         'Cormorant Garamond', Georgia, serif; /* latin display / dates */
+
+  /* ---------- TYPE SCALE (px @ 16 root) ---------- */
+  --t-hero:   clamp(48px, 9vw, 112px);   /* film-title scale */
+  --t-d1:     clamp(36px, 5vw, 64px);
+  --t-d2:     clamp(28px, 3.4vw, 44px);
+  --t-h1:     32px;
+  --t-h2:     24px;
+  --t-h3:     19px;
+  --t-body:   16px;
+  --t-body-l: 18px;
+  --t-small:  14px;
+  --t-meta:   12px;
+
+  --lh-tight:  1.12;
+  --lh-snug:   1.45;
+  --lh-body:   1.95;   /* generous, airy mincho body */
+  --lh-loose:  2.2;
+
+  --ls-display: 0.04em;
+  --ls-label:   0.22em;   /* wide tracking for latin/kana labels */
+  --ls-body:    0.02em;
+
+  /* ---------- SPACING (8px base) ---------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --s-9: 96px; --s-10: 128px; --s-11: 192px;
+
+  /* ---------- RADII ---------- */
+  --r-xs: 2px; --r-sm: 4px; --r-md: 8px; --r-lg: 14px;
+  --r-pill: 999px;
+
+  /* ---------- SHADOWS (soft, low-contrast — sea haze) ---------- */
+  --sh-1: 0 1px 2px rgba(10,42,58,0.06);
+  --sh-2: 0 4px 16px rgba(10,42,58,0.08);
+  --sh-3: 0 12px 40px rgba(10,42,58,0.12);
+  --sh-img: 0 24px 60px rgba(7,32,45,0.22);   /* lifted photography */
+
+  /* ---------- MOTION (cinematic, slow fades) ---------- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 240ms;
+  --dur: 520ms;
+  --dur-slow: 1100ms;   /* hero / scroll-reveal fades */
+
+  /* ---------- LAYOUT ---------- */
+  --maxw: 1200px;
+  --maxw-text: 720px;
+  --gutter: clamp(20px, 5vw, 80px);
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Apply by element or with the matching utility class.
+   ============================================================ */
+
+.lc-hero-title {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  font-size: var(--t-hero);
+  line-height: var(--lh-tight);
+  letter-spacing: 0.08em;
+  color: var(--fg);
+}
+
+h1, .lc-h1 {
+  font-family: var(--serif-display);
+  font-weight: 700;
+  font-size: var(--t-h1);
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+}
+
+h2, .lc-h2 {
+  font-family: var(--serif-display);
+  font-weight: 600;
+  font-size: var(--t-h2);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+}
+
+h3, .lc-h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+}
+
+p, .lc-body {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+.lc-body-lead {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--t-body-l);
+  line-height: var(--lh-loose);
+  letter-spacing: var(--ls-body);
+  color: var(--fg);
+}
+
+.lc-small { font-family: var(--sans); font-size: var(--t-small); line-height: 1.7; color: var(--fg-muted); }
+
+/* Wide-tracked label — kana or latin section eyebrows */
+.lc-label {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: var(--t-meta);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Latin display — section numbers, dates, "LAST CALL" mark */
+.lc-latin {
+  font-family: var(--latin);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-feature-settings: "lnum" 1;
+}
+
+/* Vertical Japanese running text (story / poetic captions) */
+.lc-vertical {
+  writing-mode: vertical-rl;
+  font-family: var(--serif);
+  line-height: 2.4;
+  letter-spacing: 0.14em;
+}
+
+a { color: var(--brand-strong); text-underline-offset: 3px; }
+::selection { background: var(--sea-200); color: var(--ink); }
+
+/* ---------- film-grain & sea-haze utilities ---------- */
+.lc-grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
