@@ -26,7 +26,10 @@ export default async function HomePage() {
       <section className="hero">
         <div className="container">
           <span className="hero__tag">YOLO PHOTO EXHIBITION — lumina</span>
-          <h1>今日の出会いが、次の一枚になる。</h1>
+          <h1>
+            <span className="hero__line">今日の出会いが、</span>
+            <span className="hero__line">次の一枚になる。</span>
+          </h1>
           <p>気になる人を見つけたら、まずはプロフィールを覗いてみよう。</p>
         </div>
       </section>

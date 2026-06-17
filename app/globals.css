@@ -153,6 +153,10 @@ a:hover {
   letter-spacing: 0.04em;
   max-width: 30em;
 }
+/* 見出しが折り返す場合に、文の途中ではなく意味のまとまりで改行させる */
+.hero__line {
+  display: inline-block;
+}
 
 /* ---- セクション ---- */
 .section {
@@ -720,12 +724,25 @@ hr {
   }
   /* ヘッダーを低くして、開いてすぐ上部に出る空白帯を減らす */
   .site-header__inner {
-    height: 54px;
+    height: 56px;
   }
   .brand__event {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
-  /* ヒーローの上余白を大きく削る（ヘッダー54px + ここ で上部の空きが決まる） */
+  /* 冗長なサブ表記は隠す（すぐ下のヒーロータグと内容が重複） */
+  .brand__mark {
+    display: none;
+  }
+  /* ナビが文字単位で折り返して崩れるのを防ぎ、間隔・文字を詰める */
+  .header-nav {
+    gap: 15px;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+  }
+  .header-nav a {
+    white-space: nowrap;
+  }
+  /* ヒーローの上余白を大きく削る（ヘッダー56px + ここ で上部の空きが決まる） */
   .hero {
     padding: 26px 0 34px;
   }
