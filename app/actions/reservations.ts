@@ -5,6 +5,7 @@ import { getServiceClient } from "@/lib/supabase";
 import { getReservations } from "@/lib/data";
 import { isBookable, normalizeTime } from "@/lib/slots";
 import { todayJST } from "@/lib/date";
+import { notifyReservation } from "@/lib/notify";
 import type { Model } from "@/lib/types";
 
 export interface ActionResult {
@@ -31,12 +32,12 @@ export async function createReservation(formData: FormData): Promise<ActionResul
 
   const { data: model, error: modelErr } = await supabase
     .from("models")
-    .select("id,available_start,available_end,status,is_active")
+    .select("id,name,available_start,available_end,status,is_active")
     .eq("id", modelId)
     .maybeSingle();
   if (modelErr || !model) return { ok: false, message: "モデルが見つかりません。" };
 
-  const m = model as Pick<Model, "id" | "available_start" | "available_end" | "status" | "is_active">;
+  const m = model as Pick<Model, "id" | "name" | "available_start" | "available_end" | "status" | "is_active">;
   if (!m.is_active || m.status !== "active") {
     return { ok: false, message: "現在このモデルは撮影リクエストを受け付けていません。" };
   }
@@ -60,6 +61,9 @@ export async function createReservation(formData: FormData): Promise<ActionResul
     }
     return { ok: false, message: `リクエストに失敗しました: ${insertErr.message}` };
   }
+
+  // 運営へメール通知（未設定/失敗でも予約は成立させる）
+  await notifyReservation({ modelName: m.name, visitorName, startTime, date });
 
   revalidatePath(`/models/${modelId}`);
   revalidatePath("/m/dashboard");
