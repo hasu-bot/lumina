@@ -510,6 +510,20 @@ textarea {
 select {
   appearance: none;
 }
+/* iOS Safari の time 入力はネイティブ表示だと独自の固有幅を持ち、
+   width:100% を無視して枠からはみ出す・表示が崩れる。appearance を
+   無効化して通常のテキスト欄と同じ箱にする（タップで時刻ピッカーは開く）。 */
+input[type="time"],
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* iOS で値テキストが右寄せ・縦ズレするのを防ぎ、左寄せに揃える */
+input[type="time"]::-webkit-date-and-time-value,
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
+}
 
 /* ---- ボタン ---- */
 .btn {
