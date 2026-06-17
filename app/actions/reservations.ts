@@ -62,8 +62,12 @@ export async function createReservation(formData: FormData): Promise<ActionResul
     return { ok: false, message: `リクエストに失敗しました: ${insertErr.message}` };
   }
 
-  // 運営へメール通知（未設定/失敗でも予約は成立させる）
-  await notifyReservation({ modelName: m.name, visitorName, startTime, date });
+  // モデル本人の通知先メールを取得（email列が無い環境ではnull扱い）
+  const { data: emailRow } = await supabase.from("models").select("email").eq("id", modelId).maybeSingle();
+  const modelEmail = (emailRow as { email?: string | null } | null)?.email ?? null;
+
+  // モデル本人＋運営へメール通知（未設定/失敗でも予約は成立させる）
+  await notifyReservation({ modelName: m.name, modelEmail, visitorName, startTime, date });
 
   revalidatePath(`/models/${modelId}`);
   revalidatePath("/m/dashboard");

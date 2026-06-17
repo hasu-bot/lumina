@@ -43,6 +43,10 @@ export function ModelRegisterForm() {
         <input name="passcode" type="text" placeholder="モデルがログインに使う合言葉" required />
       </div>
       <div className="field">
+        <label>通知用メール（任意）</label>
+        <input name="email" type="email" placeholder="撮影リクエスト時にモデルへ通知" />
+      </div>
+      <div className="field">
         <label>ジャンル</label>
         <input name="genre" type="text" placeholder="例）ポートレート / 映像" />
       </div>

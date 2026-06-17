@@ -152,6 +152,10 @@ function ModelAdminRow({ model }: { model: Model }) {
           <label>撮影条件</label>
           <input name="fee" type="text" defaultValue={model.fee ?? ""} placeholder="30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" />
         </div>
+        <div className="field" style={{ flex: 1.4, marginBottom: 0 }}>
+          <label>通知用メール</label>
+          <input name="email" type="email" defaultValue={model.email ?? ""} placeholder="撮影リクエスト時に通知" />
+        </div>
         <button className="btn btn--sm" type="submit">
           保存
         </button>

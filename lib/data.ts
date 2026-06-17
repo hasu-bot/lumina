@@ -1,6 +1,20 @@
 import { getPublicClient, getServiceClient } from "./supabase";
 import type { Model, PublicModel, Reservation } from "./types";
 
+/**
+ * マイグレーション未適用などで指定カラムが存在しない場合のエラーか判定する。
+ * （列追加前でも email を含む書き込みをフォールバックさせるために使う）
+ */
+export function isMissingColumnError(
+  error: { code?: string; message?: string } | null | undefined,
+  column: string
+): boolean {
+  if (!error) return false;
+  if (error.code === "PGRST204") return true; // schema cache に列が無い
+  if (error.code === "42703") return true; // undefined_column
+  return (error.message ?? "").includes(column);
+}
+
 const PUBLIC_FIELDS =
   "id,name,agency,instagram,genre,profile,photo_url,fee,available_start,available_end,status,is_active,creator_type,created_at";
 

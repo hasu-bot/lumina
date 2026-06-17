@@ -55,6 +55,14 @@ export function ModelSelfRegisterForm() {
         </div>
 
         <div className="field">
+          <label htmlFor="reg-email">通知用メールアドレス</label>
+          <input id="reg-email" name="email" type="email" placeholder="例）you@example.com" maxLength={120} />
+          <p className="muted" style={{ fontSize: "0.74rem", marginTop: 4 }}>
+            撮影リクエストが入ったときにここへメールが届きます（任意）。
+          </p>
+        </div>
+
+        <div className="field">
           <label htmlFor="reg-genre">ジャンル</label>
           <input id="reg-genre" name="genre" type="text" placeholder="例）ポートレート / コスプレ / ファッション" maxLength={40} />
         </div>

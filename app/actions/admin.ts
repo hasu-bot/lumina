@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServiceClient } from "@/lib/supabase";
 import { isAdmin, loginAdmin, logoutAdmin } from "@/lib/session";
+import { isMissingColumnError } from "@/lib/data";
 import { normalizeTime } from "@/lib/slots";
 import type { ModelStatus } from "@/lib/types";
 
@@ -62,9 +63,9 @@ export async function createModel(formData: FormData): Promise<{ ok: false; mess
 
   const start = normalizeTime(String(formData.get("available_start") ?? "")) || null;
   const end = normalizeTime(String(formData.get("available_end") ?? "")) || null;
+  const email = String(formData.get("email") ?? "").trim() || null;
 
-  const supabase = getServiceClient();
-  const { error } = await supabase.from("models").insert({
+  const row = {
     name,
     agency,
     instagram: String(formData.get("instagram") ?? "").trim() || null,
@@ -77,7 +78,14 @@ export async function createModel(formData: FormData): Promise<{ ok: false; mess
     passcode,
     status: "active",
     is_active: true,
-  });
+  };
+
+  const supabase = getServiceClient();
+  let { error } = await supabase.from("models").insert({ ...row, email });
+  // email 列が未追加（migration 002 未適用）ならメール無しで登録
+  if (error && isMissingColumnError(error, "email")) {
+    ({ error } = await supabase.from("models").insert(row));
+  }
 
   if (error) {
     if ((error as { code?: string }).code === "23505") {
@@ -118,9 +126,14 @@ export async function updateModelSettings(formData: FormData): Promise<void> {
     fee: String(formData.get("fee") ?? "").trim() || null,
   };
   if (["active", "break", "closed"].includes(status)) patch.status = status;
+  const email = String(formData.get("email") ?? "").trim() || null;
 
   const supabase = getServiceClient();
-  const { error } = await supabase.from("models").update(patch).eq("id", id);
+  let { error } = await supabase.from("models").update({ ...patch, email }).eq("id", id);
+  // email 列が未追加（migration 002 未適用）ならメール以外を更新
+  if (error && isMissingColumnError(error, "email")) {
+    ({ error } = await supabase.from("models").update(patch).eq("id", id));
+  }
   if (error) throw new Error(`設定の更新に失敗: ${error.message}`);
 
   revalidatePath("/admin");

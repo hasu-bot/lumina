@@ -12,6 +12,7 @@ create table if not exists public.models (
   genre           text,
   profile         text,
   photo_url       text,
+  email           text,                           -- モデル本人への撮影リクエスト通知用（非公開）
   fee             text,                           -- 料金（自由記述: 例「30分 ¥3,000」）
   available_start time,                           -- 在廊/対応 開始
   available_end   time,                           -- 在廊/対応 終了
@@ -55,9 +56,10 @@ create policy models_public_read on public.models for select using (true);
 drop policy if exists reservations_public_read on public.reservations;
 create policy reservations_public_read on public.reservations for select using (true);
 
--- パスコードは公開ロールから読めないよう列単位で権限を絞る
+-- パスコード・メールは公開ロールから読めないよう列単位で権限を絞る
 -- （service role は所有者権限で引き続き読める）
 revoke select (passcode) on public.models from anon, authenticated;
+revoke select (email) on public.models from anon, authenticated;
 
 -- realtime（モデル管理画面の自動反映を Realtime でも使いたい場合に有効化）
 -- alter publication supabase_realtime add table public.reservations;

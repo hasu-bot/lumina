@@ -14,6 +14,7 @@ export interface Model {
   genre: string | null;
   profile: string | null;
   photo_url: string | null;
+  email: string | null; // モデル本人への通知用（運営のみ取得）
   fee: string | null;
   available_start: string | null; // "HH:MM" or "HH:MM:SS"
   available_end: string | null;
@@ -25,8 +26,8 @@ export interface Model {
   created_at: string;
 }
 
-/** 公開向け（パスコードを含めない）モデル型 */
-export type PublicModel = Omit<Model, "passcode">;
+/** 公開向け（パスコード・メールを含めない）モデル型 */
+export type PublicModel = Omit<Model, "passcode" | "email">;
 
 export interface Reservation {
   id: string;

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getServiceClient } from "@/lib/supabase";
 import { getModelSession, loginModelByPasscode, logoutModel } from "@/lib/session";
+import { isMissingColumnError } from "@/lib/data";
 import { normalizeTime } from "@/lib/slots";
 import type { ModelStatus } from "@/lib/types";
 
@@ -23,10 +24,10 @@ export async function submitModelRegistration(
 
   const start = normalizeTime(String(formData.get("available_start") ?? "")) || null;
   const end = normalizeTime(String(formData.get("available_end") ?? "")) || null;
+  const email = String(formData.get("email") ?? "").trim() || null;
 
   const passcode = generatePasscode();
-  const supabase = getServiceClient();
-  const { error } = await supabase.from("models").insert({
+  const row = {
     name,
     agency,
     instagram: String(formData.get("instagram") ?? "").trim() || null,
@@ -39,7 +40,14 @@ export async function submitModelRegistration(
     status: "closed",
     is_active: false,
     registration_status: "pending",
-  });
+  };
+
+  const supabase = getServiceClient();
+  let { error } = await supabase.from("models").insert({ ...row, email });
+  // email 列が未追加（migration 002 未適用）ならメール無しで申請
+  if (error && isMissingColumnError(error, "email")) {
+    ({ error } = await supabase.from("models").insert(row));
+  }
 
   if (error) return { ok: false, message: `申請に失敗しました: ${error.message}` };
 
