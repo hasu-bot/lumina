@@ -77,7 +77,7 @@ export function ModelSelfRegisterForm() {
           <input id="reg-fee" name="fee" type="text" placeholder="例）30分 ¥3,000 ／ 要相談 ／ 相互無償歓迎" maxLength={100} />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 12 }}>
           <div className="field">
             <label htmlFor="reg-start">参加開始時間</label>
             <input id="reg-start" name="available_start" type="time" />
