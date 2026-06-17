@@ -452,6 +452,7 @@ a:hover {
 /* ---- フォーム ---- */
 .field {
   margin-bottom: 16px;
+  min-width: 0; /* グリッド/フレックス内で子(time入力等)がはみ出さないよう縮める */
 }
 .field label {
   display: block;
