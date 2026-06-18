@@ -96,10 +96,10 @@ a:hover {
   color: var(--ink);
 }
 .brand__event {
-  font-family: var(--font-mincho);
-  font-weight: 600;
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
+  font-family: "Cormorant Garamond", var(--font-mincho);
+  font-weight: 500;
+  font-size: 1.85rem;
+  letter-spacing: 0.10em;
   color: var(--accent-deep);
 }
 .brand__mark {
@@ -631,11 +631,11 @@ select {
   color: var(--ink-soft);
 }
 .footer__mark {
-  font-family: var(--font-mincho);
-  font-weight: 600;
-  font-size: 1.4rem;
+  font-family: "Cormorant Garamond", var(--font-mincho);
+  font-weight: 500;
+  font-size: 1.55rem;
   color: var(--accent-deep);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.10em;
 }
 
 /* ---- ユーティリティ ---- */
