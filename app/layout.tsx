@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HeaderNav } from "@/components/HeaderNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,11 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="brand__event">lumina</span>
               <span className="brand__mark">YOLO 写真映像展</span>
             </Link>
-            <nav className="header-nav">
-              <Link href="/">参加者一覧</Link>
-              <Link href="/m/login">モデル</Link>
-              <Link href="/admin/login">運営</Link>
-            </nav>
+            <HeaderNav />
           </div>
         </header>
 

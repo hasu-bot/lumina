@@ -37,13 +37,15 @@ export default async function HomePage() {
           <p className="section__sub">PHOTO EXHIBITION GUESTS ／ 本日参加中のモデル</p>
 
           {loadError ? (
-            <div className="alert alert--err">
-              {loadError}
-              <br />
-              <span className="muted">.env.local に Supabase のキーを設定し、supabase/schema.sql・seed.sql を実行してください。</span>
+            <div className="empty">
+              モデル情報を読み込めませんでした
+              <span className="empty__sub">通信状況をご確認のうえ、しばらくしてから再度お試しください。</span>
             </div>
           ) : models.length === 0 ? (
-            <div className="empty">現在参加中のモデルはいません。</div>
+            <div className="empty">
+              ただいま参加中のモデルはいません
+              <span className="empty__sub">時間をおいて、もう一度のぞいてみてください。</span>
+            </div>
           ) : (
             <div className="grid">
               {models.map((m) => (

@@ -70,7 +70,10 @@ export default async function ModelDashboardPage() {
         <div className="panel">
           <h2 className="panel__title">本日の予約一覧（{reservations.length}件）</h2>
           {reservations.length === 0 ? (
-            <p className="muted">まだ予約はありません。</p>
+            <div className="empty">
+              まだ予約はありません
+              <span className="empty__sub">「参加中」にして一覧に表示されると、ここに予約が入ります。</span>
+            </div>
           ) : (
             <table className="table">
               <thead>

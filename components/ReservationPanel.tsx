@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { Slot } from "@/lib/types";
 import { createReservation, type ActionResult } from "@/app/actions/reservations";
@@ -22,12 +22,20 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
   const [name, setName] = useState("");
+  const [confirming, setConfirming] = useState(false);
   const [result, setResult] = useState<ActionResult | null>(null);
   const [pending, startTransition] = useTransition();
+  const resultRef = useRef<HTMLDivElement | null>(null);
 
   const hasOpenSlots = slots.some((s) => s.type === "reserved_quota" && !s.booked);
+  const selectedSlot = selected ? slots.find((s) => s.start === selected) ?? null : null;
 
-  function submit() {
+  // 予約完了・エラーのメッセージが画面外でも気づけるようスクロールする
+  useEffect(() => {
+    if (result) resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [result]);
+
+  function confirm() {
     if (!selected || !name.trim()) return;
     const fd = new FormData();
     fd.set("modelId", modelId);
@@ -39,6 +47,7 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
       if (res.ok) {
         setSelected(null);
         setName("");
+        setConfirming(false);
         router.refresh(); // サーバーから最新の枠状況を再取得
       }
     });
@@ -61,7 +70,11 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
                   key={slot.start}
                   role="listitem"
                   className={slotClass(slot, isSelected)}
-                  onClick={isSelectable ? () => setSelected(isSelected ? null : slot.start) : undefined}
+                  onClick={
+                    isSelectable && !confirming
+                      ? () => setSelected(isSelected ? null : slot.start)
+                      : undefined
+                  }
                 >
                   <div className="slot__time">
                     {slot.start}–{slot.end}
@@ -83,11 +96,39 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
         <div className="alert alert--info">現在このモデルは予約を受け付けていません（休憩中／受付終了）。</div>
       ) : !hasOpenSlots ? (
         <div className="alert alert--info">現在予約可能な枠はありません。当日枠は会場受付でお問い合わせください。</div>
+      ) : confirming && selectedSlot ? (
+        <div className="confirm-box">
+          <p className="confirm-box__lead">この内容で予約します。よろしいですか？</p>
+          <dl className="confirm-box__detail">
+            <dt>時間</dt>
+            <dd>
+              {selectedSlot.start}–{selectedSlot.end}（30分）
+            </dd>
+            <dt>お名前</dt>
+            <dd>{name.trim()} 様</dd>
+          </dl>
+          <div className="btn-row" style={{ marginTop: 16 }}>
+            <button className="btn" disabled={pending} onClick={confirm}>
+              {pending ? "送信中…" : "予約を確定する"}
+            </button>
+            <button className="btn btn--ghost" disabled={pending} onClick={() => setConfirming(false)}>
+              戻る
+            </button>
+          </div>
+        </div>
       ) : (
         <div>
           <div className="field">
             <label>予約する枠</label>
-            <div>{selected ? <strong>{selected} の枠</strong> : <span className="muted">上の○の枠を選択してください</span>}</div>
+            <div>
+              {selectedSlot ? (
+                <strong>
+                  {selectedSlot.start}–{selectedSlot.end} の枠
+                </strong>
+              ) : (
+                <span className="muted">上の○の枠を選択してください</span>
+              )}
+            </div>
           </div>
           <div className="field">
             <label htmlFor="visitorName">
@@ -102,13 +143,19 @@ export function ReservationPanel({ modelId, slots, acceptingReservations }: { mo
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <button className="btn" disabled={!selected || !name.trim() || pending} onClick={submit}>
-            {pending ? "送信中…" : "この枠で予約する"}
+          <button className="btn" disabled={!selected || !name.trim()} onClick={() => setConfirming(true)}>
+            内容を確認する
           </button>
         </div>
       )}
 
-      {result ? <div className={`alert ${result.ok ? "alert--ok" : "alert--err"}`} style={{ marginTop: 14 }}>{result.message}</div> : null}
+      <div ref={resultRef}>
+        {result ? (
+          <div className={`alert ${result.ok ? "alert--ok" : "alert--err"}`} style={{ marginTop: 14 }}>
+            {result.message}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

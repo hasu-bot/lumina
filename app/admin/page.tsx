@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { ModelRegisterForm } from "@/components/ModelRegisterForm";
 import { StatusBadge } from "@/components/StatusBadge";
+import { CopyButton } from "@/components/CopyButton";
 import { getAllModelsAdmin } from "@/lib/data";
 import { isAdmin } from "@/lib/session";
 import { adminLogout, setModelActive, updateModelSettings } from "@/app/actions/admin";
@@ -51,7 +52,10 @@ export default async function AdminPage() {
             <div className="panel">
               <h2 className="panel__title">登録済みモデル（{models.length}名）</h2>
               {models.length === 0 ? (
-                <p className="muted">まだモデルが登録されていません。</p>
+                <div className="empty">
+                  まだモデルが登録されていません
+                  <span className="empty__sub">左のフォームから最初のモデルを登録してください。</span>
+                </div>
               ) : (
                 <div className="stack-sm">
                   {models.map((m) => (
@@ -69,7 +73,7 @@ export default async function AdminPage() {
 
 function ModelAdminRow({ model }: { model: Model }) {
   return (
-    <div style={{ border: "1px solid var(--line)", borderRadius: 10, padding: 14 }}>
+    <div className="admin-row">
       <div className="meta-row" style={{ justifyContent: "space-between" }}>
         <div>
           <strong>{model.name}</strong> <StatusBadge status={model.status} />
@@ -114,9 +118,12 @@ function ModelAdminRow({ model }: { model: Model }) {
           保存
         </button>
       </form>
-      <p className="muted" style={{ fontSize: "0.74rem", marginTop: 6 }}>
-        パスコード：<code>{model.passcode}</code>（モデルに伝えてください）
-      </p>
+      <div className="code-row">
+        <span className="muted" style={{ fontSize: "0.74rem" }}>パスコード</span>
+        <code>{model.passcode}</code>
+        <CopyButton value={model.passcode} />
+        <span className="muted" style={{ fontSize: "0.72rem" }}>（モデルに伝えてください）</span>
+      </div>
     </div>
   );
 }
