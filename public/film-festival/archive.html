@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>過去の開催 — あなたのまちの映画祭</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .edition-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .edition-header {
+      background: var(--navy);
+      color: white;
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .edition-year {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .edition-meta { text-align: right; }
+    .edition-date { font-size: 14px; opacity: 0.8; }
+    .edition-venue { font-size: 13px; opacity: 0.55; margin-top: 4px; }
+    .edition-body { padding: 28px; }
+    .edition-theme {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+    .edition-summary { font-size: 14px; color: var(--ink-mid); line-height: 2; margin-bottom: 24px; }
+    .edition-films {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .edition-film-item {
+      background: var(--ivory-dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 16px;
+    }
+    .edition-film-title {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .edition-film-director { font-size: 12px; color: var(--ink-light); }
+    .edition-stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 16px 0;
+      border-top: 1px solid var(--ivory-dark);
+      margin-top: 24px;
+    }
+    .stat-item { text-align: center; }
+    .stat-value { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--red); line-height: 1; }
+    .stat-label { font-size: 11px; color: var(--ink-light); margin-top: 4px; letter-spacing: 0.1em; }
+
+    .upcoming-card {
+      background: var(--ivory-dark);
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .upcoming-year {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--ink-light);
+      opacity: 0.3;
+      margin-bottom: 12px;
+    }
+    .upcoming-label {
+      font-size: 14px;
+      color: var(--ink-light);
+      line-height: 2;
+    }
+  </style>
+</head>
+<body>
+
+<div class="film-strip">
+  <div class="perforations">
+    <div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div>
+  </div>
+  <div class="film-strip-text">YOLO FILM FESTIVAL &nbsp;•&nbsp; KUMAMOTO &nbsp;•&nbsp; DENKIKAN</div>
+  <div class="perforations" style="margin-left:auto">
+    <div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div><div class="perf-hole"></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <span class="logo-main">あなたのまちの映画祭</span>
+      <span class="logo-sub">YOLO FILM FESTIVAL</span>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.site-nav').classList.toggle('open')" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav">
+      <a href="about.html">映画祭について</a>
+      <a href="program.html">上映プログラム</a>
+      <a href="schedule.html">タイムテーブル</a>
+      <a href="access.html">アクセス</a>
+      <a href="news.html">ニュース</a>
+      <a href="archive.html" class="active">過去の開催</a>
+      <a href="index.html#ticket" class="nav-ticket">チケット</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-label">Archive</div>
+  <h1>過去の開催</h1>
+  <p>毎年積み重なる、まちの映画の記録。</p>
+</div>
+
+<section>
+  <div class="section-inner">
+
+    <!-- 2026 coming -->
+    <div class="upcoming-card" style="margin-bottom:32px">
+      <div class="upcoming-year">2026</div>
+      <div class="upcoming-label">第2回 開催準備中<br>詳細は決定次第お知らせします。</div>
+      <a href="news.html" class="btn btn-outline" style="margin-top:20px;display:inline-block">最新情報をニュースで確認する</a>
+    </div>
+
+    <!-- 2025 -->
+    <div class="edition-card">
+      <div class="edition-header">
+        <div class="edition-year">2025</div>
+        <div class="edition-meta">
+          <div class="edition-date">第1回 / 2025年9月23日（火・祝）</div>
+          <div class="edition-venue">Denkikan（熊本市中央区新市街）</div>
+        </div>
+      </div>
+      <div class="edition-body">
+        <div class="edition-theme">テーマ：「地元」</div>
+        <p class="edition-summary">
+          熊本のクリエイティブコミュニティ「YOLO」が主催する短編映画祭の第1回。3人の監督が九州各地を舞台に制作した短編映画を上映。上映後の監督トーク、最後には3監督によるクロストークを実施した。約150名のお客様にご来場いただき、熊本・天草・阿蘇の風景が歴史ある映画館のスクリーンに映し出された。
+        </p>
+
+        <h4 style="font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:12px">上映作品</h4>
+        <div class="edition-films">
+          <div class="edition-film-item">
+            <div class="edition-film-title">夏の終わりに、川を渡る</div>
+            <div class="edition-film-director">監督：田中 誠 ／ 22分 ／ 熊本市</div>
+          </div>
+          <div class="edition-film-item">
+            <div class="edition-film-title">朝凪</div>
+            <div class="edition-film-director">監督：山本 佳奈 ／ 18分 ／ 天草市</div>
+          </div>
+          <div class="edition-film-item">
+            <div class="edition-film-title">草原のラジオ</div>
+            <div class="edition-film-director">監督：木村 大輝 ／ 25分 ／ 阿蘇市</div>
+          </div>
+        </div>
+
+        <div class="edition-stats">
+          <div class="stat-item">
+            <div class="stat-value">3</div>
+            <div class="stat-label">上映作品数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">150</div>
+            <div class="stat-label">来場者数（名）</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">65</div>
+            <div class="stat-label">上映総時間（分）</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">3</div>
+            <div class="stat-label">監督トーク数</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">あなたのまちの映画祭</div>
+    <div class="footer-tagline">YOLO FILM FESTIVAL — KUMAMOTO</div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="about.html">映画祭について</a>
+        <a href="program.html">上映プログラム</a>
+        <a href="schedule.html">タイムテーブル</a>
+        <a href="access.html">アクセス</a>
+      </div>
+      <div class="footer-col">
+        <h4>More</h4>
+        <a href="news.html">ニュース</a>
+        <a href="archive.html">過去の開催</a>
+      </div>
+      <div class="footer-col">
+        <h4>Organizer</h4>
+        <a href="about.html">YOLO（熊本）</a>
+        <a href="mailto:info@yolo-film.jp">お問い合わせ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 あなたのまちの映画祭 / YOLO</p>
+      <p>Denkikan, Kumamoto</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
