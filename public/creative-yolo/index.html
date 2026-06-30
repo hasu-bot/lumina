@@ -24,6 +24,7 @@
   </head>
   <body>
     <div class="page-grain" aria-hidden="true"></div>
+    <div class="cursor-signal" aria-hidden="true">YOLO</div>
     <header class="site-header" aria-label="Creative YOLO">
       <a class="brand" href="#top">Creative YOLO</a>
       <nav class="nav" aria-label="メイン">
@@ -38,6 +39,12 @@
       <section class="hero" aria-label="Creative YOLO hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-mark" aria-hidden="true">Creative<br />YOLO</div>
+        <div class="hero-live" aria-hidden="true">
+          <span>LIVE</span>
+          <span>PHOTO</span>
+          <span>FILM</span>
+          <span>EXHIBIT</span>
+        </div>
         <div class="hero-copy">
           <p class="eyebrow">KUMAMOTO CREATIVE COLLECTIVE</p>
           <h1>
@@ -62,7 +69,7 @@
         <div class="hero-scroll" aria-hidden="true">SCROLL</div>
       </section>
 
-      <section class="intro section" id="about">
+      <section class="intro section reveal" id="about">
         <p class="section-no">01</p>
         <h2>YOLOとは？</h2>
         <p class="intro-main">
@@ -77,13 +84,19 @@
       </section>
 
       <section class="statement" aria-label="Creative YOLO statement">
-        <p>
-          A PHOTO WALK BECOMES AN EXHIBITION. A CONVERSATION BECOMES A FILM.
-          A SMALL IDEA FINDS PEOPLE, PLACES, AND A SHAPE.
-        </p>
+        <div class="statement-track">
+          <p>
+            A PHOTO WALK BECOMES AN EXHIBITION. A CONVERSATION BECOMES A FILM.
+            A SMALL IDEA FINDS PEOPLE, PLACES, AND A SHAPE.
+          </p>
+          <p aria-hidden="true">
+            A PHOTO WALK BECOMES AN EXHIBITION. A CONVERSATION BECOMES A FILM.
+            A SMALL IDEA FINDS PEOPLE, PLACES, AND A SHAPE.
+          </p>
+        </div>
       </section>
 
-      <section class="section split">
+      <section class="section split reveal">
         <div>
           <p class="section-no">02</p>
           <h2>はじまりは、いつも小さい。</h2>
@@ -107,10 +120,15 @@
           <span>CREATE</span>
           <span>EXHIBIT</span>
           <span>SHARE</span>
+          <span>TALK</span>
+          <span>SHOOT</span>
+          <span>CREATE</span>
+          <span>EXHIBIT</span>
+          <span>SHARE</span>
         </div>
       </section>
 
-      <section class="section split dark">
+      <section class="section split dark reveal">
         <div>
           <p class="section-no">03</p>
           <h2>ひとりでは、終わらせない。</h2>
@@ -126,20 +144,20 @@
         </div>
       </section>
 
-      <section class="section index-section">
+      <section class="section index-section reveal">
         <p class="section-no">04</p>
         <h2>形になるもの</h2>
         <ol class="large-list">
-          <li><span>01</span>写真展</li>
-          <li><span>02</span>フォトウォーク</li>
-          <li><span>03</span>映画制作</li>
-          <li><span>04</span>演技練習会</li>
-          <li><span>05</span>映画祭</li>
-          <li><span>06</span>YOLO MAGAZINE</li>
+          <li><span>01</span><strong>写真展</strong></li>
+          <li><span>02</span><strong>フォトウォーク</strong></li>
+          <li><span>03</span><strong>映画制作</strong></li>
+          <li><span>04</span><strong>演技練習会</strong></li>
+          <li><span>05</span><strong>映画祭</strong></li>
+          <li><span>06</span><strong>YOLO MAGAZINE</strong></li>
         </ol>
       </section>
 
-      <section class="section works" id="works">
+      <section class="section works reveal" id="works">
         <div class="section-head">
           <p class="section-no">05</p>
           <h2>生まれた企画</h2>
@@ -163,7 +181,7 @@
         </div>
       </section>
 
-      <section class="section magazine">
+      <section class="section magazine reveal">
         <p class="section-no">06</p>
         <h2>活動は、記録されていく。</h2>
         <p>
@@ -175,7 +193,7 @@
         </a>
       </section>
 
-      <section class="section inside" id="join">
+      <section class="section inside reveal" id="join">
         <p class="section-no">07</p>
         <h2>
           中に入ると、<br />
@@ -195,7 +213,7 @@
         </div>
       </section>
 
-      <section class="section join-flow">
+      <section class="section join-flow reveal">
         <p class="section-no">08</p>
         <h2>気になる場所から、混ざってみる。</h2>
         <div class="flow">
@@ -228,5 +246,6 @@
       <span>Creative YOLO</span>
       <small>YOU ONLY LIVE ONCE. KUMAMOTO CREATIVE COLLECTIVE.</small>
     </footer>
+    <script src="/creative-yolo/assets/site.js" defer></script>
   </body>
 </html>
