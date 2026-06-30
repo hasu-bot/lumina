@@ -18,10 +18,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
   color: var(--ink);
   background:
     linear-gradient(rgba(169, 135, 73, .055) 1px, transparent 1px),
@@ -68,11 +70,11 @@ a {
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 92svh;
   overflow: hidden;
   display: grid;
-  align-items: end;
-  padding: 112px clamp(20px, 6vw, 86px) 52px;
+  align-items: center;
+  padding: 96px clamp(20px, 6vw, 86px) 44px;
   color: var(--paper);
   background: var(--black);
 }
@@ -105,7 +107,7 @@ a {
 .hero h1 {
   margin: 26px 0 22px;
   font-family: var(--serif);
-  font-size: clamp(58px, 12vw, 156px);
+  font-size: clamp(58px, 10.8vw, 136px);
   font-weight: 600;
   line-height: .82;
 }
@@ -146,7 +148,7 @@ a {
 .hero-caption {
   position: absolute;
   right: clamp(20px, 5vw, 70px);
-  bottom: 52px;
+  bottom: 34px;
   z-index: 1;
   display: grid;
   gap: 6px;
@@ -401,6 +403,23 @@ h2 {
   .hero {
     min-height: 92svh;
     padding: 92px 20px 34px;
+  }
+
+  .hero h1 {
+    font-size: clamp(52px, 18vw, 86px);
+  }
+
+  .lead {
+    font-size: clamp(19px, 5.3vw, 24px);
+  }
+
+  .hero-actions {
+    max-width: 100%;
+  }
+
+  .hero-actions a {
+    min-width: 119px;
+    justify-content: center;
   }
 
   .hero-bg {
