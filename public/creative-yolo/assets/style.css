@@ -6,6 +6,7 @@
   --muted: #928a7c;
   --line: #ddd5c7;
   --gold: #a98749;
+  --gold-soft: #c0a66e;
   --black: #141210;
   --max: 1180px;
   --serif: "Shippori Mincho", "Noto Serif JP", serif;
@@ -36,13 +37,26 @@ body {
   line-height: 1.9;
 }
 
+.page-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: .18;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(20, 18, 16, .18) 0 1px, transparent 1px),
+    radial-gradient(circle at 82% 64%, rgba(169, 135, 73, .16) 0 1px, transparent 1px);
+  background-size: 6px 6px, 9px 9px;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
 .site-header {
-  position: fixed;
+  position: absolute;
   inset: 0 0 auto;
   z-index: 10;
   height: 72px;
@@ -51,13 +65,13 @@ a {
   justify-content: space-between;
   padding: 0 clamp(18px, 4vw, 56px);
   color: var(--paper);
-  mix-blend-mode: difference;
 }
 
 .brand {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
+  letter-spacing: .04em;
 }
 
 .nav {
@@ -70,11 +84,11 @@ a {
 
 .hero {
   position: relative;
-  min-height: 92svh;
+  min-height: 94svh;
   overflow: hidden;
   display: grid;
   align-items: center;
-  padding: 96px clamp(20px, 6vw, 86px) 44px;
+  padding: 104px clamp(20px, 6vw, 86px) 56px;
   color: var(--paper);
   background: var(--black);
 }
@@ -83,16 +97,42 @@ a {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(20, 18, 16, .9) 0%, rgba(20, 18, 16, .72) 36%, rgba(20, 18, 16, .18) 72%),
-    linear-gradient(0deg, rgba(20, 18, 16, .68), rgba(20, 18, 16, .06) 58%),
+    radial-gradient(circle at 72% 34%, rgba(192, 166, 110, .26), transparent 30%),
+    linear-gradient(90deg, rgba(20, 18, 16, .94) 0%, rgba(20, 18, 16, .72) 38%, rgba(20, 18, 16, .2) 74%),
+    linear-gradient(0deg, rgba(20, 18, 16, .76), rgba(20, 18, 16, .08) 58%),
     url("./hero-collective.png") center right / cover no-repeat;
   transform: scale(1.02);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 253, 247, .09) 1px, transparent 1px),
+    linear-gradient(rgba(255, 253, 247, .08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(90deg, #000, transparent 70%);
+}
+
+.hero-mark {
+  position: absolute;
+  right: max(18px, 5vw);
+  top: 12vh;
+  z-index: 1;
+  color: rgba(255, 253, 247, .12);
+  font-family: var(--serif);
+  font-size: clamp(76px, 14vw, 190px);
+  font-weight: 600;
+  line-height: .86;
+  text-align: right;
+  pointer-events: none;
 }
 
 .hero-copy {
   position: relative;
   z-index: 1;
-  max-width: 920px;
+  max-width: 980px;
 }
 
 .eyebrow,
@@ -107,9 +147,9 @@ a {
 .hero h1 {
   margin: 26px 0 22px;
   font-family: var(--serif);
-  font-size: clamp(58px, 10.8vw, 136px);
+  font-size: clamp(64px, 11.8vw, 156px);
   font-weight: 600;
-  line-height: .82;
+  line-height: .78;
 }
 
 .lead {
@@ -136,6 +176,7 @@ a {
   padding: 0 22px;
   font-size: 13px;
   font-weight: 700;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
 
 .hero-actions a:first-child,
@@ -143,6 +184,16 @@ a {
   background: var(--paper);
   color: var(--black);
   border-color: var(--paper);
+}
+
+.hero-actions a:hover,
+.contact a:hover,
+.works-list a:hover,
+.inside-grid a:hover,
+.flow a:hover {
+  background: var(--black);
+  color: var(--paper);
+  border-color: var(--black);
 }
 
 .hero-caption {
@@ -157,6 +208,27 @@ a {
   font-weight: 700;
   letter-spacing: .18em;
   text-align: right;
+}
+
+.hero-scroll {
+  position: absolute;
+  left: clamp(20px, 6vw, 86px);
+  bottom: 30px;
+  z-index: 1;
+  color: rgba(255, 253, 247, .58);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  writing-mode: vertical-rl;
+}
+
+.hero-scroll::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 54px;
+  margin: 12px auto 0;
+  background: rgba(255, 253, 247, .5);
 }
 
 .section {
@@ -186,6 +258,25 @@ h2 {
   line-height: 1.75;
 }
 
+.statement {
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.statement p {
+  width: max-content;
+  margin: 0;
+  padding: 18px 0 20px;
+  color: var(--black);
+  font-family: var(--serif);
+  font-size: clamp(20px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateX(-3vw);
+}
+
 .intro-text,
 .body-copy,
 .magazine p,
@@ -212,7 +303,7 @@ h2 {
 
 .image-band {
   position: relative;
-  min-height: 360px;
+  min-height: 430px;
   overflow: hidden;
   border-block: 1px solid var(--line);
 }
@@ -221,13 +312,14 @@ h2 {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(244, 240, 232, .85), rgba(244, 240, 232, .22), rgba(20, 18, 16, .42)),
+    linear-gradient(90deg, rgba(244, 240, 232, .9), rgba(244, 240, 232, .16), rgba(20, 18, 16, .5)),
     url("./hero-collective.png") center / cover no-repeat;
+  filter: saturate(.9) contrast(1.04);
 }
 
 .image-band-words {
   position: relative;
-  min-height: 360px;
+  min-height: 430px;
   display: flex;
   align-items: center;
   gap: clamp(18px, 5vw, 70px);
@@ -243,7 +335,10 @@ h2 {
   max-width: none;
   background: var(--black);
   color: var(--paper);
+  min-height: 520px;
   padding-inline: max(clamp(20px, 6vw, 86px), calc((100vw - var(--max)) / 2 + 56px));
+  padding-top: clamp(116px, 14vw, 184px);
+  padding-bottom: clamp(96px, 12vw, 160px);
 }
 
 .dark .body-copy {
@@ -288,18 +383,34 @@ h2 {
 .inside-grid,
 .flow {
   display: grid;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 0;
+  background: transparent;
+  border-top: 1px solid var(--line);
 }
 
 .works-list a,
 .inside-grid a,
 .flow a {
   display: grid;
-  gap: 8px;
-  background: rgba(255, 253, 247, .68);
+  gap: 10px;
+  background: transparent;
+  border-bottom: 1px solid var(--line);
   padding: clamp(22px, 4vw, 40px);
+  transition: background .2s ease, color .2s ease, padding-left .2s ease;
+}
+
+.works-list a:hover,
+.inside-grid a:hover {
+  padding-left: clamp(28px, 5vw, 56px);
+}
+
+.works-list em,
+.inside-grid em {
+  color: var(--gold);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .2em;
 }
 
 .works-list span,
@@ -317,6 +428,9 @@ h2 {
 
 .magazine {
   border-block: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(255, 253, 247, .7), rgba(255, 253, 247, .16)),
+    var(--bg);
 }
 
 .magazine p {
@@ -357,7 +471,9 @@ h2 {
 .contact {
   margin: 0;
   padding: clamp(92px, 13vw, 170px) clamp(20px, 6vw, 86px);
-  background: var(--black);
+  background:
+    linear-gradient(90deg, rgba(20, 18, 16, .96), rgba(20, 18, 16, .78)),
+    url("./hero-collective.png") center / cover no-repeat;
   color: var(--paper);
 }
 
@@ -402,11 +518,12 @@ h2 {
 
   .hero {
     min-height: 92svh;
-    padding: 92px 20px 34px;
+    padding: 88px 20px 34px;
   }
 
   .hero h1 {
-    font-size: clamp(52px, 18vw, 86px);
+    font-size: clamp(58px, 19vw, 90px);
+    line-height: .8;
   }
 
   .lead {
@@ -424,9 +541,16 @@ h2 {
 
   .hero-bg {
     background:
-      linear-gradient(90deg, rgba(20, 18, 16, .88), rgba(20, 18, 16, .34)),
+      radial-gradient(circle at 78% 18%, rgba(192, 166, 110, .24), transparent 34%),
+      linear-gradient(90deg, rgba(20, 18, 16, .92), rgba(20, 18, 16, .38)),
       linear-gradient(0deg, rgba(20, 18, 16, .72), rgba(20, 18, 16, .08) 58%),
       url("./hero-collective.png") center / cover no-repeat;
+  }
+
+  .hero-mark {
+    top: 72px;
+    right: 16px;
+    font-size: clamp(66px, 21vw, 96px);
   }
 
   .hero-caption {
@@ -435,6 +559,10 @@ h2 {
     bottom: auto;
     margin-top: 54px;
     text-align: left;
+  }
+
+  .hero-scroll {
+    display: none;
   }
 
   .split,
@@ -453,7 +581,12 @@ h2 {
 
   .image-band,
   .image-band-words {
-    min-height: 300px;
+    min-height: 340px;
+  }
+
+  .statement p {
+    padding-block: 16px;
+    font-size: clamp(22px, 8vw, 32px);
   }
 
   .image-band-words {
