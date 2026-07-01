@@ -67,12 +67,6 @@ npm run dev
 2. 上記の環境変数を Vercel の Environment Variables に設定。
 3. デプロイ。Supabase が共有DBなので複数端末で予約が同期します。
 
-GA4を有効化する場合は、Vercelの Environment Variables に以下も設定します。
-
-```env
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-R0YPCPLNFQ
-```
-
 ## 将来拡張（未実装・設計のみ）
 - `models.creator_type` 列でモデル以外（カメラマン・デザイナー等）を追加可能。
 - 撮影会 / MV / 映画キャスト募集は将来 `projects`（募集案件）テーブルで拡張する想定。
