@@ -3,6 +3,10 @@
 写真展会場で、来場者がモデルと出会い・プロフィールを見て・撮影予約できる Web システム（MVP）。
 Next.js (App Router) + Supabase で構築。既存の静的サイト「Last Call」とは独立して動作します。
 
+> 事業計画（写真展の収支・モデル事業への展開）は [`docs/LUMINA-BUSINESS.md`](./docs/LUMINA-BUSINESS.md)、
+> AIキャラクター「ルミナ」のIP設計は [`docs/LUMINA-IP.md`](./docs/LUMINA-IP.md) を参照。
+> Creative YOLO 全体の計画は yolo-members リポジトリの `docs/creative-yolo/` にある。
+
 > 既存の `index.html` / `css/` / `js/` / `photos/`（Last Call サイト）はこのアプリと共存します。
 > Next.js は `public/` 以外の静的ファイルを配信しないため、互いに干渉しません。
 
