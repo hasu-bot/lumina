@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YOLO MAGAZINE — 熊本のクリエイティブを、YOLOが届ける。</title>
+<meta name="description" content="写真、映像、音楽、展示、演劇、イベント… 熊本で生まれる表現と、そこに関わる人たちを紹介するWebマガジン！">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+a{text-decoration:none;color:inherit}
+:root{--y:#FFD600;--p:#FF4A6B;--b:#00B9E8;--g:#26C281;--o:#FF8C42;--v:#9B6DFF;--dk:#1A1A1A;--tx:#333;--mt:#888;--bg:#fff;--lt:#F7F7F7;--bd:#E8E8E8}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+/* Placeholders */
+.ph{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ph::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 7px,rgba(0,0,0,.042) 7px,rgba(0,0,0,.042) 8px)}
+.ph-lbl{position:relative;z-index:1;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;font-family:'Barlow Condensed',sans-serif;opacity:.35;color:#000}
+.ph-ev{background:#D8CEC6}.ph-art{background:#C4CCDA}.ph-pl{background:#C0D6C4}.ph-fi{background:#C8C2C0}.ph-ph{background:#D4CCC6}.ph-nu{background:#D2D0CE}.ph-dk2{background:#2C2A28}
+
+/* Animations */
+@keyframes fup{from{transform:translateY(16px);opacity:.01}to{transform:none;opacity:1}}
+.fu{animation:fup .55s ease forwards}
+.fd1{animation-delay:.02s}.fd2{animation-delay:.1s}.fd3{animation-delay:.2s}.fd4{animation-delay:.3s}.fd5{animation-delay:.4s}
+@keyframes fl{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-9px) rotate(var(--r2,0deg))}}
+.reveal{transform:translateY(18px);opacity:1;transition:transform .7s ease}
+.reveal.in{transform:none}
+
+/* Marquee */
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-w{overflow:hidden;white-space:nowrap}
+.mq-t{display:inline-flex;animation:mq 34s linear infinite}
+
+/* Hover lift */
+.lift{transition:transform .22s ease,box-shadow .22s ease}
+.lift:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.12)}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:2px solid var(--bd)}
+.nav-in{max-width:1280px;margin:0 auto;padding:0 48px;height:72px;display:flex;align-items:center;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:9px;flex-shrink:0;margin-right:4px}
+.nav-logo-t{font-weight:900;font-size:13px;line-height:1.1;color:var(--dk);letter-spacing:-.01em}
+.nav-logo-t span{display:block}
+.nav-logo-t .nm{font-size:11px;letter-spacing:.08em}
+.nav-bdg{background:var(--y);color:var(--dk);font-size:10px;font-weight:700;padding:5px 9px;border-radius:10px;line-height:1.25;text-align:center;white-space:nowrap}
+.nav-links{display:flex;flex:1;justify-content:center}
+.nl{display:flex;flex-direction:column;align-items:center;padding:6px 13px;color:var(--dk);opacity:.7;transition:opacity .18s;gap:2px;cursor:pointer}
+.nl:hover{opacity:1}
+.nl-ja{font-size:11px;font-weight:700;letter-spacing:.02em}
+.nl-en{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mt)}
+.nav-acts{display:flex;gap:7px;flex-shrink:0}
+.n-srch{background:var(--p);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.n-menu{background:var(--b);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;display:flex;align-items:center;gap:5px;white-space:nowrap}
+
+/* ── HERO ── */
+.hero{padding:44px 0 52px;position:relative;overflow:clip;background:#fff}
+.dc{position:absolute;pointer-events:none;z-index:0}
+.hero-in{max-width:1280px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;position:relative;z-index:1;min-height:520px}
+.hero-eye{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mt);margin-bottom:8px}
+.hero-title{margin-bottom:10px;line-height:.86}
+.h-yolo{display:block;font-weight:900;font-size:clamp(64px,13vw,172px);color:var(--dk);letter-spacing:-4px}
+.h-mag{display:block;font-weight:900;font-size:clamp(32px,6.5vw,86px);color:var(--dk);letter-spacing:-1px;margin-top:2px}
+.hero-tg{margin-bottom:12px}
+.hero-tg-pill{background:var(--p);color:#fff;font-weight:700;font-size:17px;padding:6px 18px;border-radius:100px;display:inline-block}
+.hero-desc{font-size:13px;line-height:1.92;color:var(--mt);margin-bottom:26px}
+.hero-ctas{display:flex;gap:11px;flex-wrap:wrap}
+.hcta-b{background:var(--b);color:#fff;font-weight:700;font-size:15px;padding:13px 26px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;transition:background .2s,transform .2s}
+.hcta-b:hover{background:#0099C8;transform:translateY(-2px)}
+.hcta-y{background:var(--y);color:var(--dk);font-weight:700;font-size:15px;padding:13px 26px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;transition:background .2s,transform .2s}
+.hcta-y:hover{background:#E8C000;transform:translateY(-2px)}
+.hero-right{position:relative;height:500px}
+.h-photos{position:absolute;left:0;top:0;width:58%;height:480px;min-width:0}
+.h-ph-main{position:absolute;left:0;top:0;width:100%;height:350px;border-radius:20px;overflow:hidden;z-index:1}
+.h-ph-sub{position:absolute;right:-16px;bottom:20px;width:140px;height:140px;border-radius:14px;overflow:hidden;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.feat-card{position:absolute;right:0;top:20px;width:min(330px,105%);background:radial-gradient(circle at 80% 0,rgba(255,214,0,.34),transparent 30%),linear-gradient(145deg,#141414 0%,#251D44 55%,#FF4A6B 145%);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:18px;box-shadow:8px 8px 0 rgba(0,0,0,.13),0 24px 60px rgba(26,26,26,.24);z-index:3;color:#fff}
+.feat-card::before{content:"ANNUAL SIGNATURE";position:absolute;right:15px;top:-14px;background:var(--y);color:var(--dk);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.1em;padding:6px 12px;border-radius:100px;box-shadow:0 5px 14px rgba(0,0,0,.14)}
+.feat-bdg{background:rgba(255,255,255,.16);color:var(--y);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:7px;border:1px solid rgba(255,255,255,.16)}
+.feat-img{height:100px;border-radius:10px;overflow:hidden;margin-bottom:8px}
+.feat-num{font-size:11px;color:rgba(255,255,255,.72);margin-bottom:1px;font-weight:500}
+.feat-title{font-size:24px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px}
+.feat-lead{font-size:12px;line-height:1.65;color:rgba(255,255,255,.82);margin:-3px 0 10px}
+.feat-info{background:rgba(0,0,0,.14);border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px}
+.feat-row{display:flex;align-items:baseline;gap:7px;font-size:12px;color:#fff}
+.feat-lbl{font-size:9px;font-weight:700;background:rgba(255,255,255,.22);padding:2px 6px;border-radius:4px;flex-shrink:0;letter-spacing:.05em}
+.feat-ctas{display:flex;flex-direction:column;gap:6px}
+.fcta-dk{background:var(--dk);color:#fff;font-weight:700;font-size:12px;padding:10px 12px;border-radius:8px;text-align:center;transition:background .2s}
+.fcta-dk:hover{background:#333}
+.fcta-y{background:var(--y);color:var(--dk);font-weight:700;font-size:12px;padding:10px 12px;border-radius:8px;text-align:center;transition:background .2s}
+.fcta-y:hover{background:#E8C000}
+
+/* ── TICKER ── */
+.ticker{background:var(--dk);padding:11px 0;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.tk-i{padding:0 24px;display:inline-flex;align-items:center;gap:14px}
+.tk-d{width:6px;height:6px;border-radius:50%;background:var(--y);flex-shrink:0}
+
+/* ── ANNUAL SPECIAL ── */
+.annual{background:#121212;color:#fff;padding:56px 0 62px;position:relative;overflow:hidden}
+.annual::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 18%,rgba(255,214,0,.22),transparent 30%),radial-gradient(circle at 88% 22%,rgba(0,185,232,.18),transparent 26%),linear-gradient(135deg,rgba(255,74,107,.22),transparent 42%);pointer-events:none}
+.annual-in{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 48px}
+.annual-hd{display:grid;grid-template-columns:minmax(260px,380px) 1fr;gap:36px;align-items:end;margin-bottom:22px}
+.annual-kicker{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.16em;color:var(--y);text-transform:uppercase;margin-bottom:8px}
+.annual-title{font-size:30px;font-weight:900;line-height:1.3;letter-spacing:.01em}
+.annual-copy{font-size:13px;line-height:1.95;color:rgba(255,255,255,.72);max-width:580px}
+.annual-grid{display:grid;grid-template-columns:1.25fr .85fr;gap:16px}
+.annual-card{position:relative;min-height:270px;border-radius:18px;overflow:hidden;padding:20px;border:1px solid rgba(255,255,255,.16);display:flex;flex-direction:column;justify-content:space-between;background:#1d1d1d}
+.annual-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.42));pointer-events:none}
+.annual-card > *{position:relative;z-index:1}
+.annual-lumina{background:radial-gradient(circle at 75% 18%,rgba(255,230,174,.55),transparent 25%),linear-gradient(145deg,#111827 0%,#241246 56%,#8B234B 118%)}
+.annual-film{background:radial-gradient(circle at 18% 20%,rgba(0,185,232,.32),transparent 26%),linear-gradient(145deg,#111 0%,#26343C 64%,#00B9E8 150%)}
+.annual-status{align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.12em;background:var(--y);color:var(--dk);padding:5px 11px;border-radius:100px;text-transform:uppercase}
+.annual-name{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:800;letter-spacing:.03em;line-height:.95;text-transform:uppercase}
+.annual-card h3{font-size:22px;font-weight:900;line-height:1.35;margin-top:10px}
+.annual-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.annual-meta span{font-size:11px;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.1);border-radius:100px;padding:5px 10px}
+.annual-link{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-top:16px;background:#fff;color:var(--dk);font-size:13px;font-weight:800;padding:10px 15px;border-radius:8px}
+.annual-link:hover{background:var(--y)}
+
+/* ── ARTICLES ── */
+.sec-art{padding:64px 0;background:var(--lt)}
+.sec-art-in{max-width:1280px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 294px;gap:24px;align-items:start}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-hd-l{display:flex;align-items:center;gap:10px}
+.sec-en{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;letter-spacing:.04em;color:var(--dk);text-transform:uppercase}
+.sec-jp{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px}
+.sec-all{font-size:12px;font-weight:700;color:var(--b);display:flex;align-items:center;gap:3px;white-space:nowrap}
+.art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.art-card{background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid var(--bd);transition:box-shadow .22s}
+.art-card:hover{box-shadow:0 12px 30px rgba(0,0,0,.1)}
+.art-card:hover .art-img-in{transform:scale(1.05)}
+.art-img{height:185px;overflow:hidden;position:relative}
+.art-img-in{width:100%;height:100%;transition:transform .4s ease}
+.thumb-photo{display:block;width:100%;height:100%;object-fit:cover}
+.art-num{position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;z-index:1}
+.n1{background:var(--y);color:var(--dk)}.n2{background:var(--g);color:#fff}.n3{background:var(--p);color:#fff}
+.art-body{padding:13px}
+.art-meta{display:flex;align-items:center;gap:7px;margin-bottom:6px;flex-wrap:wrap}
+.ctag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;letter-spacing:.03em}
+.cg{background:#DFF8EC;color:#147040}.cb{background:#DCF2FF;color:#006090}.cp{background:#FFE0E6;color:#B01030}.co{background:#FFEEE0;color:#A04000}.cv{background:#EDE0FF;color:#5020A8}
+.art-date{font-size:10px;color:var(--mt);font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em}
+.art-title{font-size:13px;font-weight:700;line-height:1.58;margin-bottom:6px;color:var(--dk)}
+.art-desc{font-size:11px;color:var(--mt);line-height:1.78;margin-bottom:8px}
+.art-more{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--b);display:flex;align-items:center;gap:3px}
+
+/* Sidebar */
+.sdb-card{background:#fff;border-radius:14px;border:1px solid var(--bd);overflow:hidden}
+.sdb-hd{background:var(--dk);color:#fff;padding:13px 15px;display:flex;align-items:center;justify-content:space-between}
+.sdb-hd-t{font-weight:700;font-size:13px}
+.sdb-hd-a{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--y)}
+.sdb-item{padding:11px 13px;border-bottom:1px solid var(--bd);display:grid;grid-template-columns:68px 1fr;gap:9px;align-items:center;cursor:pointer;transition:background .18s}
+.sdb-item:last-child{border-bottom:none}
+.sdb-item:hover{background:#fafafa}
+.sdb-th{height:52px;border-radius:8px;overflow:hidden}
+.sdb-st{font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;display:inline-block;margin-bottom:3px;letter-spacing:.04em}
+.sts-r{background:#FFE0E6;color:var(--p)}.sts-o{background:#DFF8EC;color:#147040}
+.sdb-title{font-size:11px;font-weight:700;line-height:1.4;color:var(--dk)}
+.sdb-sub{font-size:10px;color:var(--mt);margin-top:2px}
+.sdb-cta{display:block;background:var(--y);color:var(--dk);font-weight:700;font-size:13px;padding:11px 13px;text-align:center;transition:background .18s}
+.sdb-cta:hover{background:#E8C000}
+
+/* ── PROJECTS ── */
+.sec-proj{padding:64px 0;background:#fff;position:relative}
+.proj-hd{max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.proj-hd-l{display:flex;align-items:center;gap:10px}
+.proj-arrows{display:flex;gap:7px}
+.p-arr{width:38px;height:38px;border-radius:50%;border:2px solid var(--bd);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;color:var(--dk);transition:border-color .18s,background .18s,color .18s}
+.p-arr:hover{border-color:var(--dk);background:var(--dk);color:#fff}
+.proj-tw{overflow-x:auto;padding:4px 48px 20px;scrollbar-width:none;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.proj-tw::-webkit-scrollbar{display:none}
+.proj-tr{display:flex;gap:16px;width:max-content}
+.proj-card{width:244px;flex-shrink:0;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid var(--bd);background:#fff;scroll-snap-align:start;transition:box-shadow .22s}
+.proj-card:hover{box-shadow:0 12px 30px rgba(0,0,0,.1)}
+.proj-card:hover .proj-img-in{transform:scale(1.05)}
+.proj-card.is-signature{width:332px;border-color:#1A1A1A;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.proj-card.is-signature .proj-img{height:210px}
+.proj-card.is-signature .proj-body{background:#1A1A1A;color:#fff}
+.proj-card.is-signature .proj-title{color:#fff;font-size:18px}
+.proj-card.is-signature .proj-sub{color:rgba(255,255,255,.72)}
+.proj-card.is-signature .proj-cat{background:var(--y)!important;color:var(--dk)!important}
+.proj-img{height:188px;overflow:hidden;position:relative}
+.proj-img-in{width:100%;height:100%;transition:transform .4s ease}
+.proj-cat{position:absolute;top:9px;left:9px;font-size:10px;font-weight:700;padding:4px 9px;border-radius:100px;z-index:1;letter-spacing:.04em}
+.proj-body{padding:12px}
+.proj-title{font-size:14px;font-weight:700;color:var(--dk);margin-bottom:3px}
+.proj-sub{font-size:11px;color:var(--mt);line-height:1.55}
+.lj{position:absolute;right:48px;bottom:48px;background:var(--p);color:#fff;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:12px;line-height:1.25;transform:rotate(10deg);box-shadow:0 4px 16px rgba(255,74,107,.35);z-index:2;cursor:pointer}
+
+/* ── ABOUT ── */
+.sec-about{padding:68px 0;background:var(--lt)}
+.about-in{max-width:1280px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.about-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mt);margin-bottom:10px}
+.about-h{font-size:20px;font-weight:900;color:var(--dk);margin-bottom:12px;line-height:1.38}
+.about-txt{font-size:13px;line-height:1.95;color:var(--tx);margin-bottom:20px}
+.about-lnk{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;color:var(--dk);border:2px solid var(--dk);padding:10px 20px;border-radius:100px;transition:background .2s,color .2s}
+.about-lnk:hover{background:var(--dk);color:#fff}
+.about-bubble{background:var(--y);color:var(--dk);font-size:12px;font-weight:700;padding:6px 13px;border-radius:100px;display:inline-block;margin-bottom:12px}
+.about-rh{font-size:26px;font-weight:900;color:var(--dk);line-height:1.32;margin-bottom:12px}
+.about-rt{font-size:13px;line-height:1.88;color:var(--mt);margin-bottom:18px}
+.about-rcta{background:var(--dk);color:#fff;font-weight:700;font-size:13px;padding:13px 20px;border-radius:8px;display:inline-flex;align-items:center;gap:7px;transition:background .2s;margin-bottom:20px}
+.about-rcta:hover{background:#333}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.pg-i{border-radius:9px;overflow:hidden;height:82px}
+
+/* ── INSTAGRAM ── */
+.sec-insta{background:var(--dk)}
+.insta-in{max-width:1280px;margin:0 auto;padding:36px 48px;display:flex;align-items:center;gap:36px}
+.insta-l{flex-shrink:0;width:190px}
+.insta-ico{width:40px;height:40px;border-radius:10px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+.insta-h{font-size:18px;font-weight:900;color:#fff;line-height:1.25;margin-bottom:5px}
+.insta-hnd{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:13px}
+.insta-fol{background:#fff;color:var(--dk);font-weight:700;font-size:12px;padding:8px 16px;border-radius:100px;display:inline-block;transition:background .18s}
+.insta-fol:hover{background:var(--y)}
+.insta-photos{flex:1;display:flex;gap:6px;overflow:hidden}
+.insta-ph{flex:1;border-radius:9px;overflow:hidden;height:108px;min-width:0}
+
+/* ── FOOTER ── */
+.footer{background:#fff;border-top:2px solid var(--bd)}
+.footer-top{max-width:1280px;margin:0 auto;padding:36px 48px 28px;display:flex;align-items:flex-start;justify-content:space-between;gap:28px}
+.footer-logo-t{font-weight:900;font-size:13px;line-height:1.1;color:var(--dk);letter-spacing:-.01em;margin-bottom:5px}
+.footer-logo-t span{display:block}
+.footer-logo-t .fnm{font-size:11px;letter-spacing:.08em}
+.footer-tg{font-size:11px;color:var(--mt);line-height:1.65}
+.footer-nav{display:flex;gap:0}
+.fnl{display:flex;flex-direction:column;align-items:center;padding:4px 10px;color:var(--dk);opacity:.6;transition:opacity .18s;gap:3px}
+.fnl:hover{opacity:1}
+.fnl-ja{font-size:10px;font-weight:700}
+.fnl-en{font-size:7px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mt)}
+.footer-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.footer-lks{display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+.footer-lks a{font-size:12px;color:var(--mt);font-weight:500;transition:color .18s}
+.footer-lks a:hover{color:var(--dk)}
+.footer-soc{display:flex;gap:7px}
+.sc{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--bd);display:flex;align-items:center;justify-content:center;color:var(--mt);transition:border-color .18s,color .18s;font-size:12px;font-weight:700}
+.sc:hover{border-color:var(--dk);color:var(--dk)}
+.footer-bot{border-top:1px solid var(--bd);max-width:1280px;margin:0 auto;padding:13px 48px;display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:11px;color:var(--mt)}
+@media (max-width:980px){
+  .nav-in,.hero-in,.sec-art-in,.proj-hd,.about-in,.insta-in,.footer-top,.footer-bot{padding-left:24px;padding-right:24px}
+  .hero-in{grid-template-columns:1fr;gap:24px}
+  .hero-right{height:450px}
+  .sec-art-in{grid-template-columns:1fr}
+  .annual-in{padding:0 24px}
+  .annual-hd,.annual-grid{grid-template-columns:1fr}
+  .art-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .nav-links,.nav-acts{display:none}
+  .nav-in{height:62px}
+  .hero{padding-top:32px}
+  .hero-desc br{display:none}
+  .hero-right{height:auto}
+  .h-photos{position:relative;width:100%;height:250px}
+  .h-ph-main{height:230px}
+  .h-ph-sub{width:104px;height:104px;right:8px;bottom:0}
+  .feat-card{position:relative;top:auto;right:auto;width:100%;margin-top:18px}
+  .art-grid{grid-template-columns:1fr}
+  .annual{padding:44px 0 50px}
+  .annual-title{font-size:24px}
+  .annual-card{min-height:238px}
+  .annual-name{font-size:38px}
+  .proj-card.is-signature{width:286px}
+  .about-in{grid-template-columns:1fr}
+  .insta-in{flex-direction:column;align-items:flex-start}
+  .footer-top,.footer-bot{flex-direction:column;align-items:flex-start}
+  .footer-r{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ────────── NAV ────────── -->
+<nav class="nav">
+  <div class="nav-in">
+    <div class="nav-logo">
+      <div class="nav-logo-t"><span>YOLO</span><span class="nm">MAGAZINE</span></div>
+      <div class="nav-bdg">わくわくが<br>見つかる場所！</div>
+    </div>
+    <div class="nav-links">
+      <a class="nl" href="#articles">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        <span class="nl-ja">記事</span><span class="nl-en">ARTICLES</span>
+      </a>
+      <a class="nl" href="#projects">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14z"/></svg>
+        <span class="nl-ja">企画</span><span class="nl-en">PROJECTS</span>
+      </a>
+      <a class="nl" href="#about">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="nl-ja">人</span><span class="nl-en">PEOPLE</span>
+      </a>
+      <a class="nl" href="#annual-special">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nl-ja">イベント</span><span class="nl-en">EVENTS</span>
+      </a>
+      <a class="nl" href="#projects">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="nl-ja">場所</span><span class="nl-en">PLACES</span>
+      </a>
+      <a class="nl" href="#instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nl-ja">コラム</span><span class="nl-en">COLUMN</span>
+      </a>
+    </div>
+    <div class="nav-acts">
+      <button class="n-srch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 検索</button>
+      <button class="n-menu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg> メニュー</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ────────── HERO ────────── -->
+<section class="hero">
+  <!-- Confetti decorations -->
+  <span class="dc" style="top:30px;left:56px;font-size:22px;color:var(--y);animation:fl 3.6s ease-in-out infinite;--r:-6deg;--r2:8deg">★</span>
+  <div class="dc" style="top:52px;left:190px;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:16px solid var(--p);animation:fl 4s ease-in-out infinite .4s;--r:18deg;--r2:-8deg"></div>
+  <span class="dc" style="top:18px;left:340px;font-size:17px;color:var(--b);animation:fl 3.2s ease-in-out infinite .2s;--r:0deg;--r2:6deg">★</span>
+  <div class="dc" style="top:62px;left:268px;width:13px;height:13px;background:var(--g);border-radius:50%;animation:fl 4.6s ease-in-out infinite .9s"></div>
+  <div class="dc" style="top:36px;left:430px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:13px solid var(--o);animation:fl 3.8s ease-in-out infinite .7s;--r:-14deg;--r2:10deg"></div>
+  <span class="dc" style="top:22px;right:80px;font-size:20px;color:var(--y);animation:fl 3.9s ease-in-out infinite .3s;--r:8deg;--r2:-5deg">★</span>
+  <div class="dc" style="top:50px;right:200px;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:14px solid var(--v);animation:fl 3.3s ease-in-out infinite .8s;--r:-10deg;--r2:12deg"></div>
+  <span class="dc" style="bottom:80px;left:64px;font-size:15px;color:var(--p);animation:fl 4.2s ease-in-out infinite .5s;--r:4deg;--r2:-9deg">★</span>
+  <div class="dc" style="bottom:100px;left:180px;width:11px;height:11px;background:var(--y);border-radius:50%;animation:fl 5s ease-in-out infinite .2s"></div>
+  <div class="dc" style="top:40px;left:500px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid var(--g);animation:fl 4.4s ease-in-out infinite 1.1s;--r:25deg;--r2:-5deg"></div>
+  <div class="hero-in">
+    <div>
+      <div class="hero-eye fu fd1">Kumamoto Creative Web Magazine</div>
+      <div class="hero-title fu fd2"><span class="h-yolo">YOLO</span><span class="h-mag">MAGAZINE</span></div>
+      <div class="hero-tg fu fd3"><span class="hero-tg-pill">熊本のクリエイティブを、YOLOが届ける。</span></div>
+      <p class="hero-desc fu fd4">写真、映像、音楽、展示、演劇、イベント…<br>熊本で生まれる表現と、そこに関わる人たちを紹介するWebマガジン！</p>
+      <div class="hero-ctas fu fd5">
+        <a class="hcta-b" href="#articles">最新記事を見る <span>›</span></a>
+        <a class="hcta-y" href="#projects">参加できる企画を見る <span>›</span></a>
+      </div>
+    </div>
+    <div class="hero-right fu fd3">
+      <div class="h-photos">
+        <div class="h-ph-main ph ph-ev"><span class="ph-lbl">Event Photo</span></div>
+        <div class="h-ph-sub ph ph-pl"><span class="ph-lbl">People</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-bdg">年に一度の特別企画</div>
+        <div class="feat-img ph ph-art"><span class="ph-lbl">lumina</span></div>
+        <div class="feat-num">第3回写真映像展</div>
+        <div class="feat-title">lumina —光—</div>
+        <p class="feat-lead">YOLOが一年をかけて届ける、写真と映像のシグネチャー企画。</p>
+        <div class="feat-info">
+          <div class="feat-row"><span class="feat-lbl">期間</span><span>2026.10.13(火)〜10.18(日)</span></div>
+          <div class="feat-row"><span class="feat-lbl">会場</span><span>熊本県立美術館 分館</span></div>
+          <div class="feat-row"><span class="feat-lbl">応募締切</span><span>6.30(火)</span></div>
+        </div>
+        <div class="feat-ctas">
+          <a class="fcta-dk" href="https://lumina-site-ecru.vercel.app/" target="_blank" rel="noopener">lumina公式サイトへ ›</a>
+          <a class="fcta-y" href="https://lumina-site-ecru.vercel.app/" target="_blank" rel="noopener">出展について見る ›</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── TICKER ────────── -->
+<div class="ticker mq-w">
+  <div class="mq-t">
+    <span class="tk-i">YOLO MAGAZINE<span class="tk-d"></span></span><span class="tk-i">写真映像展 lumina 出展者募集中<span class="tk-d"></span></span><span class="tk-i">ラストコール 短編映画プロジェクト<span class="tk-d"></span></span><span class="tk-i">撮影会 / フォトウォーク 参加受付中<span class="tk-d"></span></span><span class="tk-i">演技練習会 毎週開催<span class="tk-d"></span></span><span class="tk-i">熊本のクリエイティブを、YOLOが届ける<span class="tk-d"></span></span><span class="tk-i">YOLO MAGAZINE<span class="tk-d"></span></span><span class="tk-i">写真映像展 lumina 出展者募集中<span class="tk-d"></span></span><span class="tk-i">ラストコール 短編映画プロジェクト<span class="tk-d"></span></span><span class="tk-i">撮影会 / フォトウォーク 参加受付中<span class="tk-d"></span></span><span class="tk-i">演技練習会 毎週開催<span class="tk-d"></span></span><span class="tk-i">熊本のクリエイティブを、YOLOが届ける<span class="tk-d"></span></span>
+  </div>
+</div>
+
+<!-- ────────── ANNUAL SPECIAL ────────── -->
+<section class="annual reveal" id="annual-special">
+  <div class="annual-in">
+    <div class="annual-hd">
+      <div>
+        <div class="annual-kicker">Annual Special Issue</div>
+        <h2 class="annual-title">YOLOが年に一度だけ立ち上げる、特別な表現の場。</h2>
+      </div>
+      <p class="annual-copy">通常のイベントや撮影会とは別に、写真展と映画祭はYOLOの一年を象徴する企画として開催。作品、作り手、観客がひとつの場所に集まる“年1の本編”として届けます。</p>
+    </div>
+    <div class="annual-grid">
+      <article class="annual-card annual-lumina lift">
+        <span class="annual-status">Now Open</span>
+        <div>
+          <div class="annual-name">lumina</div>
+          <h3>第3回写真映像展「lumina —光—」</h3>
+          <div class="annual-meta"><span>写真・映像</span><span>熊本県立美術館 分館</span><span>2026.10.13-10.18</span></div>
+          <a class="annual-link" href="https://lumina-site-ecru.vercel.app/" target="_blank" rel="noopener">公式サイトを見る ›</a>
+        </div>
+      </article>
+      <article class="annual-card annual-film lift">
+        <span class="annual-status">Coming Next</span>
+        <div>
+          <div class="annual-name">Film Festival</div>
+          <h3>あなたのまちの映画祭</h3>
+          <div class="annual-meta"><span>映画祭</span><span>地域と映像</span><span>年1開催</span></div>
+          <a class="annual-link" href="/film-festival/">企画をのぞく ›</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── ARTICLES ────────── -->
+<section class="sec-art reveal" id="articles">
+  <div class="sec-art-in">
+    <div>
+      <div class="sec-hd">
+        <div class="sec-hd-l">
+          <span class="sec-en">LATEST ARTICLES</span>
+          <span class="sec-jp" style="background:#DFF8EC;color:#147040">最新記事</span>
+        </div>
+        <a class="sec-all" href="#articles">すべての記事を見る →</a>
+      </div>
+      <div class="art-grid">
+        <div class="art-card lift">
+          <div class="art-img">
+            <div class="art-img-in ph ph-ev" style="height:100%"><span class="ph-lbl">熊本の風景</span></div>
+            <div class="art-num n1">01</div>
+          </div>
+          <div class="art-body">
+            <div class="art-meta"><span class="ctag cg">コラム</span><span class="art-date">2026.06.20</span></div>
+            <div class="art-title">YOLO MAGAZINEとは？</div>
+            <div class="art-desc">熊本のクリエイティブを、YOLOの目線で紹介するプロジェクトです！</div>
+            <span class="art-more">READ MORE →</span>
+          </div>
+        </div>
+        <div class="art-card lift">
+          <div class="art-img">
+            <div class="art-img-in ph ph-art" style="height:100%"><span class="ph-lbl">企画イメージ</span></div>
+            <div class="art-num n2">02</div>
+          </div>
+          <div class="art-body">
+            <div class="art-meta"><span class="ctag cb">企画</span><span class="art-date">2026.06.15</span></div>
+            <div class="art-title">Creative YOLOとは？</div>
+            <div class="art-desc">写真、映像、展示、映像などを通して、熊本に表現の場をつくるコミュニティ。</div>
+            <span class="art-more">READ MORE →</span>
+          </div>
+        </div>
+        <div class="art-card lift">
+          <div class="art-img">
+            <div class="art-img-in ph ph-ph" style="height:100%"><span class="ph-lbl">展示会場</span></div>
+            <div class="art-num n3">03</div>
+          </div>
+          <div class="art-body">
+            <div class="art-meta"><span class="ctag cp">イベント</span><span class="art-date">2026.06.10</span></div>
+            <div class="art-title">第3回写真映像展「lumina —光—」出展者募集</div>
+            <div class="art-desc">2026年10月、熊本県立美術館 分館で開催する写真映像展の出展者を募集します。</div>
+            <span class="art-more">READ MORE →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-hd" style="margin-bottom:0">
+        <div class="sec-hd-l"><span class="sec-en" style="font-size:16px">開催中・募集中の企画！</span></div>
+        <a class="sec-all" href="#annual-special">すべて見る</a>
+      </div>
+      <div class="sdb-card" style="margin-top:20px">
+        <div class="sdb-hd"><span class="sdb-hd-t">開催中・募集中の企画！</span><span class="sdb-hd-a">すべて見る →</span></div>
+        <a class="sdb-item" href="https://lumina-site-ecru.vercel.app/" target="_blank" rel="noopener">
+          <div class="sdb-th ph ph-art"></div>
+          <div><span class="sdb-st sts-r">年1特別企画</span><div class="sdb-title">第3回写真映像展 lumina —光—</div><div class="sdb-sub">応募締切：6.30 (火)</div></div>
+        </a>
+        <div class="sdb-item">
+          <div class="sdb-th"><img class="thumb-photo" src="assets/last-call-making.jpg" alt="ラストコール制作記の撮影風景"></div>
+          <div><span class="sdb-st sts-r">募集中</span><div class="sdb-title">ラストコール 短編映画制作プロジェクト</div><div class="sdb-sub">応募締切：未定</div></div>
+        </div>
+        <div class="sdb-item">
+          <div class="sdb-th ph ph-pl"></div>
+          <div><span class="sdb-st sts-o">開催中</span><div class="sdb-title">撮影会 / フォトウォーク in 熊本市内</div><div class="sdb-sub">次回：6.8 (日)</div></div>
+        </div>
+        <a class="sdb-cta" href="#projects">企画一覧を見る →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── PROJECTS ────────── -->
+<section class="sec-proj reveal" id="projects">
+  <div class="proj-hd">
+    <div class="proj-hd-l">
+      <span class="sec-en">PROJECTS</span>
+      <span class="sec-jp" style="background:#DFF8EC;color:#147040">YOLOの企画</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a class="sec-all" href="#projects">すべての企画を見る →</a>
+      <div class="proj-arrows">
+        <button class="p-arr" id="p-prev">‹</button>
+        <button class="p-arr" id="p-next">›</button>
+      </div>
+    </div>
+  </div>
+  <div class="proj-tw" id="proj-tw">
+    <div class="proj-tr">
+      <a class="proj-card is-signature lift" href="https://lumina-site-ecru.vercel.app/" target="_blank" rel="noopener">
+        <div class="proj-img"><div class="proj-img-in ph ph-art" style="height:100%"><span class="ph-lbl">lumina</span></div><span class="proj-cat" style="background:#FF8C42;color:#fff">展示</span></div>
+        <div class="proj-body"><div class="proj-title">lumina</div><div class="proj-sub">年に一度の写真映像展</div></div>
+      </a>
+      <div class="proj-card lift">
+        <div class="proj-img"><div class="proj-img-in" style="height:100%"><img class="thumb-photo" src="assets/last-call-making.jpg" alt="ラストコール制作記の撮影風景"></div><span class="proj-cat" style="background:#00B9E8;color:#fff">企画</span></div>
+        <div class="proj-body"><div class="proj-title">ラストコール</div><div class="proj-sub">短編映画制作プロジェクト</div></div>
+      </div>
+      <a class="proj-card is-signature lift" href="/film-festival/">
+        <div class="proj-img"><div class="proj-img-in ph ph-ph" style="height:100%"><span class="ph-lbl">映画祭</span></div><span class="proj-cat" style="background:#9B6DFF;color:#fff">人</span></div>
+        <div class="proj-body"><div class="proj-title">あなたのまちの映画祭</div><div class="proj-sub">年に一度の上映企画</div></div>
+      </a>
+      <div class="proj-card lift">
+        <div class="proj-img"><div class="proj-img-in ph ph-pl" style="height:100%"><span class="ph-lbl">撮影会</span></div><span class="proj-cat" style="background:#26C281;color:#fff">イベント</span></div>
+        <div class="proj-body"><div class="proj-title">撮影会 / フォトウォーク</div><div class="proj-sub">写真を楽しむ学びイベント</div></div>
+      </div>
+      <div class="proj-card lift">
+        <div class="proj-img"><div class="proj-img-in ph ph-ev" style="height:100%"><span class="ph-lbl">演技</span></div><span class="proj-cat" style="background:#FF4A6B;color:#fff">演技</span></div>
+        <div class="proj-body"><div class="proj-title">演技練習会</div><div class="proj-sub">俳優・表現者のための練習の場</div></div>
+      </div>
+      <div class="proj-card lift">
+        <div class="proj-img"><div class="proj-img-in ph ph-nu" style="height:100%"><span class="ph-lbl">コミュニティ</span></div><span class="proj-cat" style="background:#26C281;color:#fff">コミュ</span></div>
+        <div class="proj-body"><div class="proj-title">YOLOコミュニティ</div><div class="proj-sub">熊本のクリエイターが集まる場</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="lj">Let's<br>Join!</div>
+</section>
+
+<!-- ────────── ABOUT ────────── -->
+<section class="sec-about reveal" id="about">
+  <div class="about-in">
+    <div>
+      <div class="about-lbl">ABOUT YOLO MAGAZINE</div>
+      <div class="about-h">YOLO MAGAZINEについて</div>
+      <div class="about-txt">YOLO MAGAZINEは、Creative YOLOが運営するWebマガジンです。熊本で活動するクリエイターや、作品、アーティスト、学生、表現に関わる人たちを紹介します。<br><br>あなたの「やってみたい！」が、楽しい出会いや活動のきっかけになればうれしいです。</div>
+      <a class="about-lnk" href="https://creative-yolo.com/" target="_blank" rel="noopener">YOLOについてもっと見る →</a>
+    </div>
+    <div>
+      <div class="about-bubble">一緒につくろう！</div>
+      <div class="about-rh">熊本のクリエイティブを、<br>もっと近くに。もっと楽しく。</div>
+      <div class="about-rt">取材してほしい活動がある方、一緒に企画をつくりたい方、Creative YOLOに相談したい方は、お気軽にご連絡ください！</div>
+      <a class="about-rcta" href="https://creative-yolo.com/" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        お問い合わせフォームへ ›
+      </a>
+      <div class="pg">
+        <div class="pg-i ph ph-ev"></div><div class="pg-i ph ph-art"></div><div class="pg-i ph ph-pl"></div>
+        <div class="pg-i ph ph-fi"></div><div class="pg-i ph ph-ph"></div><div class="pg-i ph ph-nu"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── INSTAGRAM ────────── -->
+<section class="sec-insta reveal" id="instagram">
+  <div class="insta-in">
+    <div class="insta-l">
+      <div class="insta-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+      </div>
+      <div class="insta-h">Follow us!<br>Instagramで<br>つながる</div>
+      <div class="insta-hnd">@creative.yolo</div>
+      <a class="insta-fol" href="https://www.instagram.com/creative.yolo" target="_blank" rel="noopener">@creative.yolo をフォローする</a>
+    </div>
+    <div class="insta-photos">
+      <div class="insta-ph ph ph-ev"></div>
+      <div class="insta-ph ph ph-art"></div>
+      <div class="insta-ph ph ph-pl"></div>
+      <div class="insta-ph ph ph-ph"></div>
+      <div class="insta-ph ph ph-fi"></div>
+      <div class="insta-ph ph ph-nu"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── FOOTER ────────── -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-t"><span>YOLO</span><span class="fnm">MAGAZINE</span></div>
+      <div class="footer-tg">熊本のクリエイティブを、YOLOが届ける。</div>
+    </div>
+    <nav class="footer-nav">
+      <a class="fnl" href="#articles"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span class="fnl-ja">記事</span><span class="fnl-en">ARTICLES</span></a>
+      <a class="fnl" href="#projects"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5z"/></svg><span class="fnl-ja">企画</span><span class="fnl-en">PROJECTS</span></a>
+      <a class="fnl" href="https://creative-yolo.com/" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="fnl-ja">人</span><span class="fnl-en">PEOPLE</span></a>
+      <a class="fnl" href="#annual-special"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="fnl-ja">イベント</span><span class="fnl-en">EVENTS</span></a>
+      <a class="fnl" href="#instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="fnl-ja">場所</span><span class="fnl-en">PLACES</span></a>
+      <a class="fnl" href="#articles"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="fnl-ja">コラム</span><span class="fnl-en">COLUMN</span></a>
+    </nav>
+    <div class="footer-r">
+      <div class="footer-lks">
+        <a href="https://creative-yolo.com/" target="_blank" rel="noopener">Creative YOLO</a>
+        <a href="https://www.instagram.com/creative.yolo" target="_blank" rel="noopener">お問い合わせ</a>
+      </div>
+      <div class="footer-soc">
+        <a class="sc" href="https://www.instagram.com/creative.yolo" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+        <a class="sc" href="https://creative-yolo.com/film-festival/" target="_blank" rel="noopener" style="font-size:10px;font-weight:900;font-family:sans-serif">映画祭</a>
+        <a class="sc" href="https://creative-yolo.com/lumina/" target="_blank" rel="noopener" style="font-size:10px;font-weight:900;font-family:sans-serif">lumina</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <span class="footer-copy">© 2025 Creative YOLO All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Project carousel arrows
+const tw = document.getElementById('proj-tw');
+const prev = document.getElementById('p-prev');
+const next = document.getElementById('p-next');
+if (tw && prev && next) {
+  prev.addEventListener('click', () => tw.scrollBy({ left: -260, behavior: 'smooth' }));
+  next.addEventListener('click', () => tw.scrollBy({ left: 260, behavior: 'smooth' }));
+}
+</script>
+</body>
+</html>

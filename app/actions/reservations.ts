@@ -59,7 +59,8 @@ export async function createReservation(formData: FormData): Promise<ActionResul
     if ((insertErr as { code?: string }).code === "23505") {
       return { ok: false, message: "申し訳ありません。今その枠はリクエストされました。" };
     }
-    return { ok: false, message: `リクエストに失敗しました: ${insertErr.message}` };
+    console.error("Failed to create reservation", insertErr);
+    return { ok: false, message: "リクエストを受け付けられませんでした。会場受付にお声がけください。" };
   }
 
   // モデル本人の通知先メールを取得（email列が無い環境ではnull扱い）

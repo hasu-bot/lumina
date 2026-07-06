@@ -1,0 +1,10 @@
+.git
+.claude
+.next
+node_modules
+yolo-members
+yolo-magazine
+lumina-site
+work
+*.tsbuildinfo
+.env*

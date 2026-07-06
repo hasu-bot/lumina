@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>映画『ラストコール』公式サイト</title>
+<meta name="description" content="天草を舞台にした青春・音楽映画『ラストコール』公式サイト。上映情報・キャスト・スチール写真など。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="映画『ラストコール』公式サイト">
+<meta property="og:description" content="天草を舞台にした青春・音楽映画『ラストコール』公式サイト。上映情報・キャスト・スチール写真など。">
+<meta property="og:url" content="https://lumina-yolo.vercel.app/last-call">
+<meta property="og:image" content="https://lumina-yolo.vercel.app/last-call/assets/photos/key-visual.jpg">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="映画『ラストコール』公式サイト">
+<meta name="twitter:description" content="天草を舞台にした青春・音楽映画『ラストコール』公式サイト。">
+<meta name="twitter:image" content="https://lumina-yolo.vercel.app/last-call/assets/photos/key-visual.jpg">
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    background: #fff;
+    color: var(--fg);
+    font-family: var(--serif);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+  .wrap-text { max-width: var(--maxw-text); }
+
+  /* ---------- section eyebrow ---------- */
+  .eyebrow {
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--sans);
+    font-weight: 600;
+    color: var(--sun-600);
+    letter-spacing: 0.28em;
+    line-height: 1;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block; flex-shrink: 0;
+    width: 24px; height: 1px;
+    background: var(--sun-600); opacity: 0.7;
+  }
+  .eyebrow-jp {
+    display: block;
+    font-family: var(--serif-display);
+    font-weight: 400;
+    font-size: clamp(16px, 2.2vw, 22px);
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    margin-top: 16px;
+    line-height: 1.8;
+  }
+  .center { text-align: center; }
+  .center .eyebrow { justify-content: center; }
+  .center .eyebrow::before { display: none; }
+  .deco-line { display: block; height: 16px; margin: 20px auto 0; }
+  .deco-line.center { margin-inline: auto; }
+
+  section { position: relative; }
+  .pad { padding-block: clamp(52px, 7vw, 96px); }
+
+  /* GSAP controlled */
+  .hero-logo .ch { display: inline-block; will-change: transform; }
+  .hl-wrap { display: block; overflow: hidden; }
+  .hl-inner { display: block; font-style: normal; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-5);
+    padding: 18px clamp(20px, 5vw, 56px);
+    transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), padding var(--dur) var(--ease);
+  }
+  .site-header.scrolled {
+    background: rgba(247,243,236,0.94);
+    backdrop-filter: blur(14px) saturate(1.1);
+    box-shadow: 0 1px 0 rgba(194,99,44,0.10);
+    padding-block: 12px;
+  }
+  .brand-mark { display: flex; align-items: center; }
+  .brand-logo {
+    height: 30px; width: auto;
+    filter: drop-shadow(0 1px 8px rgba(6,33,47,0.35));
+    transition: filter var(--dur) var(--ease);
+  }
+  .scrolled .brand-logo {
+    filter: brightness(0) sepia(1) saturate(0.6) hue-rotate(340deg);
+  }
+  .nav { display: flex; align-items: center; gap: clamp(14px, 1.8vw, 30px); }
+  .nav a {
+    font-family: var(--sans); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.18em; color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 8px rgba(6,33,47,0.35);
+    position: relative; padding-bottom: 4px;
+    transition: color var(--dur) var(--ease), text-shadow var(--dur) var(--ease);
+  }
+  .nav a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0;
+    background: currentColor; transition: width var(--dur) var(--ease);
+  }
+  .nav a:hover::after { width: 100%; }
+  .scrolled .nav a { color: var(--ink-2); text-shadow: none; }
+  .scrolled .nav a:hover { color: var(--sea-600); }
+  .header-social { height: 26px; opacity: 0.95; }
+  .scrolled .header-social { filter: none; }
+  @media (max-width: 900px) { .nav { display: none; } }
+
+  /* ============ HERO ============ */
+  .hero { height: 100svh; min-height: 620px; position: relative; overflow: hidden; background: var(--sea-100); }
+  .hero-photo {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    object-position: center 62%;
+    animation: kenburns 26s var(--ease) infinite alternate;
+  }
+  @keyframes kenburns { from { transform: scale(1.04); } to { transform: scale(1.13); } }
+  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(to bottom, rgba(6,21,31,0.22) 0%, rgba(6,21,31,0) 32%),
+      linear-gradient(to bottom, rgba(6,21,31,0) 42%, rgba(38,16,4,0.72) 100%);
+  }
+  .hero-inner {
+    position: absolute; inset: 0; z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+    padding-bottom: clamp(120px, 18vh, 180px);
+  }
+  .hero-logo {
+    width: clamp(200px, 32vw, 460px);
+    height: auto;
+    filter: drop-shadow(0 4px 32px rgba(6,21,31,0.55)) drop-shadow(0 1px 8px rgba(6,21,31,0.3));
+    will-change: transform, opacity;
+  }
+  /* 縦書きキャッチコピー */
+  .hero-vert {
+    position: absolute;
+    right: clamp(28px, 6vw, 72px);
+    top: 50%; transform: translateY(-50%);
+    z-index: 3;
+    writing-mode: vertical-rl;
+    font-family: var(--serif-display); font-weight: 400;
+    font-size: clamp(13px, 1.5vw, 17px);
+    letter-spacing: 0.38em; line-height: 1;
+    color: rgba(255,255,255,0.85);
+    text-shadow: 0 1px 14px rgba(6,21,31,0.55);
+  }
+  .hero-meta {
+    position: absolute; bottom: clamp(36px, 7vh, 72px); left: 0; right: 0; z-index: 3;
+    text-align: center; color: #fff;
+  }
+  .hero-date {
+    font-family: var(--latin); font-weight: 500; font-size: clamp(28px, 4.2vw, 46px);
+    letter-spacing: 0.1em; text-shadow: 0 2px 16px rgba(6,33,47,0.55);
+  }
+  .hero-date .sat { font-size: 0.6em; letter-spacing: 0.22em; margin-left: 0.3em; }
+  .hero-venue {
+    font-family: var(--sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.34em; margin-top: 10px; color: rgba(255,255,255,0.94);
+    text-shadow: 0 1px 12px rgba(6,33,47,0.5);
+  }
+  .scroll-cue {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 3;
+    width: 1px; height: 46px; background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0));
+    overflow: hidden;
+  }
+  .scroll-cue::after {
+    content: ""; position: absolute; inset: 0; background: #fff;
+    animation: cue 2.4s var(--ease) infinite;
+  }
+  @keyframes cue { 0%{transform:translateY(-100%);} 60%,100%{transform:translateY(100%);} }
+
+  /* ============ QUOTE BREAK ============ */
+  .quote-break {
+    position: relative; height: 88vh; min-height: 520px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .qb-photo {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center 38%;
+  }
+  .quote-break::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(6,21,31,0.28) 0%,
+      rgba(6,21,31,0.52) 60%,
+      rgba(6,21,31,0.78) 100%
+    );
+  }
+  .qb-inner {
+    position: relative; z-index: 2;
+    text-align: center; padding-inline: var(--gutter);
+    max-width: 820px;
+  }
+  .qb-label {
+    font-family: var(--sans); font-weight: 500; font-size: 11px;
+    letter-spacing: 0.4em; color: rgba(255,255,255,0.45);
+    text-transform: uppercase; margin-bottom: 36px;
+  }
+  .qb-text {
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(22px, 3.6vw, 50px); line-height: 2.0;
+    letter-spacing: 0.1em; color: #fff;
+    text-shadow: 0 2px 28px rgba(6,21,31,0.6);
+  }
+  .qb-rule {
+    width: 1px; height: 60px;
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0));
+    margin: 44px auto 0;
+  }
+
+  /* ============ CONCEPT ============ */
+  .concept { background: #fff; overflow: hidden; }
+  .concept-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 84px);
+    align-items: center;
+  }
+  .concept-copy .eyebrow { text-align: left; }
+  .concept-headline {
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(30px, 4.6vw, 56px); line-height: 1.55; letter-spacing: 0.06em;
+    color: var(--ink); margin: 30px 0 28px;
+  }
+  .concept-body { color: var(--ink-2); font-size: var(--t-body-l); line-height: 2.25; letter-spacing: 0.04em; }
+  .photo-frame {
+    position: relative; border-radius: var(--r-md); overflow: hidden; box-shadow: var(--sh-img);
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .concept-photo { aspect-ratio: 4/3.1; }
+  .concept-photo img { object-position: center 55%; transition: transform 1.6s var(--ease-out); }
+  .photo-frame:hover img { transform: scale(1.05); }
+  .splash {
+    position: absolute; pointer-events: none; z-index: 0; opacity: 0.62;
+    mix-blend-mode: multiply;
+  }
+
+  /* ============ ABOUT / INTRO ============ */
+  .about { background: #fff; }
+  .about-grid {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(36px, 6vw, 80px);
+    align-items: center;
+  }
+  .about-photo { aspect-ratio: 4/3.2; }
+  .about-photo img { object-position: 40% 30%; }
+  .about-copy .eyebrow { text-align: left; }
+  .about-title {
+    font-family: var(--serif-display); font-weight: 600; font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: 0.05em; color: var(--ink); margin: 26px 0 24px;
+  }
+  .about-body { color: var(--ink-2); font-size: var(--t-body); line-height: 2.3; letter-spacing: 0.03em; }
+  .about-body + .about-body { margin-top: 1.4em; }
+  .intro-headline {
+    font-family: var(--serif-display); font-weight: 500;
+    font-size: clamp(26px, 3.8vw, 48px); line-height: 1.65;
+    letter-spacing: 0.06em; color: var(--ink);
+    margin: 24px 0 28px;
+  }
+
+  /* ============ STORY ============ */
+  .story {
+    background: var(--sea-950); overflow: hidden;
+    position: relative;
+  }
+  .story::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, rgba(6,21,31,0.6));
+    pointer-events: none;
+  }
+  .story .eyebrow { color: var(--sun-300, #EFBB95); }
+  .story .eyebrow::before { background: var(--sun-300, #EFBB95); }
+  .story .eyebrow-jp { color: rgba(234,243,247,0.82); }
+  .story-lead {
+    max-width: 600px; margin: clamp(24px, 3.5vw, 40px) auto 0; text-align: center;
+    font-family: var(--serif-display); font-weight: 400;
+    font-size: clamp(16px, 1.9vw, 21px); line-height: 2.3; letter-spacing: 0.07em;
+    color: rgba(234,243,247,0.5);
+  }
+  .story-acts { margin-top: clamp(40px, 5.5vw, 68px); max-width: 760px; margin-inline: auto; }
+  .act {
+    display: grid; grid-template-columns: 60px 1fr; gap: clamp(16px, 3vw, 36px);
+    padding-block: clamp(28px, 4vw, 44px);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .act:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .act-num {
+    font-family: var(--latin); font-size: clamp(36px, 4.5vw, 54px); font-weight: 300;
+    color: rgba(255,255,255,0.15); line-height: 1; letter-spacing: 0.02em;
+    padding-top: 4px;
+  }
+  .act-title {
+    font-family: var(--serif-display); font-weight: 600;
+    font-size: clamp(16px, 2vw, 20px); color: var(--sea-200);
+    letter-spacing: 0.06em; margin-bottom: 12px;
+  }
+  .act-body {
+    font-family: var(--serif); font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 2.2; color: rgba(234,243,247,0.45); letter-spacing: 0.03em;
+  }
+
+  /* ============ TRAILER ============ */
+  .trailer { background: #fafafa; }
+  .trailer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(34px, 5vw, 70px); align-items: center; margin-top: clamp(40px,5vw,64px); }
+  .trailer-thumb {
+    position: relative; aspect-ratio: 16/9; border-radius: var(--r-md); overflow: hidden;
+    box-shadow: var(--sh-img); cursor: pointer;
+  }
+  .trailer-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 32%; transition: transform 1.6s var(--ease-out); }
+  .trailer-thumb::after { content:""; position:absolute; inset:0; background: linear-gradient(120deg, rgba(6,33,47,0.34), rgba(6,33,47,0.06) 55%, rgba(6,33,47,0.28)); }
+  .trailer-thumb:hover img { transform: scale(1.05); }
+  .play-btn {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 76px; height: 76px; z-index: 3;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.55);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+    pointer-events: none;
+  }
+  .play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
+  .trailer-thumb:hover .play-btn { background: rgba(27,92,138,0.82); transform: translate(-50%, -50%) scale(1.1); }
+  .trailer-copy .eyebrow { text-align: left; }
+  .trailer-jp { font-family: var(--serif-display); font-weight: 600; font-size: 24px; color: var(--ink); margin: 22px 0 18px; letter-spacing: 0.06em; }
+  .trailer-copy p { color: var(--ink-2); font-size: var(--t-body); line-height: 2.1; margin-bottom: 30px; }
+  @media (max-width: 820px){ .trailer-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- buttons (CSS pills styled after deco refs 09/10) ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 16px;
+    font-family: var(--sans); font-weight: 500; font-size: 13px; letter-spacing: 0.2em;
+    padding: 16px 30px; border-radius: var(--r-pill); cursor: pointer;
+    transition: background var(--dur) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  .btn .arw { font-family: var(--sans); font-size: 14px; transition: transform var(--dur) var(--ease); }
+  .btn:hover .arw { transform: translateX(5px); }
+  .btn:active { transform: scale(0.985); }
+  .btn-primary { background: var(--sun-600); color: #fff; box-shadow: 0 8px 22px rgba(194,99,44,0.28); }
+  .btn-primary:hover { background: #A8521F; }
+  .btn-ghost { background: transparent; color: var(--sun-600); border: 1.5px solid var(--sun-400); }
+  .btn-ghost:hover { background: var(--sun-600); border-color: var(--sun-600); color: #fff; }
+
+  /* ============ CAST ============ */
+  .cast { background: #fafafa; overflow: hidden; }
+  .cast-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.2vw, 32px);
+    margin-top: clamp(36px, 5vw, 60px);
+  }
+  .cast-card { text-align: center; will-change: transform; cursor: none; }
+  .cast-photo {
+    aspect-ratio: 3/4; border-radius: var(--r-md); overflow: hidden;
+    box-shadow: 0 6px 28px rgba(6,21,31,0.14); margin-bottom: 16px;
+  }
+  .cast-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease-out); }
+  .cast-card:hover .cast-photo img { transform: scale(1.06); }
+  .cast-role { font-family: var(--sans); font-weight: 700; font-size: 10px; letter-spacing: 0.22em; color: var(--sun-600); }
+  .cast-name { font-family: var(--serif-display); font-weight: 600; font-size: clamp(17px, 2vw, 20px); color: var(--ink); margin: 8px 0 8px; letter-spacing: 0.07em; }
+  .cast-desc { font-family: var(--serif); font-size: 13px; line-height: 1.9; color: var(--ink-3); }
+  @media (max-width: 560px){ .cast-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ============ GALLERY ============ */
+  .gallery { background: #fff; }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(8px, 1vw, 14px);
+    margin-top: clamp(32px, 4.5vw, 52px);
+  }
+  .g-item { overflow: hidden; border-radius: var(--r-sm); aspect-ratio: 4/3; box-shadow: var(--sh-1); }
+  .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s var(--ease-out); }
+  .g-item:hover img { transform: scale(1.07); }
+  .g-wide { grid-column: span 2; aspect-ratio: 8/3; }
+  .gallery-more { text-align: center; margin-top: clamp(38px, 5vw, 56px); }
+  @media (max-width: 760px){ .gallery-grid { grid-template-columns: repeat(2, 1fr); } .g-wide { grid-column: span 2; aspect-ratio: 16/7; } }
+
+  /* ============ SCREENING ============ */
+  .screening { background: linear-gradient(to bottom, var(--sea-100) 0%, var(--sea-200) 50%, var(--sea-700) 100%); overflow: hidden; }
+  .screening-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 80px); align-items: center; }
+  .scr-left { text-align: center; }
+  .scr-left .eyebrow { color: var(--sun-600); }
+  .scr-date {
+    font-family: var(--serif-display); font-weight: 500; letter-spacing: 0.06em;
+    color: var(--ink); line-height: 1.5; margin-top: 30px;
+  }
+  .scr-date .y { font-size: clamp(34px, 5.4vw, 64px); }
+  .scr-venue { font-family: var(--serif-display); font-weight: 600; font-size: clamp(30px, 4.6vw, 52px); color: var(--sea-700); letter-spacing: 0.14em; margin-top: 10px; }
+  .scr-city { font-family: var(--sans); font-weight: 500; font-size: 13px; letter-spacing: 0.3em; color: var(--ink-3); margin-top: 14px; }
+  .scr-card {
+    position: relative; background: rgba(255,255,255,0.78); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.9); border-radius: var(--r-lg);
+    padding: clamp(28px, 3.6vw, 46px); box-shadow: var(--sh-3);
+  }
+  .scr-corner { position: absolute; width: 96px; opacity: 0.7; pointer-events: none; }
+  .scr-corner.tl { top: 14px; left: 14px; }
+  .scr-corner.br { bottom: 14px; right: 14px; transform: rotate(180deg); }
+  .scr-row { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 18px 6px; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .scr-row:last-of-type { border-bottom: none; }
+  .scr-key { font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing: 0.2em; color: var(--sea-600); }
+  .scr-val { font-family: var(--serif); font-size: 15px; line-height: 1.8; color: var(--ink); }
+  .scr-card .btn { margin-top: 22px; width: 100%; justify-content: center; }
+  @media (max-width: 820px){ .screening-grid { grid-template-columns: 1fr; } }
+
+  /* ============ CUSTOM CURSOR ============ */
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0; z-index: 9990;
+    border-radius: 50%; pointer-events: none;
+    will-change: transform; transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    width: 7px; height: 7px;
+    background: var(--sea-600);
+    transition: width .2s, height .2s, background .2s, opacity .2s;
+  }
+  .cursor-ring {
+    width: 38px; height: 38px;
+    border: 1.5px solid var(--sea-400);
+    background: transparent;
+    opacity: 0.6;
+    transition: width .28s cubic-bezier(.22,.61,.36,1),
+                height .28s cubic-bezier(.22,.61,.36,1),
+                border-color .2s, opacity .2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cursor-ring.is-hover { width: 58px; height: 58px; opacity: 0.9; border-color: var(--sea-600); }
+  .cursor-ring.is-play  { width: 72px; height: 72px; opacity: 1; border-color: #fff; border-width: 2px; }
+  .cursor-ring.is-play::after {
+    content: 'PLAY'; font-family: var(--sans); font-size: 8px;
+    letter-spacing: 0.22em; color: #fff; opacity: 0.9;
+  }
+  .cursor-dot.is-play { background: #fff; }
+  @media (hover: none) {
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+
+  /* ============ CROWDFUNDING ============ */
+  .crowdfunding { background: var(--sea-950); text-align: center; overflow: hidden; }
+  .crowdfunding .eyebrow { color: var(--sun-300, #EFBB95); }
+  .crowdfunding .eyebrow::before { background: var(--sun-300, #EFBB95); }
+  .crowdfunding .eyebrow-jp { color: rgba(234,243,247,0.75); }
+  .cfd-body {
+    max-width: 600px; margin: clamp(36px,5vw,52px) auto clamp(40px,5vw,56px);
+    font-family: var(--serif); font-size: var(--t-body-l);
+    line-height: 2.3; color: var(--on-dark-mute); letter-spacing: 0.04em;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer { position: relative; background: var(--sea-950); padding: clamp(56px,6vw,88px) 0 44px; text-align: center; }
+  .footer-strip { position: absolute; top: -1px; left: 0; width: 100%; height: 70px; object-fit: cover; object-position: center top; opacity: 0.3; transform: scaleY(-1); pointer-events: none; filter: invert(1); }
+  .footer-logo { font-family: var(--serif-display); font-weight: 600; font-size: 30px; letter-spacing: 0.16em; color: #fff; }
+  .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin: 30px 0 32px; }
+  .footer-nav a { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.45); transition: color var(--dur) var(--ease); }
+  .footer-nav a:hover { color: var(--sea-300); }
+  .footer-social { height: 30px; margin: 0 auto 30px; opacity: 0.6; filter: invert(1) brightness(2); }
+  .footer-copy { font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; color: rgba(255,255,255,0.25); }
+
+  /* ============ RESPONSIVE ============ */
+
+  /* タブレット〜スマホ共通 */
+  @media (max-width: 820px){
+    .concept-grid, .about-grid { grid-template-columns: 1fr; }
+    .concept-copy, .about-copy { order: -1; }
+    .screening-grid { grid-template-columns: 1fr; }
+    .trailer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* スマホ */
+  @media (max-width: 640px){
+    /* ヘッダー */
+    .brand-mark { font-size: 18px; }
+    .header-social { display: none; }
+
+    /* ヒーロー */
+    .hero { min-height: 100svh; }
+    .hero-logo { width: clamp(180px, 68vw, 300px); }
+    .hero-vert {
+      font-size: 12px; letter-spacing: 0.28em;
+      right: clamp(14px, 4vw, 28px);
+    }
+    .hero-date { font-size: 26px; }
+    .hero-venue { font-size: 11px; letter-spacing: 0.22em; }
+
+    /* デコ装飾を非表示 */
+    .splash { display: none; }
+    .deco-line { display: none; }
+    .scr-corner { display: none; }
+
+    /* コンセプト */
+    .eyebrow { font-size: clamp(22px, 6vw, 30px); }
+    .eyebrow-jp { font-size: 11px; margin-top: 10px; }
+    .concept-headline { font-size: clamp(24px, 7vw, 36px); margin: 20px 0 16px; }
+    .concept-body { font-size: 15px; }
+
+    /* アバウト */
+    .about-title { font-size: 20px; margin: 18px 0 16px; }
+    .about-body { font-size: 15px; }
+
+    /* ストーリー */
+    .story-lead { font-size: 16px; letter-spacing: 0.05em; }
+    .act { grid-template-columns: 1fr; gap: 8px; padding-block: 28px; }
+    .act-num { font-size: 32px; }
+    .act-title { margin-bottom: 10px; }
+
+    /* トレーラー */
+    .trailer-copy .eyebrow,
+    .trailer-jp { text-align: center; }
+    .trailer-copy { text-align: center; }
+    .trailer-copy p { margin-bottom: 20px; }
+    .trailer-jp { font-size: 20px; margin: 16px 0 12px; }
+
+    /* キャスト */
+    .cast-grid { grid-template-columns: repeat(2, 1fr); }
+    .cast-name { font-size: 17px; }
+    .cast-desc { font-size: 11.5px; }
+
+    /* ギャラリー */
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .g-wide { grid-column: span 2; }
+
+    /* スクリーニング */
+    .scr-left { margin-bottom: 10px; }
+    .scr-date .y { font-size: 36px; }
+    .scr-venue { font-size: 28px; }
+    .scr-row { grid-template-columns: 90px 1fr; gap: 12px; padding: 14px 4px; }
+    .scr-key { font-size: 10px; }
+    .scr-val { font-size: 14px; }
+
+    /* フッター */
+    .footer-social { display: none; }
+    .footer-strip { display: none; }
+    .footer-logo { font-size: 22px; }
+    .footer-nav { gap: 8px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <a href="#hero" class="brand-mark"><img class="brand-logo" src="assets/logo.png" alt="ラストコール"></a>
+  <nav class="nav">
+    <a href="#intro">INTRO</a>
+    <a href="#story">STORY</a>
+    <a href="#trailer">TRAILER</a>
+    <a href="#cast">CAST</a>
+    <a href="#gallery">GALLERY</a>
+    <a href="#screening">SCREENING</a>
+  </nav>
+  <img class="header-social" src="assets/deco/social-icons.png" alt="SNS">
+</header>
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" id="hero" data-screen-label="HERO">
+  <img class="hero-photo" src="assets/photos/hero-wide.jpg" alt="天草の海辺に立つ高校生バンド">
+  <div class="hero-inner">
+    <img class="hero-logo" src="assets/logo.png" alt="ラストコール">
+  </div>
+  <p class="hero-vert">天草の海辺で、高校最後の夏が鳴り出す。</p>
+  <div class="hero-meta">
+    <div class="hero-date">2026.8.29<span class="sat">SAT</span></div>
+    <div class="hero-venue">熊本 ・ 電気館</div>
+  </div>
+  <div class="scroll-cue"></div>
+</section>
+
+<!-- ============ 02 QUOTE BREAK ============ -->
+<section class="quote-break" id="quote-break">
+  <img class="qb-photo" src="assets/photos/still-04.jpg" alt="">
+  <div class="qb-inner">
+    <p class="qb-label">LAST CALL — 2026</p>
+    <p class="qb-text">うまくいかなくても、<br>この夏だけは終わらせたくなかった。</p>
+    <div class="qb-rule"></div>
+  </div>
+</section>
+
+<!-- ============ 03 INTRODUCTION ============ -->
+<section class="about pad" id="intro" data-screen-label="INTRO">
+  <div class="wrap about-grid">
+    <div class="photo-frame about-photo reveal">
+      <img src="assets/photos/still-06.jpg" alt="天草の海">
+    </div>
+    <div class="about-copy reveal">
+      <div class="eyebrow">INTRODUCTION<span class="eyebrow-jp">イントロダクション</span></div>
+      <h2 class="intro-headline">この夏、<br>僕らの音が鳴り出す。</h2>
+      <p class="about-body">天草の海辺で暮らす高校生たちが、恋や進路、音楽にぶつかりながら、高校最後の夏を駆け抜けていく青春音楽映画。</p>
+      <p class="about-body">うまくいかないことばかりでも、それでももう一度、ステージに立つ。——これは、何者でもなかった彼らが、自分たちの音を見つけるまでの物語。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 STORY ============ -->
+<section class="story pad" id="story" data-screen-label="STORY">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">STORY<span class="eyebrow-jp">何もないと思っていた町で、僕らは初めて夢を見た。</span></div>
+    </div>
+    <p class="story-lead reveal">夢と呼ぶにはまだ遠く、恋と呼ぶにはまだ不器用で、<br>未来と呼ぶにはまだ怖かった。<br>それでも、あの夏の僕らには、どうしても鳴らしたい音があった。</p>
+    <div class="story-acts">
+      <div class="act reveal">
+        <div class="act-num">01</div>
+        <div>
+          <div class="act-title">はじまりの夏</div>
+          <p class="act-body">天草で暮らす高校生・晴人は、幼なじみの葵、友人の陸と陽平と、何気ない毎日を過ごしていた。新学期、東京からやってきた音楽教師・白石茜との出会いをきっかけに、晴人たちは軽音楽部でバンドを始める。</p>
+        </div>
+      </div>
+      <div class="act reveal">
+        <div class="act-num">02</div>
+        <div>
+          <div class="act-title">うまくいかない夏</div>
+          <p class="act-body">勢いだけで始めたバンドは、初ライブで大失敗。SNSで笑われ、仲間との関係も少しずつ揺らいでいく。恋、憧れ、進路、地元に残ること——晴人たちは、それぞれの気持ちと向き合うことになる。</p>
+        </div>
+      </div>
+      <div class="act reveal">
+        <div class="act-num">03</div>
+        <div>
+          <div class="act-title">最後のステージ</div>
+          <p class="act-body">「このまま終わりたくない」——晴人たちはもう一度、海辺でリベンジライブを開くことを決める。不器用な彼らの音は、今度こそ誰かに届くのか。高校最後の夏、彼らのラストコールが鳴り響く。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 TRAILER ============ -->
+<section class="trailer pad" id="trailer" data-screen-label="TRAILER">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">TRAILER<span class="eyebrow-jp">予告編</span></div>
+      <img class="deco-line" src="assets/deco/divider-sparkle.png" alt="">
+    </div>
+    <div class="trailer-grid">
+      <div class="trailer-thumb reveal" role="button" tabindex="0" aria-label="予告編を再生"
+           data-trailer-id="yOuTtrSztFU" onclick="openTrailer(this)" onkeydown="if(event.key==='Enter'||event.key===' ')openTrailer(this)">
+        <img src="assets/photos/thumb.jpg" alt="予告編サムネイル">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="trailer-copy reveal">
+        <div class="trailer-jp">予告編</div>
+        <p>風の匂い、海の音、<br>あの夏のきらめきが、ここに。</p>
+        <button class="btn btn-ghost" onclick="openTrailer(document.querySelector('.trailer-thumb'))">予告編を見る<span class="arw">▶</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 CAST / CHARACTER ============ -->
+<section class="cast pad" id="cast" data-screen-label="CAST">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">CAST / CHARACTER<span class="eyebrow-jp">あの夏を生きた人たち。</span></div>
+    </div>
+    <div class="cast-grid">
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/still-02.jpg" alt="晴人" style="object-position: 28% 26%;"></div>
+        <div class="cast-role">VOCAL / GUITAR</div>
+        <div class="cast-name">晴人</div>
+        <p class="cast-desc">天草で暮らす高校3年生。明るく単純で、思い立ったらすぐ行動するタイプ。茜との出会いをきっかけにバンドを始めるが、恋も音楽も将来も、思うようにはいかない。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-c.jpg" alt="葵" style="object-position: 86% 24%;"></div>
+        <div class="cast-role">CHILDHOOD FRIEND</div>
+        <div class="cast-name">葵</div>
+        <p class="cast-desc">晴人の幼なじみ。口ではきついことを言いながらも、いつも晴人たちを見守っている。晴人への気持ちを抱えながら、自分の将来や天草に残る意味にも向き合っていく。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-d.jpg" alt="陸" style="object-position: 50% 28%;"></div>
+        <div class="cast-role">BASS</div>
+        <div class="cast-name">陸</div>
+        <p class="cast-desc">晴人たちの友人で、冷静なツッコミ役。将来は熊本を出て大学へ進むことも考えている。葵への想いを抱えながら、仲間との時間を大切にしている。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-b.jpg" alt="陽平" style="object-position: 22% 38%;"></div>
+        <div class="cast-role">DRUMS</div>
+        <div class="cast-name">陽平</div>
+        <p class="cast-desc">明るくお調子者のムードメーカー。モテたいという不純な動機でバンドに参加するが、仲間と過ごす時間の中で少しずつ本気になっていく。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/still-05.jpg" alt="茜" style="object-position: 50% 20%;"></div>
+        <div class="cast-role">MUSIC TEACHER</div>
+        <div class="cast-name">茜</div>
+        <p class="cast-desc">東京から天草へやってきた音楽教師。晴人たちに音楽の楽しさを教える存在。明るく振る舞う一方で、自身も過去の恋や夢に揺れている。</p>
+      </article>
+      <article class="cast-card reveal">
+        <div class="cast-photo"><img src="assets/photos/cast-a.jpg" alt="秀也" style="object-position: 50% 20%;"></div>
+        <div class="cast-role">LOCAL MUSICIAN</div>
+        <div class="cast-name">秀也</div>
+        <p class="cast-desc">天草で活動する人気バンドのボーカル。かつて東京でプロを目指していたが、夢破れて地元へ戻ってきた。茜との過去を抱えながら、晴人たちの音楽と向き合っていく。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 GALLERY ============ -->
+<section class="gallery pad" id="gallery" data-screen-label="GALLERY">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">GALLERY<span class="eyebrow-jp">ギャラリー</span></div>
+      <img class="deco-line" src="assets/deco/divider-sparkle.png" alt="">
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item"><img src="assets/photos/still-01.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-03.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-c.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-06.jpg" alt=""></div>
+      <div class="g-item g-wide"><img src="assets/photos/still-04.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-d.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-a.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/still-02.jpg" alt=""></div>
+      <div class="g-item"><img src="assets/photos/cast-b.jpg" alt=""></div>
+      <div class="g-item g-wide"><img src="assets/photos/key-visual.jpg" alt=""></div>
+    </div>
+    <div class="gallery-more reveal">
+      <a href="#gallery" class="btn btn-ghost">ギャラリーをもっと見る<span class="arw">＋</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 SCREENING ============ -->
+<section class="screening pad" id="screening" data-screen-label="SCREENING">
+  <div class="wrap screening-grid">
+    <div class="scr-left reveal">
+      <div class="eyebrow">SCREENING<span class="eyebrow-jp">上映情報</span></div>
+      <div class="scr-date"><span class="y">2026</span>年8月29日（土）</div>
+      <div class="scr-venue">電気館</div>
+      <div class="scr-city">熊本市</div>
+    </div>
+    <div class="scr-card reveal">
+      <div class="scr-row"><div class="scr-key">劇場</div><div class="scr-val">電気館</div></div>
+      <div class="scr-row"><div class="scr-key">住所</div><div class="scr-val">熊本県熊本市中央区新市街8-2</div></div>
+      <div class="scr-row"><div class="scr-key">上映日</div><div class="scr-val">2026年8月29日（土）より公開</div></div>
+      <div class="scr-row"><div class="scr-key">チケット</div><div class="scr-val">近日発売予定</div></div>
+      <a href="#screening" class="btn btn-primary">劇場サイトはこちら<span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 FOOTER ============ -->
+<footer class="footer" data-screen-label="FOOTER">
+  <img class="footer-strip" src="assets/deco/footer-strip.png" alt="">
+  <div class="wrap">
+    <div class="footer-logo">ラストコール</div>
+    <nav class="footer-nav">
+      <a href="#intro">INTRODUCTION</a>
+      <a href="#story">STORY</a>
+      <a href="#trailer">TRAILER</a>
+      <a href="#cast">CAST</a>
+      <a href="#gallery">GALLERY</a>
+      <a href="#screening">SCREENING</a>
+      <a href="https://yolo-members.vercel.app/" target="_blank" rel="noopener">CREATIVE YOLO</a>
+      <a href="https://lumina-yolo.vercel.app/film-festival" target="_blank" rel="noopener">FILM FESTIVAL</a>
+      <a href="https://www.instagram.com/creative.yolo/" target="_blank" rel="noopener">INSTAGRAM</a>
+    </nav>
+    <img class="footer-social" src="assets/deco/social-icons.png" alt="SNS">
+    <div class="footer-copy">© 2026 映画『ラストコール』製作委員会</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  document.documentElement.classList.remove('no-js');
+  document.documentElement.classList.add('js');
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Header ──────────────────────────────────────────────────────────
+  const header = document.getElementById('header');
+  ScrollTrigger.create({
+    start: 60, end: 99999,
+    onEnter: () => header.classList.add('scrolled'),
+    onLeaveBack: () => header.classList.remove('scrolled'),
+  });
+
+  // ── Hero: logo image reveal ─────────────────────────────────────────
+  gsap.timeline({ defaults: { ease: 'power4.out' } })
+    .fromTo('.hero-logo',
+      { y: 30, opacity: 0, scale: 0.94, filter: 'blur(6px) drop-shadow(0 4px 32px rgba(6,21,31,0.55))' },
+      { y: 0, opacity: 1, scale: 1, filter: 'blur(0px) drop-shadow(0 4px 32px rgba(6,21,31,0.55))', duration: 1.4 }, 0.1)
+    .fromTo('.hero-vert',
+      { x: 20, opacity: 0 },
+      { x: 0, opacity: 1, duration: 1.4 }, 0.9)
+    .fromTo('.hero-meta',
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.0 }, 1.4)
+    .fromTo('.scroll-cue',
+      { opacity: 0, scaleY: 0, transformOrigin: 'top' },
+      { opacity: 1, scaleY: 1, duration: 0.8 }, 2.0);
+
+  // ── Quote break: parallax + text reveal ────────────────────────────
+  gsap.to('.qb-photo', {
+    yPercent: 22, ease: 'none',
+    scrollTrigger: { trigger: '.quote-break', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.fromTo('.qb-label',
+    { opacity: 0, letterSpacing: '0.7em' },
+    { opacity: 1, letterSpacing: '0.4em', duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.qb-inner', start: 'top 75%' } }
+  );
+  gsap.fromTo('.qb-text',
+    { y: 50, opacity: 0, filter: 'blur(10px)' },
+    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.6, ease: 'power4.out',
+      scrollTrigger: { trigger: '.qb-inner', start: 'top 75%' }, delay: 0.2 }
+  );
+  gsap.fromTo('.qb-rule',
+    { scaleY: 0, transformOrigin: 'top' },
+    { scaleY: 1, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.qb-inner', start: 'top 75%' }, delay: 0.9 }
+  );
+
+  // ── Hero photo parallax ─────────────────────────────────────────────
+  gsap.to('.hero-photo', {
+    yPercent: 24, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  // ── Eyebrow clip-path wipe ──────────────────────────────────────────
+  gsap.utils.toArray('.eyebrow').forEach(el => {
+    gsap.fromTo(el,
+      { clipPath: 'inset(0 100% 0 0)' },
+      { clipPath: 'inset(0 0% 0 0)', duration: 1.05, ease: 'power3.inOut',
+        scrollTrigger: { trigger: el, start: 'top 88%' } }
+    );
+  });
+
+  // ── General reveals ─────────────────────────────────────────────────
+  const skipEls = new Set([
+    ...document.querySelectorAll('.cast-card, .g-item, .trailer-thumb'),
+  ]);
+  gsap.utils.toArray('.reveal').forEach(el => {
+    if (skipEls.has(el)) return;
+    gsap.fromTo(el,
+      { y: 80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' } }
+    );
+  });
+
+  // ── Section photo parallax (strong) ────────────────────────────────
+  gsap.utils.toArray('.photo-frame').forEach(frame => {
+    const img = frame.querySelector('img');
+    if (!img) return;
+    gsap.fromTo(img,
+      { yPercent: -12 },
+      { yPercent: 12, ease: 'none',
+        scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true } }
+    );
+  });
+
+  // ── Cast cards: stagger with rotation ──────────────────────────────
+  gsap.fromTo('.cast-card',
+    { y: 100, opacity: 0, scale: 0.88, rotateY: 8 },
+    { y: 0, opacity: 1, scale: 1, rotateY: 0,
+      stagger: { each: 0.12, ease: 'power2.out' },
+      duration: 1.0, ease: 'power4.out',
+      scrollTrigger: { trigger: '.cast-grid', start: 'top 84%' } }
+  );
+
+  // ── Gallery: dramatic stagger ────────────────────────────────────────
+  gsap.fromTo('.g-item',
+    { scale: 0.78, opacity: 0, y: 30 },
+    { scale: 1, opacity: 1, y: 0,
+      stagger: { each: 0.07, from: 'start' },
+      duration: 0.85, ease: 'power3.out',
+      scrollTrigger: { trigger: '.gallery-grid', start: 'top 86%' } }
+  );
+
+  // ── Trailer: cinematic reveal ────────────────────────────────────────
+  gsap.fromTo('.trailer-thumb',
+    { scale: 0.82, opacity: 0, y: 50 },
+    { scale: 1, opacity: 1, y: 0, duration: 1.3, ease: 'power4.out',
+      scrollTrigger: { trigger: '.trailer-thumb', start: 'top 86%' } }
+  );
+
+  // ── Story text: scrub reveal ─────────────────────────────────────────
+  gsap.fromTo('.story-lead',
+    { y: 60, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1.4, ease: 'power4.out',
+      scrollTrigger: { trigger: '.story-lead', start: 'top 82%' } }
+  );
+
+  // ── Screening: slide in from sides ──────────────────────────────────
+  gsap.fromTo('.scr-left',
+    { x: -80, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1.1, ease: 'power4.out',
+      scrollTrigger: { trigger: '.screening-grid', start: 'top 82%' } }
+  );
+  gsap.fromTo('.scr-card',
+    { x: 80, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1.1, ease: 'power4.out',
+      scrollTrigger: { trigger: '.screening-grid', start: 'top 82%' } }
+  );
+
+  // ═══════════════════════════════════════════════════════════════
+  //  PHASE 1 — 基盤インタラクション
+  // ═══════════════════════════════════════════════════════════════
+
+  // ── カスタムカーソル ────────────────────────────────────────────
+  (function() {
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    if (isTouch) return;
+
+    const dot  = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    if (!dot || !ring) return;
+
+    document.body.style.cursor = 'none';
+    document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+      el.style.cursor = 'none';
+    });
+
+    const moveX = gsap.quickTo(ring, 'x', { duration: 0.12, ease: 'power3.out' });
+    const moveY = gsap.quickTo(ring, 'y', { duration: 0.12, ease: 'power3.out' });
+
+    window.addEventListener('mousemove', e => {
+      gsap.set(dot, { x: e.clientX, y: e.clientY });
+      moveX(e.clientX); moveY(e.clientY);
+    });
+
+    // ホバー状態切替
+    const hoverEls = document.querySelectorAll('a, button, .cast-card, .g-item, label');
+    hoverEls.forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+    });
+    const trailer = document.querySelector('.trailer-thumb');
+    if (trailer) {
+      trailer.addEventListener('mouseenter', () => {
+        ring.classList.add('is-play');
+        dot.classList.add('is-play');
+      });
+      trailer.addEventListener('mouseleave', () => {
+        ring.classList.remove('is-play');
+        dot.classList.remove('is-play');
+      });
+    }
+  })();
+
+  // ── ヒーロー マウス視差（多層）──────────────────────────────────
+  (function() {
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    if (isTouch) return;
+
+    const hero  = document.querySelector('.hero');
+    const photo = document.querySelector('.hero-photo');
+    const logo  = document.querySelector('.hero-logo');
+    if (!hero || !photo) return;
+
+    const qx = [photo, logo].map(el => ({
+      el,
+      mx: gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+      my: gsap.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
+    }));
+    const depths = [-0.018, 0.022];
+
+    hero.addEventListener('mousemove', e => {
+      const r  = hero.getBoundingClientRect();
+      const dx = e.clientX - r.left  - r.width  / 2;
+      const dy = e.clientY - r.top   - r.height / 2;
+      qx.forEach(({ mx, my }, i) => {
+        mx(dx * depths[i]);
+        my(dy * (depths[i] * 0.7));
+      });
+    });
+    hero.addEventListener('mouseleave', () => {
+      qx.forEach(({ el }) => gsap.to(el, { x: 0, y: 0, duration: 1.6, ease: 'elastic.out(1,0.4)' }));
+    });
+  })();
+
+  // ═══════════════════════════════════════════════════════════════
+  //  PHASE 2 — 要素レベル 3D
+  // ═══════════════════════════════════════════════════════════════
+
+  // ── キャストカード 3Dティルト (quickTo で最適化) ────────────────
+  (function() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.cast-card').forEach(card => {
+      const img = card.querySelector('.cast-photo img');
+      gsap.set(card, { transformPerspective: 900 });
+      const qRX = gsap.quickTo(card, 'rotateX', { duration: 0.3, ease: 'power2.out' });
+      const qRY = gsap.quickTo(card, 'rotateY', { duration: 0.3, ease: 'power2.out' });
+      const qSc = gsap.quickTo(card, 'scale',   { duration: 0.3, ease: 'power2.out' });
+      const qIX = img ? gsap.quickTo(img, 'x',  { duration: 0.3, ease: 'power2.out' }) : null;
+      const qIY = img ? gsap.quickTo(img, 'y',  { duration: 0.3, ease: 'power2.out' }) : null;
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        qRY(x * 14); qRX(-y * 9); qSc(1.04);
+        if (qIX) { qIX(x * -8); qIY(y * -5); }
+      }, { passive: true });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.9, ease: 'elastic.out(1,0.5)' });
+        if (img) gsap.to(img, { x: 0, y: 0, duration: 0.9, ease: 'elastic.out(1,0.5)' });
+      });
+    });
+  })();
+
+  // ── ギャラリーアイテム 3Dティルト (quickTo) ─────────────────────
+  (function() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.g-item').forEach(item => {
+      gsap.set(item, { transformPerspective: 700 });
+      const qRX = gsap.quickTo(item, 'rotateX', { duration: 0.25, ease: 'power2.out' });
+      const qRY = gsap.quickTo(item, 'rotateY', { duration: 0.25, ease: 'power2.out' });
+      const qSc = gsap.quickTo(item, 'scale',   { duration: 0.25, ease: 'power2.out' });
+      item.addEventListener('mousemove', e => {
+        const r = item.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        qRY(x * 9); qRX(-y * 6); qSc(1.04);
+      }, { passive: true });
+      item.addEventListener('mouseleave', () => {
+        gsap.to(item, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.8, ease: 'elastic.out(1,0.4)' });
+      });
+    });
+  })();
+
+  // ── マグネティックボタン (quickTo) ──────────────────────────────
+  (function() {
+    if (window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.btn').forEach(btn => {
+      const qx = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power2.out' });
+      const qy = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power2.out' });
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        qx((e.clientX - r.left - r.width  / 2) * 0.28);
+        qy((e.clientY - r.top  - r.height / 2) * 0.28);
+      }, { passive: true });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1,0.4)' });
+      });
+    });
+  })();
+
+  // ═══════════════════════════════════════════════════════════════
+  //  PHASE 3 — スクロールストーリーテリング強化
+  // ═══════════════════════════════════════════════════════════════
+
+  // ── Story アクト 3D 入場 ─────────────────────────────────────────
+  gsap.set('.story-acts', { perspective: 900 });
+  gsap.utils.toArray('.act').forEach((act, i) => {
+    gsap.fromTo(act,
+      { rotateX: 14, y: 70, opacity: 0 },
+      { rotateX: 0,  y: 0,  opacity: 1, duration: 1.1, ease: 'power4.out',
+        scrollTrigger: { trigger: act, start: 'top 86%' }, delay: i * 0.06 }
+    );
+    const num = act.querySelector('.act-num');
+    if (num) gsap.fromTo(num,
+      { x: -30, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: act, start: 'top 86%' }, delay: i * 0.06 + 0.15 }
+    );
+  });
+
+  // ── Quote Break テキスト 3D 分割 ────────────────────────────────
+  (function() {
+    const qbText = document.querySelector('.qb-text');
+    if (!qbText) return;
+    qbText.innerHTML = qbText.innerHTML.split('<br>').map(l =>
+      `<span class="qb-line" style="display:block;overflow:hidden;"><em style="display:block;">${l}</em></span>`
+    ).join('');
+    gsap.fromTo('.qb-line em',
+      { rotateX: 28, y: '110%', opacity: 0 },
+      { rotateX: 0,  y: '0%',   opacity: 1,
+        duration: 1.2, ease: 'power4.out', stagger: 0.18,
+        scrollTrigger: { trigger: '.qb-inner', start: 'top 78%' } }
+    );
+    gsap.set('.qb-text', { perspective: 600 });
+  })();
+
+  // ── ギャラリー ライトボックス ────────────────────────────────────
+  (function() {
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    if (isTouch) return;
+
+    const lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.style.cssText = [
+      'position:fixed;inset:0;z-index:8500',
+      'background:rgba(6,21,31,0.94)',
+      'backdrop-filter:blur(10px)',
+      'display:none;align-items:center;justify-content:center',
+      'cursor:zoom-out',
+    ].join(';');
+    lb.innerHTML = '<img id="lb-img" style="max-width:90vw;max-height:88vh;border-radius:4px;box-shadow:0 24px 60px rgba(0,0,0,0.6);object-fit:contain;">';
+    document.body.appendChild(lb);
+
+    const lbImg = lb.querySelector('#lb-img');
+    document.querySelectorAll('.g-item img').forEach(img => {
+      img.parentElement.style.cursor = 'zoom-in';
+      img.parentElement.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lb.style.display = 'flex';
+        gsap.fromTo(lbImg, { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'power3.out' });
+      });
+    });
+    lb.addEventListener('click', () => {
+      gsap.to(lbImg, { scale: 0.88, opacity: 0, duration: 0.3, ease: 'power3.in',
+        onComplete: () => { lb.style.display = 'none'; lbImg.src = ''; }
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lb.style.display !== 'none') lb.click();
+    });
+  })();
+</script>
+
+<!-- ============ TRAILER MODAL ============ -->
+<div id="trailer-modal" style="
+  display:none; position:fixed; inset:0; z-index:9000;
+  background:rgba(6,21,31,0.92); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center;
+" onclick="if(event.target===this)closeTrailer()" role="dialog" aria-modal="true" aria-label="予告編">
+  <button onclick="closeTrailer()" style="
+    position:absolute; top:22px; right:28px;
+    background:none; border:none; color:#fff;
+    font-size:32px; line-height:1; cursor:pointer; opacity:0.8;
+  " aria-label="閉じる">×</button>
+  <div style="width:min(90vw,960px); aspect-ratio:16/9; position:relative;">
+    <iframe id="trailer-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen
+      style="position:absolute; inset:0; width:100%; height:100%; border:none; border-radius:6px;">
+    </iframe>
+  </div>
+</div>
+
+<script>
+  function openTrailer(el) {
+    var id = el.dataset.trailerId;
+    var modal = document.getElementById('trailer-modal');
+    document.getElementById('trailer-iframe').src =
+      'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTrailer() {
+    document.getElementById('trailer-modal').style.display = 'none';
+    document.getElementById('trailer-iframe').src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTrailer();
+  });
+</script>
+</body>
+</html>

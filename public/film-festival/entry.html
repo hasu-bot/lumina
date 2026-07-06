@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/film-festival/">
+  <title>作品応募・お問い合わせ ｜ あなたのまちの映画祭</title>
+  <meta name="description" content="あなたのまちの映画祭の作品応募・お問い合わせ案内。テーマは「地元」。九州の短編映画を募集します。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="作品応募・お問い合わせ ｜ あなたのまちの映画祭" />
+  <meta property="og:description" content="テーマは「地元」。あなたのまちで生まれた短編映画をお待ちしています。" />
+  <meta property="og:url" content="https://lumina-yolo.vercel.app/film-festival/entry.html" />
+  <meta property="og:image" content="https://lumina-yolo.vercel.app/film-festival/ogp.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="components.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <header class="site-header" data-header>
+    <a class="brand" href="./" aria-label="あなたのまちの映画祭 トップへ">
+      <span class="brand-ja">あなたのまちの映画祭</span>
+      <span class="brand-en">Your Town Film Festival</span>
+    </a>
+    <nav class="desktop-nav" aria-label="メインナビゲーション">
+      <a href="./#concept">Concept</a>
+      <a href="./#program">Program</a>
+      <a href="entry.html">Entry</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section entries" style="padding-top:140px">
+      <div class="entry-card">
+        <div class="entry-copy">
+          <p class="section-kicker">Call for Entries</p>
+          <h1 style="font-family:var(--mincho);font-weight:500;letter-spacing:.08em;line-height:1.8;margin:0 0 22px">作品応募・お問い合わせ</h1>
+          <p>第2回「あなたのまちの映画祭」では、テーマ「地元」にまつわる短編映画を募集します。正式な応募フォーム公開までは、Creative YOLO のInstagram DMで受付します。</p>
+        </div>
+        <div class="submission-card" aria-label="応募概要">
+          <p>Submission</p>
+          <dl>
+            <div><dt>テーマ</dt><dd>地元</dd></div>
+            <div><dt>部門</dt><dd>実写 / AI</dd></div>
+            <div><dt>締切</dt><dd>近日発表</dd></div>
+          </dl>
+          <a class="button" href="https://www.instagram.com/creative.yolo/" target="_blank" rel="noopener">Instagramで問い合わせる →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-brand">あなたのまちの映画祭</p>
+    <p class="footer-en">Your Town Film Festival</p>
+    <div class="footer-links">
+      <a href="./">映画祭トップ</a><a href="entry.html">作品応募</a><a href="https://www.instagram.com/creative.yolo/" target="_blank" rel="noopener">Instagram</a><a href="https://yolo-members.vercel.app/" target="_blank" rel="noopener">Creative YOLO</a>
+    </div>
+    <div class="footer-bottom"><span>© 2026 YOLO — Your Town Film Festival</span><span>Kumamoto · 熊本</span></div>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>

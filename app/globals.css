@@ -703,6 +703,19 @@ input[type="date"]::-webkit-date-and-time-value {
   color: var(--accent-deep);
   letter-spacing: 0.06em;
 }
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.footer__links a {
+  color: var(--accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(112, 66, 46, 0.25);
+}
+.footer__links a:hover {
+  border-bottom-color: currentColor;
+}
 
 /* ---- ユーティリティ ---- */
 .muted {

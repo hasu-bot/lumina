@@ -14,11 +14,12 @@ const STEPS = [
 
 export default async function HomePage() {
   let models: PublicModel[] = [];
-  let loadError: string | null = null;
+  let loadError = false;
   try {
     models = await getParticipatingModels();
   } catch (e) {
-    loadError = e instanceof Error ? e.message : "データの取得に失敗しました。";
+    loadError = true;
+    console.error("Failed to load participating models", e);
   }
 
   return (
@@ -41,9 +42,7 @@ export default async function HomePage() {
 
           {loadError ? (
             <div className="alert alert--err">
-              {loadError}
-              <br />
-              <span className="muted">.env.local に Supabase のキーを設定し、supabase/schema.sql・seed.sql を実行してください。</span>
+              ただいま参加者一覧を表示できません。会場受付にお声がけください。
             </div>
           ) : models.length === 0 ? (
             <div className="empty">現在、会場参加中のモデルはいません。</div>
