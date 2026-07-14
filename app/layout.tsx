@@ -49,8 +49,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span>YOLO写真映像展 ／ PHOTO EXHIBITION GUESTS</span>
             <nav className="footer__links" aria-label="Creative YOLO 関連リンク">
               <a href="https://yolo-members.vercel.app/" target="_blank" rel="noopener">Creative YOLO</a>
-              <a href="https://lumina-yolo.vercel.app/film-festival" target="_blank" rel="noopener">映画祭</a>
-              <a href="https://lumina-yolo.vercel.app/last-call" target="_blank" rel="noopener">ラストコール</a>
+              <a href="https://hasu-bot.github.io/yolo-film-festival/" target="_blank" rel="noopener">映画祭</a>
+              <a href="https://last-call-movie.vercel.app/" target="_blank" rel="noopener">ラストコール</a>
               <a href="https://www.instagram.com/creative.yolo/" target="_blank" rel="noopener">Instagram</a>
             </nav>
             <span className="muted">※ 掲載モデルの所属事務所は各プロフィールに明記しています。</span>

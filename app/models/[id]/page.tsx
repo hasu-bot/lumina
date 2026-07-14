@@ -10,11 +10,37 @@ export const dynamic = "force-dynamic";
 
 export default async function ModelDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const model = await getModelById(id);
-  if (!model || !model.is_active) notFound();
 
-  const date = todayJST();
-  const reservations = await getReservations(model.id, date);
+  // DB接続に失敗しても来場者に開発者向けエラーを見せない。
+  let model: Awaited<ReturnType<typeof getModelById>> = null;
+  let reservations: Awaited<ReturnType<typeof getReservations>> = [];
+  let loadError = false;
+  try {
+    model = await getModelById(id);
+    if (model && model.is_active) {
+      reservations = await getReservations(model.id, todayJST());
+    }
+  } catch (e) {
+    loadError = true;
+    console.error("Failed to load model detail", e);
+  }
+
+  if (loadError) {
+    return (
+      <section className="section">
+        <div className="container">
+          <div className="alert alert--err">
+            ただいまプロフィールを表示できません。会場受付にお声がけください。
+          </div>
+          <p style={{ marginTop: 16 }}>
+            <Link href="/">← 参加者一覧へ戻る</Link>
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!model || !model.is_active) notFound();
   // 来場者向けには予約者名を伏せる（visitorName を渡さない）
   const slots = buildSlots(model.available_start, model.available_end, reservations).map((s) => ({ ...s, visitorName: null }));
   const acceptingReservations = model.status === "active";
