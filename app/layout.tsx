@@ -1,11 +1,20 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+
+// GA4 ID / Search Console 未発行。発行後にここへ直接書き換える
+const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GOOGLE_SITE_VERIFICATION = "";
 
 export const metadata: Metadata = {
   title: "写真展参加者一覧 | YOLO写真映像展「lumina」",
   description:
     "YOLO写真映像展「lumina」公式。会場で会場参加モデルのプロフィールを見て、その場で撮影リクエストができるマッチングシステム。",
+  verification: GOOGLE_SITE_VERIFICATION
+    ? { google: GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 // スマホブラウザがデスクトップ幅(980px相当)で描画してしまい、
@@ -60,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </span>
           </div>
         </footer>
+        <Analytics />
+        {GA_MEASUREMENT_ID !== "G-XXXXXXXXXX" && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
       </body>
     </html>
   );
