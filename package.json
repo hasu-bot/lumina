@@ -10,7 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^15.5.25",
     "@supabase/supabase-js": "^2.45.4",
+    "@vercel/analytics": "^2.0.1",
     "eslint-config-next": "^15.5.19",
     "next": "^15.5.19",
     "react": "^18.3.1",
