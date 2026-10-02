@@ -44,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav className="header-nav">
               <Link href="/">参加者一覧</Link>
+              <a href="https://lumina-site-ecru.vercel.app/">展示情報 ↗</a>
               <Link href="/m/login">モデル</Link>
               <Link href="/admin/login">運営</Link>
             </nav>
@@ -57,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="footer__mark">lumina</span>
             <span>YOLO写真映像展 ／ PHOTO EXHIBITION GUESTS</span>
             <nav className="footer__links" aria-label="Creative YOLO 関連リンク">
-              <a href="https://yolo-members.vercel.app/" target="_blank" rel="noopener">Creative YOLO</a>
+              <a href="https://yolo-official.vercel.app/" target="_blank" rel="noopener">Creative YOLO</a>
               <a href="https://yolo-film-festival.vercel.app/" target="_blank" rel="noopener">映画祭</a>
               <a href="https://last-call-movie.vercel.app/" target="_blank" rel="noopener">ラストコール</a>
               <a href="https://www.instagram.com/creative.yolo/" target="_blank" rel="noopener">Instagram</a>
