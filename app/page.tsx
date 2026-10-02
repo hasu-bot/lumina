@@ -31,11 +31,12 @@ export default async function HomePage() {
             <span className="hero__line">今日の出会いが、</span>
             <span className="hero__line">次の一枚になる。</span>
           </h1>
-          <p>気になる人を見つけたら、まずはプロフィールを覗いてみよう。</p>
+          <p>プロフィールと在廊時間を確認して、会場での撮影をリクエスト。まずは気になる人を探してみよう。</p>
+          <div className="hero-actions"><a className="button" href="#guests">参加モデルを見る ↓</a><a href="https://lumina-site-ecru.vercel.app/">展示の開催情報・アクセス ↗</a></div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="guests">
         <div className="container">
           <h2 className="section__title">写真展参加者一覧</h2>
           <p className="section__sub">PHOTO EXHIBITION GUESTS ／ 会場参加モデル</p>
@@ -45,7 +46,7 @@ export default async function HomePage() {
               ただいま参加者一覧を表示できません。会場受付にお声がけください。
             </div>
           ) : models.length === 0 ? (
-            <div className="empty">現在、会場参加中のモデルはいません。</div>
+            <div className="guest-empty"><span>PHOTO EXHIBITION GUESTS</span><h3>現在、参加モデルの掲載はありません。</h3><p>掲載されると、このページからプロフィール・在廊時間・撮影枠を確認できます。写真映像展の開催情報は、展示サイトをご覧ください。</p><a href="https://lumina-site-ecru.vercel.app/">写真映像展 lumina について ↗</a></div>
           ) : (
             <div className="grid">
               {models.map((m) => (

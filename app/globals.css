@@ -813,3 +813,5 @@ hr {
     padding: 36px 0;
   }
 }
+
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:30px;font-size:.8rem}.hero-actions .button{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:12px 24px;background:var(--ink);color:var(--bg)}.guest-empty{padding:clamp(28px,5vw,56px);background:var(--cream);border:1px solid var(--line);max-width:800px}.guest-empty>span{font-size:.65rem;letter-spacing:.2em;color:var(--ink-soft)}.guest-empty h3{font-family:var(--font-mincho);font-size:1.3rem;margin:20px 0}.guest-empty p{font-size:.9rem;line-height:2;max-width:40em}.guest-empty>a{display:inline-block;margin-top:24px;border-bottom:1px solid var(--ink);padding:8px 0;font-size:.85rem}#guests{scroll-margin-top:90px}@media(max-width:600px){.hero-actions{gap:16px}.header-nav{gap:12px}.header-nav a{font-size:.68rem}}
